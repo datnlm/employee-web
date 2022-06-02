@@ -1,0 +1,244 @@
+import { useState } from 'react';
+import { paramCase } from 'change-case';
+import { Link as RouterLink } from 'react-router-dom';
+import { Icon } from '@iconify/react';
+// material
+import {
+  Box,
+  Card,
+  Link,
+  Typography,
+  Stack,
+  Grid,
+  Button,
+  Dialog,
+  TextField,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  DialogContentText,
+  Divider
+} from '@material-ui/core';
+import minusFill from '@iconify/icons-eva/minus-fill';
+import plusFill from '@iconify/icons-eva/plus-fill';
+import { styled } from '@material-ui/core/styles';
+import roundAddShoppingCart from '@iconify/icons-ic/round-add-shopping-cart';
+// redux
+import { MIconButton } from 'components/@material-extend';
+import { useDispatch, useSelector } from '../../../../redux/store';
+import { getProduct, addCart, onGotoStep } from '../../../../redux/slices/product';
+// routes
+import { PATH_DASHBOARD } from '../../../../routes/paths';
+// utils
+import { fCurrency } from '../../../../utils/formatNumber';
+//
+import Label from '../../../Label';
+import ColorPreview from '../../../ColorPreview';
+
+import { Product } from '../../../../@types/products';
+// ----------------------------------------------------------------------
+
+const ProductImgStyle = styled('img')(({ theme }) => ({
+  top: 0,
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
+  position: 'absolute'
+}));
+
+// ----------------------------------------------------------------------
+
+type ShopProductCardProps = {
+  product: Product;
+};
+
+export default function ShopProductCard({ product }: ShopProductCardProps) {
+  const { name, cover, price, colors, status, priceSale, available } = product;
+  const linkTo = `${PATH_DASHBOARD.eCommerce.root}/product/${paramCase(name)}`;
+  let quantityProduct = 0;
+  const dispatch = useDispatch();
+  const [value, setValue] = useState<number>(0);
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+    console.log(open);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const Incrementer = ({ name, available }: { name: string; available: number }) => {
+    const [value, setValue] = useState<number>(0);
+    const incrementQuantity = () => {
+      setValue(value + 1);
+      quantityProduct = value + 1;
+    };
+    const decrementQuantity = () => {
+      setValue(value - 1);
+      quantityProduct = value - 1;
+    };
+
+    return (
+      <Box
+        sx={{
+          py: 0.5,
+          px: 0.75,
+          border: 1,
+          lineHeight: 0,
+          borderRadius: 1,
+          display: 'flex',
+          alignItems: 'center',
+          borderColor: 'grey.50032'
+        }}
+      >
+        <MIconButton size="small" color="inherit" disabled={value == 0} onClick={decrementQuantity}>
+          <Icon icon={minusFill} width={16} height={16} />
+        </MIconButton>
+        <Typography
+          variant="body2"
+          component="span"
+          sx={{
+            width: 40,
+            textAlign: 'center',
+            display: 'inline-block'
+          }}
+        >
+          {value}
+        </Typography>
+        <MIconButton
+          size="small"
+          color="inherit"
+          disabled={value >= available}
+          onClick={incrementQuantity}
+        >
+          <Icon icon={plusFill} width={16} height={16} />
+        </MIconButton>
+      </Box>
+    );
+  };
+
+  const handleAddCart = async () => {
+    try {
+      setOpen(false);
+      console.log(product);
+      const data = {
+        id: product.id,
+        name: product.name,
+        cover: product.cover,
+        available: product.available,
+        price: product.price,
+        color: 'BLue',
+        size: 'Size',
+        quantity: quantityProduct,
+        subtotal: quantityProduct * product.price
+      };
+      dispatch(addCart(data));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  function FormDialogs() {
+    return (
+      <div>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Subscribe</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              <Box
+                sx={{
+                  mb: 3,
+                  display: 'flex',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
+                  Quantity
+                </Typography>
+
+                <div>
+                  <Incrementer name="quantity" available={available} />
+                  {/* <FormHelperText error>{touched.quantity && errors.quantity}</FormHelperText> */}
+                </div>
+              </Box>
+              <Divider sx={{ borderStyle: 'dashed' }} />
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="inherit">
+              Cancel
+            </Button>
+            <Button onClick={handleAddCart} variant="contained">
+              Subscribe
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  }
+
+  return (
+    <Card>
+      <Box sx={{ pt: '100%', position: 'relative' }}>
+        {status && (
+          <Label
+            variant="filled"
+            color={(status === 'sale' && 'error') || 'info'}
+            sx={{
+              top: 16,
+              right: 16,
+              position: 'absolute',
+              textTransform: 'uppercase'
+            }}
+          >
+            {status}
+          </Label>
+        )}
+        <ProductImgStyle alt={name} src={cover} />
+      </Box>
+
+      <Stack spacing={2} sx={{ p: 3 }}>
+        <Link to={linkTo} color="inherit" component={RouterLink}>
+          <Typography variant="subtitle2" noWrap>
+            {name}
+          </Typography>
+        </Link>
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
+          <ColorPreview colors={colors} />
+          <Typography variant="subtitle1">
+            <Typography
+              component="span"
+              variant="body1"
+              sx={{
+                color: 'text.disabled',
+                textDecoration: 'line-through'
+              }}
+            >
+              {priceSale && fCurrency(priceSale)}
+            </Typography>
+            &nbsp;
+            {fCurrency(price)}
+          </Typography>
+        </Stack>
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
+          {/* <ColorPreview colors={colors} /> */}
+          <Button
+            fullWidth
+            disabled={available == 0}
+            size="large"
+            type="button"
+            color="warning"
+            variant="contained"
+            startIcon={<Icon icon={roundAddShoppingCart} />}
+            onClick={handleClickOpen}
+            sx={{ whiteSpace: 'nowrap' }}
+          >
+            Add to Cart
+          </Button>
+          <FormDialogs />
+        </Stack>
+      </Stack>
+    </Card>
+  );
+}
