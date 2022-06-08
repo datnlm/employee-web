@@ -9,6 +9,7 @@ import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 import { MHidden } from '../../components/@material-extend';
 import LanguagePopover from './LanguagePopover';
 import NotificationsPopover from './NotificationsPopover';
+import AccountPopover from './AccountPopover';
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 0;
@@ -67,6 +68,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
           <NotificationsPopover />
           <LanguagePopover />
+          <AccountPopover />
         </Stack>
       </ToolbarStyle>
     </RootStyle>

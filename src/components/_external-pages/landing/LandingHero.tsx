@@ -73,7 +73,7 @@ export default function LandingHero() {
 
         <HeroImgStyle alt="hero" src="/static/home/hero.png" variants={varFadeInUp} />
 
-        <Container maxWidth="lg">
+        {/* <Container maxWidth="lg">
           <ContentStyle>
             <motion.div variants={varFadeInRight}>
               <Typography variant="h1" sx={{ color: 'common.white' }}>
@@ -136,7 +136,7 @@ export default function LandingHero() {
               <motion.img variants={varFadeInRight} src="/static/home/ic_m_ts.svg" />
             </Stack>
           </ContentStyle>
-        </Container>
+        </Container> */}
       </RootStyle>
       <Box sx={{ height: { md: '100vh' } }} />
     </>

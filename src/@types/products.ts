@@ -161,3 +161,17 @@ export type Invoice = {
     price: number;
   }[];
 };
+
+// -------------------------------------------------
+export type ProductCoralPark = {
+  id: string;
+  name: string;
+  images: string[];
+  price: number;
+  description: string;
+  mediaUrl: any;
+  siteId: string;
+  categoryId: string;
+  categoryName: string;
+  status: string;
+};

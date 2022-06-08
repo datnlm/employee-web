@@ -4,6 +4,9 @@ import { Navigate, useRoutes, useLocation } from 'react-router-dom';
 import MainLayout from '../layouts/main';
 import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
+// guards
+import GuestGuard from '../guards/GuestGuard';
+import AuthGuard from '../guards/AuthGuard';
 // components
 import LoadingScreen from '../components/LoadingScreen';
 // ----------------------------------------------------------------------
@@ -36,6 +39,31 @@ const Loadable = (Component: any) => (props: any) => {
 
 export default function Router() {
   return useRoutes([
+    {
+      path: 'auth',
+      children: [
+        {
+          path: 'login',
+          element: (
+            <GuestGuard>
+              <Login />
+            </GuestGuard>
+          )
+        },
+        {
+          path: 'register',
+          element: (
+            <GuestGuard>
+              <Register />
+            </GuestGuard>
+          )
+        },
+        { path: 'login-unprotected', element: <Login /> },
+        { path: 'register-unprotected', element: <Register /> },
+        { path: 'reset-password', element: <ResetPassword /> },
+        { path: 'verify', element: <VerifyCode /> }
+      ]
+    },
     // Main Routes
     {
       path: '*',
@@ -46,14 +74,18 @@ export default function Router() {
       ]
     },
     {
-      path: '/',
-      element: <DashboardLayout />,
+      path: 'dashboard',
+      element: (
+        <AuthGuard>
+          <DashboardLayout />
+        </AuthGuard>
+      ),
       children: [
-        { path: '/', element: <Navigate to="/e-commerce/shop" replace /> },
+        { path: '/', element: <Navigate to="/dashboard/e-commerce/shop" replace /> },
         {
           path: 'e-commerce',
           children: [
-            { path: '/', element: <Navigate to="/e-commerce/shop" replace /> },
+            { path: '/', element: <Navigate to="/dashboard/e-commerce/shop" replace /> },
             { path: 'shop', element: <EcommerceShop /> },
             { path: 'product/:name', element: <EcommerceProductDetails /> },
             { path: 'list', element: <EcommerceProductList /> },
@@ -65,12 +97,21 @@ export default function Router() {
         }
       ]
     },
+    {
+      path: '/',
+      element: <MainLayout />,
+      children: [{ path: '/', element: <LandingPage /> }]
+    },
     { path: '*', element: <Navigate to="/404" replace /> }
   ]);
 }
 
 // IMPORT COMPONENTS
-
+// Authentication
+const Login = Loadable(lazy(() => import('../pages/authentication/Login')));
+const Register = Loadable(lazy(() => import('../pages/authentication/Register')));
+const ResetPassword = Loadable(lazy(() => import('../pages/authentication/ResetPassword')));
+const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCode')));
 // Dashboard
 const NotFound = Loadable(lazy(() => import('../pages/Page404')));
 // Main

@@ -3,6 +3,7 @@ import Router from './routes';
 // theme
 import ThemeConfig from './theme';
 // components
+import { AuthProvider } from './contexts/JWTContext';
 import Settings from './components/settings';
 import RtlLayout from './components/RtlLayout';
 import ScrollToTop from './components/ScrollToTop';
@@ -20,7 +21,9 @@ export default function App() {
             <NotistackProvider>
               <Settings />
               <ScrollToTop />
-              <Router />
+              <AuthProvider>
+                <Router />
+              </AuthProvider>
             </NotistackProvider>
           </RtlLayout>
         </ThemeLocalization>

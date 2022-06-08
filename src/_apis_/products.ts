@@ -1,3 +1,4 @@
+import axios from 'axios';
 import faker from 'faker';
 import { sample } from 'lodash';
 import { paramCase } from 'change-case';
