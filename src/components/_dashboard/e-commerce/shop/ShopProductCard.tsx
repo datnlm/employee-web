@@ -35,7 +35,7 @@ import { fCurrency } from '../../../../utils/formatNumber';
 import Label from '../../../Label';
 import ColorPreview from '../../../ColorPreview';
 
-import { Product } from '../../../../@types/products';
+import { Product, ProductCoralPark } from '../../../../@types/products';
 // ----------------------------------------------------------------------
 
 const ProductImgStyle = styled('img')(({ theme }) => ({
@@ -49,13 +49,15 @@ const ProductImgStyle = styled('img')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 type ShopProductCardProps = {
-  product: Product;
+  product: ProductCoralPark;
 };
 
 export default function ShopProductCard({ product }: ShopProductCardProps) {
-  const { name, cover, price, colors, status, priceSale, available } = product;
+  // const { name, cover, price, colors, status, priceSale, available } = product;
+  const { name, images, price, status } = product;
   const linkTo = `${PATH_DASHBOARD.eCommerce.root}/product/${paramCase(name)}`;
-  let quantityProduct = 0;
+  let quantityProduct = 1;
+  const maxQuantityProduct = 1000000000000;
   const dispatch = useDispatch();
   const [value, setValue] = useState<number>(0);
   const [open, setOpen] = useState(false);
@@ -125,8 +127,8 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
       const data = {
         id: product.id,
         name: product.name,
-        cover: product.cover,
-        available: product.available,
+        cover: product.images[0].imageUrl,
+        // available: product.available,
         price: product.price,
         color: 'BLue',
         size: 'Size',
@@ -143,7 +145,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
     return (
       <div>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Subscribe</DialogTitle>
+          <DialogTitle>Quantity</DialogTitle>
           <DialogContent>
             <DialogContentText>
               <Box
@@ -158,8 +160,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
                 </Typography>
 
                 <div>
-                  <Incrementer name="quantity" available={available} />
-                  {/* <FormHelperText error>{touched.quantity && errors.quantity}</FormHelperText> */}
+                  <Incrementer name="quantity" available={maxQuantityProduct} />
                 </div>
               </Box>
               <Divider sx={{ borderStyle: 'dashed' }} />
@@ -170,7 +171,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
               Cancel
             </Button>
             <Button onClick={handleAddCart} variant="contained">
-              Subscribe
+              Add to cart
             </Button>
           </DialogActions>
         </Dialog>
@@ -195,7 +196,8 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
             {status}
           </Label>
         )}
-        <ProductImgStyle alt={name} src={cover} />
+
+        <ProductImgStyle alt={name} src={images ? images[0].imageUrl : null} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
@@ -204,10 +206,10 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
             {name}
           </Typography>
         </Link>
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={colors} />
+        <Stack direction="row" alignItems="center" justifyContent="right">
+          {/* <ColorPreview colors={['colors']} /> */}
           <Typography variant="subtitle1">
-            <Typography
+            {/* <Typography
               component="span"
               variant="body1"
               sx={{
@@ -215,8 +217,8 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
                 textDecoration: 'line-through'
               }}
             >
-              {priceSale && fCurrency(priceSale)}
-            </Typography>
+              {11111 && fCurrency(1111)}
+            </Typography>  */}
             &nbsp;
             {fCurrency(price)}
           </Typography>
@@ -225,7 +227,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
           {/* <ColorPreview colors={colors} /> */}
           <Button
             fullWidth
-            disabled={available == 0}
+            // disabled={available == 0}
             size="large"
             type="button"
             color="warning"

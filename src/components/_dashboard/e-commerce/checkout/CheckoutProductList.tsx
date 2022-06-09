@@ -115,13 +115,13 @@ export default function CheckoutProductList({
                         {name}
                       </Typography>
 
-                      <Box
+                      {/* <Box
                         sx={{
                           display: 'flex',
                           alignItems: 'center'
                         }}
-                      >
-                        <Typography variant="body2">
+                      > */}
+                      {/* <Typography variant="body2">
                           <Typography
                             component="span"
                             variant="body2"
@@ -141,8 +141,8 @@ export default function CheckoutProductList({
                             color:&nbsp;
                           </Typography>
                           {getColorName(color)}
-                        </Typography>
-                      </Box>
+                        </Typography> */}
+                      {/* </Box> */}
                     </Box>
                   </Box>
                 </TableCell>

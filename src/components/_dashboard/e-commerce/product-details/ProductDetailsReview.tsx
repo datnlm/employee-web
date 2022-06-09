@@ -5,12 +5,12 @@ import { Divider, Collapse } from '@material-ui/core';
 import ProductDetailsReviewForm from './ProductDetailsReviewForm';
 import ProductDetailsReviewList from './ProductDetailsReviewList';
 import ProductDetailsReviewOverview from './ProductDetailsReviewOverview';
-import { Product } from '../../../../@types/products';
+import { Product, ProductCoralPark } from '../../../../@types/products';
 
 // ----------------------------------------------------------------------
 
 type ProductDetailsReviewProps = {
-  product: Product;
+  product: ProductCoralPark;
 };
 
 export default function ProductDetailsReview({ product }: ProductDetailsReviewProps) {

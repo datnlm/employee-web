@@ -77,22 +77,6 @@ export default function CheckoutSummary({
           <Typography variant="subtitle2">{fCurrency(subtotal)}</Typography>
         </RowStyle>
 
-        <RowStyle>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Discount
-          </Typography>
-          <Typography variant="subtitle2">{discount ? fCurrency(-discount) : '-'}</Typography>
-        </RowStyle>
-
-        <RowStyle>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Shipping
-          </Typography>
-          <Typography variant="subtitle2">
-            {shipping ? fCurrency(shipping) : displayShipping}
-          </Typography>
-        </RowStyle>
-
         <Divider sx={{ mb: 2 }} />
 
         <RowStyle>
@@ -101,30 +85,8 @@ export default function CheckoutSummary({
             <Typography variant="subtitle1" sx={{ color: 'error.main' }}>
               {fCurrency(total)}
             </Typography>
-            <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
-              (VAT included if applicable)
-            </Typography>
           </Box>
         </RowStyle>
-
-        {enableDiscount && onApplyDiscount && (
-          <Box sx={{ mt: 3 }}>
-            <TextField
-              fullWidth
-              placeholder="Discount codes / Gifts"
-              value="DISCOUNT5"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Button type="button" onClick={() => onApplyDiscount(5)} sx={{ mr: -0.5 }}>
-                      Apply
-                    </Button>
-                  </InputAdornment>
-                )
-              }}
-            />
-          </Box>
-        )}
       </CardContent>
     </Card>
   );

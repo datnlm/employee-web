@@ -97,7 +97,7 @@ export default function MainNavbar() {
             <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />
           </MHidden>
 
-          <Button variant="contained" component={RouterLink} to={PATH_DASHBOARD.eCommerce.root}>
+          <Button variant="contained" component={RouterLink} to={PATH_DASHBOARD.root}>
             Login
           </Button>
           <MHidden width="mdUp">

@@ -8,10 +8,8 @@ import { useDispatch, useSelector } from '../../redux/store';
 import { getProducts, filterProducts } from '../../redux/slices/product';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
-// utils
-import fakeRequest from '../../utils/fakeRequest';
 // @types
-import { Product, ProductState, ProductFilter } from '../../@types/products';
+import { Product, ProductState, ProductFilter, ProductCoralPark } from '../../@types/products';
 // hooks
 import useSettings from '../../hooks/useSettings';
 // components
@@ -26,7 +24,8 @@ import {
 import CartWidget from '../../components/_dashboard/e-commerce/CartWidget';
 // ----------------------------------------------------------------------
 
-function applyFilter(products: Product[], sortBy: string | null, filters: ProductFilter) {
+function applyFilter(products: ProductCoralPark[], sortBy: string | null, filters: ProductFilter) {
+  // function applyFilter(products: Product[], sortBy: string | null, filters: ProductFilter) {
   // SORT BY
   if (sortBy === 'featured') {
     products = orderBy(products, ['sold'], ['desc']);
@@ -41,17 +40,17 @@ function applyFilter(products: Product[], sortBy: string | null, filters: Produc
     products = orderBy(products, ['price'], ['asc']);
   }
   // FILTER PRODUCTS
-  if (filters.gender.length > 0) {
-    products = filter(products, (_product) => includes(filters.gender, _product.gender));
-  }
+  // if (filters.gender.length > 0) {
+  //   products = filter(products, (_product) => includes(filters.gender, _product.gender));
+  // }
   if (filters.category !== 'All') {
-    products = filter(products, (_product) => _product.category === filters.category);
+    products = filter(products, (_product) => _product.categoryName === filters.category);
   }
-  if (filters.colors.length > 0) {
-    products = filter(products, (_product) =>
-      _product.colors.some((color) => filters.colors.includes(color))
-    );
-  }
+  // if (filters.colors.length > 0) {
+  //   products = filter(products, (_product) =>
+  //     _product.colors.some((color) => filters.colors.includes(color))
+  //   );
+  // }
   if (filters.priceRange) {
     products = filter(products, (_product) => {
       if (filters.priceRange === 'below') {
@@ -63,17 +62,17 @@ function applyFilter(products: Product[], sortBy: string | null, filters: Produc
       return _product.price > 75;
     });
   }
-  if (filters.rating) {
-    products = filter(products, (_product) => {
-      const convertRating = (value: string) => {
-        if (value === 'up4Star') return 4;
-        if (value === 'up3Star') return 3;
-        if (value === 'up2Star') return 2;
-        return 1;
-      };
-      return _product.totalRating > convertRating(filters.rating);
-    });
-  }
+  // if (filters.rating) {
+  //   products = filter(products, (_product) => {
+  //     const convertRating = (value: string) => {
+  //       if (value === 'up4Star') return 4;
+  //       if (value === 'up3Star') return 3;
+  //       if (value === 'up2Star') return 2;
+  //       return 1;
+  //     };
+  //     return _product.totalRating > convertRating(filters.rating);
+  //   });
+  // }
   return products;
 }
 
@@ -81,7 +80,7 @@ export default function EcommerceShop() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
   const [openFilter, setOpenFilter] = useState(false);
-  const { products, sortBy, filters } = useSelector(
+  const { products, sortBy, filters, isLoading } = useSelector(
     (state: { product: ProductState }) => state.product
   );
 
@@ -97,7 +96,6 @@ export default function EcommerceShop() {
     },
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        await fakeRequest(500);
         setSubmitting(false);
       } catch (error) {
         console.error(error);
@@ -185,7 +183,7 @@ export default function EcommerceShop() {
           </Stack>
         </Stack>
 
-        <ShopProductList products={filteredProducts} isLoad={!filteredProducts && !initialValues} />
+        <ShopProductList products={filteredProducts} isLoad={isLoading} />
         <CartWidget />
       </Container>
     </Page>

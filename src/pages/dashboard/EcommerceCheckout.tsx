@@ -20,13 +20,12 @@ import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import {
   CheckoutCart,
   CheckoutPayment,
-  CheckoutOrderComplete,
-  CheckoutBillingAddress
+  CheckoutBillingInformation
 } from '../../components/_dashboard/e-commerce/checkout';
 
 // ----------------------------------------------------------------------
 
-const STEPS = ['Cart', 'Billing & address', 'Payment'];
+const STEPS = ['Cart', 'Billing', 'Payment'];
 
 const QontoConnector = withStyles((theme) => ({
   alternativeLabel: {
@@ -101,7 +100,7 @@ export default function EcommerceCheckout() {
   }, [dispatch, activeStep]);
 
   return (
-    <Page title="Ecommerce: Checkout | Minimal-UI">
+    <Page title="Ecommerce: Checkout">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading="Checkout"
@@ -136,16 +135,11 @@ export default function EcommerceCheckout() {
             </Stepper>
           </Grid>
         </Grid>
-
-        {!isComplete ? (
-          <>
-            {activeStep === 0 && <CheckoutCart />}
-            {activeStep === 1 && <CheckoutBillingAddress />}
-            {activeStep === 2 && billing && <CheckoutPayment />}
-          </>
-        ) : (
-          <CheckoutOrderComplete open={isComplete} />
-        )}
+        <>
+          {activeStep === 0 && <CheckoutCart />}
+          {activeStep === 1 && <CheckoutBillingInformation />}
+          {activeStep === 2 && billing && <CheckoutPayment />}
+        </>
       </Container>
     </Page>
   );

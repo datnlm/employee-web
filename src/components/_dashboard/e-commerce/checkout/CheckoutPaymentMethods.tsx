@@ -58,7 +58,6 @@ export default function CheckoutPaymentMethods({
           <Grid container spacing={2}>
             {paymentOptions.map((method) => {
               const { value, title, icons, description } = method;
-              const hasChildren = value === 'credit_card';
 
               return (
                 <Grid key={title} item xs={12}>
@@ -67,7 +66,7 @@ export default function CheckoutPaymentMethods({
                       ...(values.payment === value && {
                         boxShadow: (theme) => theme.customShadows.z8
                       }),
-                      ...(hasChildren && { flexWrap: 'wrap' })
+                      ...{ flexWrap: 'wrap' }
                     }}
                   >
                     <FormControlLabel
@@ -96,34 +95,6 @@ export default function CheckoutPaymentMethods({
                         ))}
                       </Box>
                     </MHidden>
-
-                    {hasChildren && (
-                      <Collapse in={values.payment === 'credit_card'} sx={{ width: '100%' }}>
-                        <TextField
-                          select
-                          fullWidth
-                          label="Card"
-                          {...getFieldProps('card')}
-                          SelectProps={{ native: true }}
-                        >
-                          {cardOptions.map((option) => (
-                            <option key={option.value} value={option.value}>
-                              {option.label}
-                            </option>
-                          ))}
-                        </TextField>
-
-                        <Button
-                          id="add-card"
-                          type="button"
-                          size="small"
-                          startIcon={<Icon icon={plusFill} width={20} height={20} />}
-                          sx={{ my: 3 }}
-                        >
-                          Add new card
-                        </Button>
-                      </Collapse>
-                    )}
                   </OptionStyle>
                 </Grid>
               );

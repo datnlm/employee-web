@@ -1,7 +1,7 @@
 // material
 import { Skeleton, Grid } from '@material-ui/core';
 import ShopProductCard from './ShopProductCard';
-import { Product } from '../../../../@types/products';
+import { Product, ProductCoralPark } from '../../../../@types/products';
 
 // ----------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ const SkeletonLoad = (
 );
 
 type ShopProductListProps = {
-  products: Product[];
+  products: ProductCoralPark[];
   isLoad: boolean;
 };
 

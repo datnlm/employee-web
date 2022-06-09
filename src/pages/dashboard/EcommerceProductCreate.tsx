@@ -47,7 +47,7 @@ export default function EcommerceProductCreate() {
           ]}
         />
 
-        <ProductNewForm isEdit={isEdit} currentProduct={currentProduct} />
+        {/* <ProductNewForm isEdit={isEdit} currentProduct={currentProduct} /> */}
       </Container>
     </Page>
   );

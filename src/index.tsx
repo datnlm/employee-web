@@ -6,29 +6,32 @@ import { StrictMode } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider as ReduxProvider } from 'react-redux';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 // redux
-import { store } from './redux/store';
+import { store, persistor } from './redux/store';
 // contexts
 import { SettingsProvider } from './contexts/SettingsContext';
 import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
 //
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import LoadingScreen from './components/LoadingScreen';
 // ----------------------------------------------------------------------
 
 ReactDOM.render(
   <StrictMode>
     <ReduxProvider store={store}>
-      <HelmetProvider>
-        <SettingsProvider>
-          <CollapseDrawerProvider>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
-          </CollapseDrawerProvider>
-        </SettingsProvider>
-      </HelmetProvider>
+      <PersistGate loading={<LoadingScreen />} persistor={persistor}>
+        <HelmetProvider>
+          <SettingsProvider>
+            <CollapseDrawerProvider>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </CollapseDrawerProvider>
+          </SettingsProvider>
+        </HelmetProvider>
+      </PersistGate>
     </ReduxProvider>
   </StrictMode>,
   document.getElementById('root')

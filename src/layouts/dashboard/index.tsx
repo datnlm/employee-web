@@ -6,7 +6,6 @@ import { styled, useTheme } from '@material-ui/core/styles';
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 //
 import DashboardNavbar from './DashboardNavbar';
-import DashboardSidebar from './DashboardSidebar';
 
 // ----------------------------------------------------------------------
 

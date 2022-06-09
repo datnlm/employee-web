@@ -2,7 +2,7 @@ import { FormikProps } from 'formik';
 
 // ----------------------------------------------------------------------
 
-export type PaymentType = 'paypal' | 'credit_card' | 'cash';
+export type PaymentType = 'momo' | 'cash';
 
 export type ProductStatus = 'sale' | 'new' | '';
 
@@ -12,7 +12,7 @@ export type ProductCategory = 'Accessories' | 'Apparel' | 'Shoes';
 
 export type ProductGender = 'Men' | 'Women' | 'Kids';
 
-export type OnCreateBilling = (address: BillingAddress) => void;
+export type OnCreateBilling = (customer: Customer) => void;
 
 export type FormikPropsShopView = FormikProps<ProductFilter>;
 
@@ -82,8 +82,10 @@ export type BillingAddress = {
 export type ProductState = {
   isLoading: boolean;
   error: boolean;
-  products: Product[];
-  product: Product | null;
+  products: ProductCoralPark[];
+  product: ProductCoralPark | null;
+  // products: Product[];
+  // product: Product | null;
   sortBy: string | null;
   filters: {
     gender: string[];
@@ -99,7 +101,7 @@ export type ProductState = {
     total: number;
     discount: number;
     shipping: number;
-    billing: BillingAddress | null;
+    billing: Customer | null;
   };
 };
 
@@ -166,7 +168,7 @@ export type Invoice = {
 export type ProductCoralPark = {
   id: string;
   name: string;
-  images: string[];
+  images: any;
   price: number;
   description: string;
   mediaUrl: any;
@@ -174,4 +176,11 @@ export type ProductCoralPark = {
   categoryId: string;
   categoryName: string;
   status: string;
+};
+
+export type Customer = {
+  name: string;
+  email: string;
+  phone: string;
+  nationality: any;
 };

@@ -123,15 +123,15 @@ export default function EcommerceProductDetails() {
             <Card>
               <Grid container>
                 <Grid item xs={12} md={6} lg={7}>
-                  <ProductDetailsCarousel product={product} />
+                  {/* <ProductDetailsCarousel product={product} /> */}
                 </Grid>
                 <Grid item xs={12} md={6} lg={5}>
-                  <ProductDetailsSummary
+                  {/* <ProductDetailsSummary
                     product={product}
                     cart={checkout.cart}
                     onAddCart={handleAddCart}
                     onGotoStep={handleGotoStep}
-                  />
+                  /> */}
                 </Grid>
               </Grid>
             </Card>
@@ -160,7 +160,8 @@ export default function EcommerceProductDetails() {
                     <Tab
                       disableRipple
                       value="2"
-                      label={`Review (${product.reviews.length})`}
+                      label="Review"
+                      // label={`Review (${product.reviews.length})`}
                       sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' } }}
                     />
                   </TabList>

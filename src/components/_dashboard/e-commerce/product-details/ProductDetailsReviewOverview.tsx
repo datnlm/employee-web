@@ -8,7 +8,7 @@ import { Box, Grid, Rating, Button, Typography, LinearProgress } from '@material
 // utils
 import { fShortenNumber } from '../../../../utils/formatNumber';
 // @types
-import { Product } from '../../../../@types/products';
+import { Product, ProductCoralPark } from '../../../../@types/products';
 
 // ----------------------------------------------------------------------
 
@@ -71,7 +71,7 @@ function ProgressItem({ star, total }: PercentProgressProps) {
 }
 
 type ProductDetailsReviewOverviewProps = {
-  product: Product;
+  product: ProductCoralPark;
   onOpen: VoidFunction;
 };
 
@@ -79,9 +79,9 @@ export default function ProductDetailsReviewOverview({
   product,
   onOpen
 }: ProductDetailsReviewOverviewProps) {
-  const { totalRating, totalReview, ratings } = product;
+  // const { totalRating, totalReview, ratings } = product;
 
-  const total = sumBy(ratings, (star) => star.starCount);
+  // const total = sumBy(ratings, (star) => star.starCount);
 
   return (
     <Grid container>
@@ -89,17 +89,17 @@ export default function ProductDetailsReviewOverview({
         <Typography variant="subtitle1" gutterBottom>
           Average rating
         </Typography>
-        <Typography variant="h2" gutterBottom sx={{ color: 'error.main' }}>
+        {/* <Typography variant="h2" gutterBottom sx={{ color: 'error.main' }}>
           {totalRating}/5
-        </Typography>
-        <RatingStyle readOnly value={totalRating} precision={0.1} />
+        </Typography> */}
+        {/* <RatingStyle readOnly value={totalRating} precision={0.1} />
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           ({fShortenNumber(totalReview)}
           &nbsp;reviews)
-        </Typography>
+        </Typography> */}
       </GridStyle>
 
-      <GridStyle item xs={12} md={4}>
+      {/* <GridStyle item xs={12} md={4}>
         <Box sx={{ width: '100%' }}>
           {ratings
             .slice(0)
@@ -108,7 +108,7 @@ export default function ProductDetailsReviewOverview({
               <ProgressItem key={rating.name} star={rating} total={total} />
             ))}
         </Box>
-      </GridStyle>
+      </GridStyle> */}
 
       <GridStyle item xs={12} md={4}>
         <ScrollLink to="move_add_review" spy={true} smooth={true} offset={-200}>

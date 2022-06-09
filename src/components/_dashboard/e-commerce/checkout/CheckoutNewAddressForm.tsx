@@ -62,13 +62,13 @@ export default function CheckoutNewAddressForm({
       try {
         onNextStep();
         setSubmitting(true);
-        onCreateBilling({
-          receiver: values.receiver,
-          phone: values.phone,
-          fullAddress: `${values.address}, ${values.city}, ${values.state}, ${values.country}, ${values.zipcode}`,
-          addressType: values.addressType,
-          isDefault: values.isDefault
-        });
+        // onCreateBilling({
+        //   receiver: values.receiver,
+        //   phone: values.phone,
+        //   fullAddress: `${values.address}, ${values.city}, ${values.state}, ${values.country}, ${values.zipcode}`,
+        //   addressType: values.addressType,
+        //   isDefault: values.isDefault
+        // });
       } catch (error) {
         console.error(error);
         setSubmitting(false);

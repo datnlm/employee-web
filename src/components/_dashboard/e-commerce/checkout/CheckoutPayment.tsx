@@ -1,10 +1,13 @@
 import * as Yup from 'yup';
 import { Icon } from '@iconify/react';
 import { useFormik, Form, FormikProvider } from 'formik';
+import { useNavigate } from 'react-router';
+import { PATH_DASHBOARD } from 'routes/paths';
 import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
 // material
 import { Grid, Button } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
+import { manageShop } from '_apis_/products';
 // @types
 import {
   DeliveryOption,
@@ -18,7 +21,8 @@ import {
   onGotoStep,
   onBackStep,
   onNextStep,
-  applyShipping
+  applyShipping,
+  resetCart
 } from '../../../../redux/slices/product';
 //
 import CheckoutSummary from './CheckoutSummary';
@@ -28,36 +32,17 @@ import CheckoutPaymentMethods from './CheckoutPaymentMethods';
 
 // ----------------------------------------------------------------------
 
-const DELIVERY_OPTIONS: DeliveryOption[] = [
-  {
-    value: 0,
-    title: 'Standard delivery (Free)',
-    description: 'Delivered on Monday, August 12'
-  },
-  {
-    value: 2,
-    title: 'Fast delivery ($2,00)',
-    description: 'Delivered on Monday, August 5'
-  }
-];
-
 const PAYMENT_OPTIONS: PaymentOption[] = [
   {
-    value: 'paypal',
-    title: 'Pay with Paypal',
-    description: 'You will be redirected to PayPal website to complete your purchase securely.',
-    icons: ['/static/icons/ic_paypal.svg']
-  },
-  {
-    value: 'credit_card',
-    title: 'Credit / Debit Card',
-    description: 'We support Mastercard, Visa, Discover and Stripe.',
-    icons: ['/static/icons/ic_mastercard.svg', '/static/icons/ic_visa.svg']
+    value: 'momo',
+    title: 'MoMo',
+    description: 'You will be redirected to MoMo website to complete your purchase securely.',
+    icons: ['/static/icons/ic_momo.svg']
   },
   {
     value: 'cash',
-    title: 'Cash on CheckoutDelivery',
-    description: 'Pay with cash when your order is delivered.',
+    title: 'Cash on Checkout',
+    description: 'Pay with cash when your order.',
     icons: []
   }
 ];
@@ -71,6 +56,7 @@ const CARDS_OPTIONS: CardOption[] = [
 export default function CheckoutPayment() {
   const { checkout } = useSelector((state: { product: ProductState }) => state.product);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { total, discount, subtotal, shipping } = checkout;
 
   const handleNextStep = () => {
@@ -79,10 +65,12 @@ export default function CheckoutPayment() {
 
   const handleBackStep = () => {
     dispatch(onBackStep());
+    console.log(checkout.billing);
   };
 
   const handleGotoStep = (step: number) => {
     dispatch(onGotoStep(step));
+    console.log(checkout.billing);
   };
 
   const handleApplyShipping = (value: number) => {
@@ -101,11 +89,31 @@ export default function CheckoutPayment() {
     validationSchema: PaymentSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
-        handleNextStep();
+        const detail: { price: number; quantity: number; productId: string }[] = [];
+        checkout.cart.map((v) =>
+          detail.push({
+            price: v.price,
+            quantity: v.quantity,
+            productId: v.id
+          })
+        );
+        const data = {
+          name: checkout.billing?.name,
+          email: checkout.billing?.email,
+          phone: checkout.billing?.phone,
+          nationalityCode: checkout.billing?.nationality,
+          orderDetails: detail
+        };
+        await manageShop.createOrder(data).then((response) => {
+          if (response.status == 200) {
+            dispatch(resetCart());
+            navigate(PATH_DASHBOARD.eCommerce.shop);
+          }
+        });
       } catch (error) {
         console.error(error);
         setSubmitting(false);
-        setErrors(error.message);
+        // setErrors(error.message);
       }
     }
   });
@@ -117,11 +125,6 @@ export default function CheckoutPayment() {
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
-            <CheckoutDelivery
-              formik={formik}
-              onApplyShipping={handleApplyShipping}
-              deliveryOptions={DELIVERY_OPTIONS}
-            />
             <CheckoutPaymentMethods
               formik={formik}
               cardOptions={CARDS_OPTIONS}

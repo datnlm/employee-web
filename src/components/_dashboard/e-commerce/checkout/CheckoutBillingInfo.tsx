@@ -20,7 +20,7 @@ export default function CheckoutBillingInfo({ onBackStep }: CheckoutBillingInfoP
   return (
     <Card sx={{ mb: 3 }}>
       <CardHeader
-        title="Billing Address"
+        title="Billing Information"
         action={
           <Button
             size="small"
@@ -34,14 +34,11 @@ export default function CheckoutBillingInfo({ onBackStep }: CheckoutBillingInfoP
       />
       <CardContent>
         <Typography variant="subtitle2" gutterBottom>
-          {billing?.receiver}&nbsp;
-          <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>
-            ({billing?.addressType})
-          </Typography>
+          {billing?.name}
         </Typography>
 
         <Typography variant="body2" gutterBottom>
-          {billing?.fullAddress}
+          {billing?.email}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           {billing?.phone}
