@@ -81,28 +81,21 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { path: '/', element: <Navigate to="/dashboard/e-commerce/shop" replace /> },
-        {
-          path: 'e-commerce',
-          children: [
-            { path: '/', element: <Navigate to="/dashboard/e-commerce/shop" replace /> },
-            { path: 'shop', element: <EcommerceShop /> },
-            { path: 'product/:name', element: <EcommerceProductDetails /> },
-            { path: 'list', element: <EcommerceProductList /> },
-            { path: 'product/new', element: <EcommerceProductCreate /> },
-            { path: 'product/:name/edit', element: <EcommerceProductCreate /> },
-            { path: 'checkout', element: <EcommerceCheckout /> },
-            { path: 'invoice', element: <EcommerceInvoice /> }
-          ]
-        }
+        { path: '/', element: <Navigate to="/dashboard/shop" replace /> },
+        { path: 'shop', element: <EcommerceShop /> },
+        { path: 'product/:name', element: <EcommerceProductDetails /> },
+        { path: 'list', element: <EcommerceProductList /> },
+        { path: 'product/new', element: <EcommerceProductCreate /> },
+        { path: 'product/:name/edit', element: <EcommerceProductCreate /> },
+        { path: 'checkout', element: <EcommerceCheckout /> },
+        { path: 'invoice', element: <EcommerceInvoice /> }
       ]
     },
     {
       path: '/',
       element: <MainLayout />,
       children: [{ path: '/', element: <LandingPage /> }]
-    },
-    { path: '*', element: <Navigate to="/404" replace /> }
+    }
   ]);
 }
 

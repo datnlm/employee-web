@@ -47,13 +47,12 @@ export default function Login() {
   const { method } = useAuth();
 
   return (
-    <RootStyle title="Login | Minimal-UI">
+    <RootStyle title="Login | Employee Web">
       <MHidden width="mdDown">
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
             Hi, Welcome Back
           </Typography>
-          {/* <img src="/static/illustrations/illustration_login.png" alt="login" /> */}
         </SectionStyle>
       </MHidden>
 

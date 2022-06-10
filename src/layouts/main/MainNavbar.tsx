@@ -9,7 +9,7 @@ import Logo from '../../components/Logo';
 import Label from '../../components/Label';
 import { MHidden } from '../../components/@material-extend';
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_DASHBOARD, PATH_AUTH } from '../../routes/paths';
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
 import navConfig from './MenuConfig';
@@ -97,7 +97,7 @@ export default function MainNavbar() {
             <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />
           </MHidden>
 
-          <Button variant="contained" component={RouterLink} to={PATH_DASHBOARD.root}>
+          <Button variant="contained" component={RouterLink} to={PATH_DASHBOARD.eCommerce.shop}>
             Login
           </Button>
           <MHidden width="mdUp">

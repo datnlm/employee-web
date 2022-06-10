@@ -111,7 +111,7 @@ export default function CheckoutProductList({
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <ThumbImgStyle alt="product image" src={cover} />
                     <Box>
-                      <Typography noWrap variant="subtitle2" sx={{ maxWidth: 240 }}>
+                      <Typography noWrap variant="subtitle2" sx={{ maxWidth: 120 }}>
                         {name}
                       </Typography>
 

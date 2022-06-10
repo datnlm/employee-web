@@ -29,7 +29,7 @@ import CheckoutSummary from './CheckoutSummary';
 import CheckoutDelivery from './CheckoutDelivery';
 import CheckoutBillingInfo from './CheckoutBillingInfo';
 import CheckoutPaymentMethods from './CheckoutPaymentMethods';
-
+import useAuth from '../../../../hooks/useAuth';
 // ----------------------------------------------------------------------
 
 const PAYMENT_OPTIONS: PaymentOption[] = [
@@ -57,6 +57,7 @@ export default function CheckoutPayment() {
   const { checkout } = useSelector((state: { product: ProductState }) => state.product);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { total, discount, subtotal, shipping } = checkout;
 
   const handleNextStep = () => {
@@ -98,9 +99,11 @@ export default function CheckoutPayment() {
           })
         );
         const data = {
+          staffId: user?.id,
           name: checkout.billing?.name,
           email: checkout.billing?.email,
           phone: checkout.billing?.phone,
+          total: checkout.total,
           nationalityCode: checkout.billing?.nationality,
           orderDetails: detail
         };

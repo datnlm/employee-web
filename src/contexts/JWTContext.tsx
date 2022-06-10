@@ -179,7 +179,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
         ...state,
         method: 'jwt',
         user: {
-          id: state?.user?.sub,
+          id: state?.user?.id,
           photoURL: state?.user?.imageUrl,
           email: state?.user?.email,
           username: state?.user?.username,

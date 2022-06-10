@@ -4,7 +4,7 @@ function path(root: string, sublink: string) {
   return `${root}${sublink}`;
 }
 const ROOTS_AUTH = '/auth';
-const ROOTS_DASHBOARD = '/';
+const ROOTS_DASHBOARD = '/dashboard';
 
 // ----------------------------------------------------------------------
 export const PATH_AUTH = {
@@ -20,17 +20,12 @@ export const PATH_AUTH = {
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   eCommerce: {
-    root: path(ROOTS_DASHBOARD, '/dashboard/e-commerce'),
-    shop: path(ROOTS_DASHBOARD, '/dashboard/e-commerce/shop'),
-    product: path(ROOTS_DASHBOARD, '/dashboard/e-commerce/product/:name'),
-    productById: path(ROOTS_DASHBOARD, '/dashboard/e-commerce/product/nike-air-force-1-ndestrukt'),
-    list: path(ROOTS_DASHBOARD, '/dashboard/e-commerce/list'),
-    newProduct: path(ROOTS_DASHBOARD, '/dashboard/e-commerce/product/new'),
-    editById: path(
-      ROOTS_DASHBOARD,
-      '/dashboard/e-commerce/product/nike-blazer-low-77-vintage/edit'
-    ),
-    checkout: path(ROOTS_DASHBOARD, '/dashboard/e-commerce/checkout'),
-    invoice: path(ROOTS_DASHBOARD, '/dashboard/e-commerce/invoice')
+    root: path(ROOTS_DASHBOARD, '/'),
+    shop: path(ROOTS_DASHBOARD, '/shop'),
+    product: path(ROOTS_DASHBOARD, '/product/:name'),
+    list: path(ROOTS_DASHBOARD, '/list'),
+    newProduct: path(ROOTS_DASHBOARD, '/product/new'),
+    checkout: path(ROOTS_DASHBOARD, '/checkout'),
+    invoice: path(ROOTS_DASHBOARD, '/invoice')
   }
 };

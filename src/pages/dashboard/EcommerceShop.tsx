@@ -128,7 +128,7 @@ export default function EcommerceShop() {
   };
 
   return (
-    <Page title="Ecommerce: Shop | Minimal-UI">
+    <Page title="Ecommerce | CPMS">
       {values && (
         <Backdrop open={isSubmitting} sx={{ zIndex: 9999 }}>
           <CircularProgress />
@@ -136,18 +136,6 @@ export default function EcommerceShop() {
       )}
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
-        <HeaderBreadcrumbs
-          heading="Shop"
-          links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            {
-              name: 'E-Commerce',
-              href: PATH_DASHBOARD.eCommerce.root
-            },
-            { name: 'Shop' }
-          ]}
-        />
-
         {values !== initialValues && (
           <Typography gutterBottom>
             <Typography component="span" variant="subtitle1">

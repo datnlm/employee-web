@@ -13,27 +13,32 @@ import { store, persistor } from './redux/store';
 import { SettingsProvider } from './contexts/SettingsContext';
 import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
 //
+import { AuthProvider } from './contexts/JWTContext';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import LoadingScreen from './components/LoadingScreen';
 // ----------------------------------------------------------------------
 
 ReactDOM.render(
-  <StrictMode>
-    <ReduxProvider store={store}>
-      <PersistGate loading={<LoadingScreen />} persistor={persistor}>
-        <HelmetProvider>
-          <SettingsProvider>
-            <CollapseDrawerProvider>
-              <BrowserRouter>
-                <App />
-              </BrowserRouter>
-            </CollapseDrawerProvider>
-          </SettingsProvider>
-        </HelmetProvider>
-      </PersistGate>
-    </ReduxProvider>
-  </StrictMode>,
+  <HelmetProvider>
+    <StrictMode>
+      <ReduxProvider store={store}>
+        <PersistGate loading={<LoadingScreen />} persistor={persistor}>
+          <HelmetProvider>
+            <SettingsProvider>
+              <CollapseDrawerProvider>
+                <BrowserRouter>
+                  <AuthProvider>
+                    <App />
+                  </AuthProvider>
+                </BrowserRouter>
+              </CollapseDrawerProvider>
+            </SettingsProvider>
+          </HelmetProvider>
+        </PersistGate>
+      </ReduxProvider>
+    </StrictMode>
+  </HelmetProvider>,
   document.getElementById('root')
 );
 

@@ -42,7 +42,6 @@ const slice = createSlice({
     // START LOADING
     startLoading(state) {
       state.isLoading = true;
-      console.log('datnlm');
     },
 
     // HAS ERROR
