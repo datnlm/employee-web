@@ -4,6 +4,7 @@ function path(root: string, sublink: string) {
   return `${root}${sublink}`;
 }
 const ROOTS_AUTH = '/auth';
+const ROOTS_PHOTO = '/photo';
 const ROOTS_DASHBOARD = '/dashboard';
 
 // ----------------------------------------------------------------------
@@ -14,7 +15,8 @@ export const PATH_AUTH = {
   register: path(ROOTS_AUTH, '/register'),
   registerUnprotected: path(ROOTS_AUTH, '/register-unprotected'),
   resetPassword: path(ROOTS_AUTH, '/reset-password'),
-  verify: path(ROOTS_AUTH, '/verify')
+  verify: path(ROOTS_AUTH, '/verify'),
+  photo: path(ROOTS_AUTH, '/photo')
 };
 
 export const PATH_DASHBOARD = {
@@ -24,8 +26,14 @@ export const PATH_DASHBOARD = {
     shop: path(ROOTS_DASHBOARD, '/shop'),
     product: path(ROOTS_DASHBOARD, '/product/:name'),
     list: path(ROOTS_DASHBOARD, '/list'),
-    newProduct: path(ROOTS_DASHBOARD, '/product/new'),
+    order: path(ROOTS_DASHBOARD, '/order'),
     checkout: path(ROOTS_DASHBOARD, '/checkout'),
     invoice: path(ROOTS_DASHBOARD, '/invoice')
   }
+};
+
+export const PATH_PHOTO = {
+  root: ROOTS_PHOTO,
+  photo: path(ROOTS_PHOTO, '/photo'),
+  phone: path(ROOTS_PHOTO, '/:name')
 };

@@ -29,11 +29,11 @@ export default function EcommerceProductCreate() {
   const currentProduct = products.find((product) => paramCase(product.name) === name);
 
   useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getProducts(0, -1));
   }, [dispatch]);
 
   return (
-    <Page title="Ecommerce: Create a new product | Minimal-UI">
+    <Page title="Ecommerce: Create a new product">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading={!isEdit ? 'Create a new product' : 'Edit product'}

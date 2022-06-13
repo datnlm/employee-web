@@ -4,34 +4,34 @@ import { Box, Checkbox, TableRow, TableCell, TableHead, TableSortLabel } from '@
 
 // ----------------------------------------------------------------------
 
-type ProductListHeadProps = {
+type EcommerceListHeadProps = {
   order: 'asc' | 'desc';
   orderBy: string;
   rowCount: number;
   headLabel: any[];
   numSelected: number;
-  onRequestSort: (property: string) => void;
-  onSelectAllClick: (checked: boolean) => void;
+  onRequestSort: (id: string) => void;
 };
 
-export default function ProductListHead({
+export default function EcommerceListHead({
   order,
   orderBy,
   rowCount,
   headLabel,
   numSelected,
-  onRequestSort,
-  onSelectAllClick
-}: ProductListHeadProps) {
+  onRequestSort
+}: EcommerceListHeadProps) {
   return (
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          <Checkbox
+          {/* <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
-            onChange={(e) => onSelectAllClick(e.target.checked)}
-          />
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              onSelectAllClick(event.target.checked)
+            }
+          /> */}
         </TableCell>
         {headLabel.map((headCell) => (
           <TableCell

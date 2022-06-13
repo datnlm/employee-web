@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react';
 import homeFill from '@iconify/icons-eva/home-fill';
 import fileFill from '@iconify/icons-eva/file-fill';
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_PHOTO } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -13,8 +13,8 @@ const ICON_SIZE = {
 
 const menuConfig = [
   {
-    title: 'Download Image',
-    path: PATH_DASHBOARD.root,
+    title: 'Photo',
+    path: PATH_PHOTO.root,
     icon: <Icon icon={fileFill} {...ICON_SIZE} />
   }
 ];

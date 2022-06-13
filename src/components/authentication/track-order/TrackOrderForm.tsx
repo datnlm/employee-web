@@ -1,8 +1,10 @@
 import * as Yup from 'yup';
 import { Form, FormikProvider, useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 // material
 import { TextField, Alert, Stack } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
+import { PATH_PHOTO } from 'routes/paths';
 // hooks
 import useAuth from '../../../hooks/useAuth';
 import useIsMountedRef from '../../../hooks/useIsMountedRef';
@@ -10,7 +12,7 @@ import useIsMountedRef from '../../../hooks/useIsMountedRef';
 // ----------------------------------------------------------------------
 
 type InitialValues = {
-  email: string;
+  phone: string;
   afterSubmit?: string;
 };
 
@@ -22,22 +24,24 @@ type ResetPasswordFormProps = {
 export default function ResetPasswordForm({ onSent, onGetEmail }: ResetPasswordFormProps) {
   const { resetPassword } = useAuth();
   const isMountedRef = useIsMountedRef();
+  const navigate = useNavigate();
 
   const ResetPasswordSchema = Yup.object().shape({
-    email: Yup.string().email('Email must be a valid email address').required('Email is required')
+    phone: Yup.string().required('Phone is required')
   });
 
   const formik = useFormik<InitialValues>({
     initialValues: {
-      email: 'demo@minimals.cc'
+      phone: ''
     },
     validationSchema: ResetPasswordSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
-        resetPassword?.(values.email);
+        navigate(PATH_PHOTO.phone);
+        resetPassword?.(values.phone);
         if (isMountedRef.current) {
           onSent();
-          onGetEmail(formik.values.email);
+          onGetEmail(formik.values.phone);
           setSubmitting(false);
         }
       } catch (error) {
@@ -60,11 +64,11 @@ export default function ResetPasswordForm({ onSent, onGetEmail }: ResetPasswordF
 
           <TextField
             fullWidth
-            {...getFieldProps('email')}
-            type="email"
-            label="Email address"
-            error={Boolean(touched.email && errors.email)}
-            helperText={touched.email && errors.email}
+            {...getFieldProps('phone')}
+            type="phone"
+            label="Phone"
+            error={Boolean(touched.phone && errors.phone)}
+            helperText={touched.phone && errors.phone}
           />
 
           <LoadingButton
@@ -74,7 +78,7 @@ export default function ResetPasswordForm({ onSent, onGetEmail }: ResetPasswordF
             variant="contained"
             loading={isSubmitting}
           >
-            Reset Password
+            Confirm
           </LoadingButton>
         </Stack>
       </Form>

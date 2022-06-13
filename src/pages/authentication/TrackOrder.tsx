@@ -9,7 +9,7 @@ import LogoOnlyLayout from '../../layouts/LogoOnlyLayout';
 import { PATH_AUTH } from '../../routes/paths';
 // components
 import Page from '../../components/Page';
-import { ResetPasswordForm } from '../../components/authentication/reset-password';
+import { TrackOrderForm } from '../../components/authentication/track-order';
 //
 import { SentIcon } from '../../assets';
 
@@ -30,7 +30,7 @@ export default function ResetPassword() {
   const [sent, setSent] = useState(false);
 
   return (
-    <RootStyle title="Reset Password | CGMS">
+    <RootStyle title="Track Photo | CGMS">
       <LogoOnlyLayout />
 
       <Container>
@@ -38,25 +38,18 @@ export default function ResetPassword() {
           {!sent ? (
             <>
               <Typography variant="h3" paragraph>
-                Forgot your password?
+                Track your photo
               </Typography>
               <Typography sx={{ color: 'text.secondary', mb: 5 }}>
-                Please enter the email address associated with your account and We will email you a
-                link to reset your password.
+                Please enter the phone associated with your order and We will show your photo
               </Typography>
 
-              <ResetPasswordForm
+              <TrackOrderForm
                 onSent={() => setSent(true)}
                 onGetEmail={(value) => setEmail(value)}
               />
 
-              <Button
-                fullWidth
-                size="large"
-                component={RouterLink}
-                to={PATH_AUTH.login}
-                sx={{ mt: 1 }}
-              >
+              <Button fullWidth size="large" component={RouterLink} to="/" sx={{ mt: 1 }}>
                 Back
               </Button>
             </>

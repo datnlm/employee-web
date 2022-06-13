@@ -1,8 +1,10 @@
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { filter, includes, orderBy } from 'lodash';
+import { NavLink as RouterLink, useLocation } from 'react-router-dom';
 // material
-import { Backdrop, Container, Typography, CircularProgress, Stack } from '@material-ui/core';
+import { Backdrop, Container, Typography, CircularProgress, Stack, Box } from '@material-ui/core';
+import Logo from '../../components/Logo';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
 import { getProducts, filterProducts } from '../../redux/slices/product';
@@ -18,9 +20,9 @@ import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import {
   ShopTagFiltered,
   ShopProductSort,
-  ShopProductList,
+  PhotoList,
   ShopFilterSidebar
-} from '../../components/_dashboard/e-commerce/shop';
+} from '../../components/_dashboard/e-commerce/photo';
 import CartWidget from '../../components/_dashboard/e-commerce/CartWidget';
 // ----------------------------------------------------------------------
 
@@ -128,7 +130,20 @@ export default function EcommerceShop() {
   };
 
   return (
-    <Page title="Ecommerce | CPMS">
+    <Page title="Photo | CPMS">
+      <Container
+        maxWidth="lg"
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}
+      >
+        <RouterLink to="/">
+          <Logo />
+        </RouterLink>
+        <Box sx={{ flexGrow: 1 }} />
+      </Container>
       {values && (
         <Backdrop open={isSubmitting} sx={{ zIndex: 9999 }}>
           <CircularProgress />
@@ -152,12 +167,12 @@ export default function EcommerceShop() {
           justifyContent="flex-end"
           sx={{ mb: 5 }}
         >
-          <ShopTagFiltered
+          {/* <ShopTagFiltered
             filters={filters}
             formik={formik}
             isShowReset={openFilter}
             onResetFilter={handleResetFilter}
-          />
+          /> */}
 
           <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
             <ShopFilterSidebar
@@ -171,8 +186,8 @@ export default function EcommerceShop() {
           </Stack>
         </Stack>
 
-        <ShopProductList products={filteredProducts} isLoad={isLoading} />
-        <CartWidget />
+        <PhotoList products={filteredProducts} isLoad={isLoading} />
+        {/* <CartWidget /> */}
       </Container>
     </Page>
   );

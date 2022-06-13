@@ -84,8 +84,7 @@ export type ProductState = {
   error: boolean;
   products: ProductCoralPark[];
   product: ProductCoralPark | null;
-  // products: Product[];
-  // product: Product | null;
+  orderDetail: OrderDetail[];
   sortBy: string | null;
   filters: {
     gender: string[];
@@ -183,4 +182,24 @@ export type Customer = {
   email: string;
   phone: string;
   nationality: any;
+};
+
+export type Order = {
+  id: string;
+  price: string;
+  quantity: string;
+  productId: string;
+  productName: string;
+  mediaUrl: string;
+};
+export type OrderDetail = {
+  id: string;
+  createTime: string;
+  total: string;
+  name: string;
+  email: string;
+  phone: string;
+  nationalityName: string;
+  status: string;
+  orderDetails: Order[];
 };

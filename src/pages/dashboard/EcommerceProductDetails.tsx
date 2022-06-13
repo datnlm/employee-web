@@ -11,7 +11,7 @@ import { Box, Tab, Card, Grid, Divider, Skeleton, Container, Typography } from '
 import { TabContext, TabList, TabPanel } from '@material-ui/lab';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
-import { getProduct, addCart, onGotoStep } from '../../redux/slices/product';
+import { addCart, onGotoStep } from '../../redux/slices/product';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // @types
@@ -88,9 +88,9 @@ export default function EcommerceProductDetails() {
     (state: { product: ProductState }) => state.product
   );
 
-  useEffect(() => {
-    dispatch(getProduct(name));
-  }, [dispatch, name]);
+  // useEffect(() => {
+  //   dispatch(getProduct(name));
+  // }, [dispatch, name]);
 
   const handleAddCart = (product: CartItem) => {
     console.log(product);

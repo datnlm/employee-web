@@ -10,10 +10,10 @@ import {
   Tooltip,
   IconButton,
   Typography,
-  InputAdornment,
-  OutlinedInput
+  OutlinedInput,
+  InputAdornment
 } from '@material-ui/core';
-
+import useLocales from '../../../../hooks/useLocales';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Toolbar)(({ theme }) => ({
@@ -38,17 +38,18 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-type ProductListToolbarProps = {
+type EcommerceListToolbarProps = {
   numSelected: number;
   filterName: string;
   onFilterName: (value: string) => void;
 };
 
-export default function ProductListToolbar({
+export default function EcommerceListToolbar({
   numSelected,
   filterName,
   onFilterName
-}: ProductListToolbarProps) {
+}: EcommerceListToolbarProps) {
+  const { translate } = useLocales();
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
 
@@ -61,36 +62,16 @@ export default function ProductListToolbar({
         })
       }}
     >
-      {numSelected > 0 ? (
-        <Typography component="div" variant="subtitle1">
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <SearchStyle
-          value={filterName}
-          onChange={(e) => onFilterName(e.target.value)}
-          placeholder="Search product..."
-          startAdornment={
-            <InputAdornment position="start">
-              <Box component={Icon} icon={searchFill} sx={{ color: 'text.disabled' }} />
-            </InputAdornment>
-          }
-        />
-      )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <Icon icon={trash2Fill} />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <Icon icon={roundFilterList} />
-          </IconButton>
-        </Tooltip>
-      )}
+      <SearchStyle
+        value={filterName}
+        onChange={(e) => onFilterName(e.target.value)}
+        placeholder={translate('page.technician.search')}
+        startAdornment={
+          <InputAdornment position="start">
+            <Box component={Icon} icon={searchFill} sx={{ color: 'text.disabled' }} />
+          </InputAdornment>
+        }
+      />
     </RootStyle>
   );
 }

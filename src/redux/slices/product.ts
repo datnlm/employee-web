@@ -16,6 +16,7 @@ const initialState: ProductState = {
   error: false,
   products: [],
   product: null,
+  orderDetail: [],
   sortBy: null,
   filters: {
     gender: [],
@@ -60,6 +61,12 @@ const slice = createSlice({
     getProductSuccess(state, action) {
       state.isLoading = false;
       state.product = action.payload;
+    },
+
+    // GET PRODUCT
+    getOrder(state, action) {
+      state.isLoading = false;
+      state.orderDetail = action.payload;
     },
 
     //  SORT & FILTER PRODUCTS
@@ -212,12 +219,12 @@ export const {
 } = slice.actions;
 
 // ----------------------------------------------------------------------
-export function getProducts() {
+export function getProducts(page: number, rowPerPage: number) {
   return async () => {
     const { dispatch } = store;
     dispatch(slice.actions.startLoading());
     try {
-      await manageShop.getListProduct(1, -1).then((response) => {
+      await manageShop.getListProduct(1 + page, rowPerPage).then((response) => {
         if (response.status == 200) {
           dispatch(slice.actions.getProductsSuccess(response.data.items));
         }
@@ -230,14 +237,15 @@ export function getProducts() {
 
 // ----------------------------------------------------------------------
 
-export function getProduct(name: string) {
+export function getOrderDetail(page: number, rowPerpage: number) {
   return async () => {
     const { dispatch } = store;
     dispatch(slice.actions.startLoading());
     try {
-      await manageShop.getListProduct(1, -1).then((response) => {
+      await manageShop.getListOrder(1 + page, rowPerpage).then((response) => {
         if (response.status == 200) {
-          dispatch(slice.actions.getProductSuccess(response.data.response.data.items));
+          console.log(response.data.items);
+          dispatch(slice.actions.getOrder(response.data.items));
         }
       });
     } catch (error) {
@@ -246,3 +254,19 @@ export function getProduct(name: string) {
     }
   };
 }
+// export function getProduct(name: string) {
+//   return async () => {
+//     const { dispatch } = store;
+//     dispatch(slice.actions.startLoading());
+//     try {
+//       await manageShop.getListProduct(1, -1).then((response) => {
+//         if (response.status == 200) {
+//           dispatch(slice.actions.getProductSuccess(response.data.response.data.items));
+//         }
+//       });
+//     } catch (error) {
+//       console.error(error);
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }

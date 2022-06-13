@@ -26,7 +26,7 @@ import roundAddShoppingCart from '@iconify/icons-ic/round-add-shopping-cart';
 // redux
 import { MIconButton } from 'components/@material-extend';
 import { useDispatch, useSelector } from '../../../../redux/store';
-import { getProduct, addCart, onGotoStep } from '../../../../redux/slices/product';
+import { addCart, onGotoStep } from '../../../../redux/slices/product';
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // utils
@@ -59,7 +59,6 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
   let quantityProduct = 1;
   const maxQuantityProduct = 1000000000000;
   const dispatch = useDispatch();
-  const [value, setValue] = useState<number>(0);
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -71,7 +70,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
   };
 
   const Incrementer = ({ name, available }: { name: string; available: number }) => {
-    const [value, setValue] = useState<number>(0);
+    const [value, setValue] = useState<number>(1);
     const incrementQuantity = () => {
       setValue(value + 1);
       quantityProduct = value + 1;
@@ -94,7 +93,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
           borderColor: 'grey.50032'
         }}
       >
-        <MIconButton size="small" color="inherit" disabled={value == 0} onClick={decrementQuantity}>
+        <MIconButton size="small" color="inherit" disabled={value == 1} onClick={decrementQuantity}>
           <Icon icon={minusFill} width={16} height={16} />
         </MIconButton>
         <Typography
