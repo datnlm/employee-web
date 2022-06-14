@@ -139,17 +139,8 @@ export default function EcommerceShop() {
           justifyContent: 'space-between'
         }}
       >
-        <RouterLink to="/">
-          <Logo />
-        </RouterLink>
         <Box sx={{ flexGrow: 1 }} />
       </Container>
-      {values && (
-        <Backdrop open={isSubmitting} sx={{ zIndex: 9999 }}>
-          <CircularProgress />
-        </Backdrop>
-      )}
-
       <Container maxWidth={themeStretch ? false : 'lg'}>
         {values !== initialValues && (
           <Typography gutterBottom>

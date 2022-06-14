@@ -85,7 +85,7 @@ export default function CheckoutPayment() {
   const formik = useFormik({
     initialValues: {
       delivery: shipping,
-      payment: ''
+      payment: 'cash'
     },
     validationSchema: PaymentSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {

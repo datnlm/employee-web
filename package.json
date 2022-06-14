@@ -47,7 +47,6 @@
     "@fullcalendar/timegrid": "^5.8.0",
     "@fullcalendar/timeline": "^5.8.0",
     "@iconify/icons-ant-design": "^1.1.0",
-    "@iconify/icons-eva": "^1.1.0",
     "@iconify/icons-ic": "^1.1.7",
     "@iconify/react": "^1.1.4",
     "@material-ui/core": "^5.0.0-beta.1",
@@ -135,6 +134,7 @@
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/eslint-parser": "^7.14.7",
+    "@iconify/icons-eva": "^1.2.2",
     "@types/autosuggest-highlight": "^3.1.1",
     "@types/d3-array": "^3.0.1",
     "@types/d3-scale": "^4.0.1",

@@ -19,7 +19,7 @@ import {
 import getColorName from '../../../../utils/getColorName';
 import { fCurrency } from '../../../../utils/formatNumber';
 // @types
-import { CartItem } from '../../../../@types/products';
+import { Order } from '../../../../@types/products';
 //
 import { MIconButton } from '../../../@material-extend';
 
@@ -45,50 +45,11 @@ const ThumbImgStyle = styled('img')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-type IncrementerProps = {
-  available: number;
-  quantity: number;
-  onIncrease: VoidFunction;
-  onDecrease: VoidFunction;
-};
-
-function Incrementer({ available, quantity, onIncrease, onDecrease }: IncrementerProps) {
-  return (
-    <Box sx={{ width: 96, textAlign: 'right' }}>
-      <IncrementerStyle>
-        <MIconButton size="small" color="inherit" onClick={onDecrease} disabled={quantity <= 1}>
-          <Icon icon={minusFill} width={16} height={16} />
-        </MIconButton>
-        {quantity}
-        <MIconButton
-          size="small"
-          color="inherit"
-          onClick={onIncrease}
-          disabled={quantity >= available}
-        >
-          <Icon icon={plusFill} width={16} height={16} />
-        </MIconButton>
-      </IncrementerStyle>
-      <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-        available: {available}
-      </Typography>
-    </Box>
-  );
-}
-
 type CheckoutProductListProps = {
-  products: CartItem[];
-  onDelete: (id: string) => void;
-  onDecreaseQuantity: (id: string) => void;
-  onIncreaseQuantity: (id: string) => void;
+  products: Order[];
 };
 
-export default function CheckoutProductList({
-  products,
-  onDelete,
-  onIncreaseQuantity,
-  onDecreaseQuantity
-}: CheckoutProductListProps) {
+export default function CheckoutProductList({ products }: CheckoutProductListProps) {
   return (
     <TableContainer sx={{ minWidth: 720 }}>
       <Table>
@@ -104,25 +65,25 @@ export default function CheckoutProductList({
 
         <TableBody>
           {products.map((product) => {
-            const { id, name, size, price, color, cover, quantity, available } = product;
+            const { id, productName, price, productImageUrl, quantity } = product;
             return (
               <TableRow key={id}>
                 <TableCell>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <ThumbImgStyle alt="product image" src={cover} />
+                    <ThumbImgStyle alt="product image" src={productImageUrl} />
                     <Box>
                       <Typography noWrap variant="subtitle2" sx={{ maxWidth: 120 }}>
-                        {name}
+                        {productName}
                       </Typography>
                     </Box>
                   </Box>
                 </TableCell>
 
-                <TableCell align="left">{fCurrency(price)}</TableCell>
+                <TableCell align="left">{fCurrency(Number(price))}</TableCell>
 
                 <TableCell align="left">{quantity}</TableCell>
 
-                <TableCell align="right">{fCurrency(price * quantity)}</TableCell>
+                <TableCell align="right">{fCurrency(Number(price) * Number(quantity))}</TableCell>
               </TableRow>
             );
           })}

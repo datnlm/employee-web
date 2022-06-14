@@ -187,11 +187,13 @@ export type Customer = {
 export type Order = {
   id: string;
   price: string;
-  quantity: string;
   productId: string;
+  productImageUrl: string;
+  productMedia: string;
   productName: string;
-  mediaUrl: string;
+  quantity: string;
 };
+
 export type OrderDetail = {
   id: string;
   createTime: string;

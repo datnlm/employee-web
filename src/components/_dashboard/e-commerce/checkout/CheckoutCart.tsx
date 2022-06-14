@@ -108,7 +108,7 @@ export default function CheckoutCart() {
             <Button
               color="inherit"
               component={RouterLink}
-              to={PATH_DASHBOARD.eCommerce.root}
+              to={PATH_DASHBOARD.eCommerce.shop}
               startIcon={<Icon icon={arrowIosBackFill} />}
             >
               Continue Shopping

@@ -29,52 +29,20 @@ const RowStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 type CheckoutSummaryProps = {
-  total: number;
-  discount?: number;
-  subtotal: number;
-  shipping?: number;
-  onEdit?: VoidFunction;
-  enableEdit?: boolean;
-  onApplyDiscount?: (discount: number) => void;
-  enableDiscount?: boolean;
+  total?: string;
 };
 
-export default function CheckoutSummary({
-  total,
-  onEdit,
-  discount,
-  subtotal,
-  shipping,
-  onApplyDiscount,
-  enableEdit = false,
-  enableDiscount = false
-}: CheckoutSummaryProps) {
-  const displayShipping = shipping !== null ? 'Free' : '-';
-
+export default function CheckoutSummary({ total }: CheckoutSummaryProps) {
   return (
     <Card sx={{ mb: 3 }}>
-      <CardHeader
-        title="Order Summary"
-        action={
-          enableEdit && (
-            <Button
-              size="small"
-              type="button"
-              onClick={onEdit}
-              startIcon={<Icon icon={editFill} />}
-            >
-              Edit
-            </Button>
-          )
-        }
-      />
+      <CardHeader title="Order Summary" />
 
       <CardContent>
         <RowStyle>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             Sub Total
           </Typography>
-          <Typography variant="subtitle2">{fCurrency(subtotal)}</Typography>
+          {total && <Typography variant="subtitle2">{fCurrency(Number(total))}</Typography>}
         </RowStyle>
 
         <Divider sx={{ mb: 2 }} />
@@ -82,9 +50,12 @@ export default function CheckoutSummary({
         <RowStyle>
           <Typography variant="subtitle1">Total</Typography>
           <Box sx={{ textAlign: 'right' }}>
-            <Typography variant="subtitle1" sx={{ color: 'error.main' }}>
-              {fCurrency(total)}
-            </Typography>
+            {total && (
+              <Typography variant="subtitle1" sx={{ color: 'error.main' }}>
+                {fCurrency(Number(total))}
+              </Typography>
+            )}
+
             <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
               (VAT included if applicable)
             </Typography>

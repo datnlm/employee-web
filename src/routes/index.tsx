@@ -76,7 +76,7 @@ export default function Router() {
     },
     {
       path: 'photo',
-      element: <PhotoLayout />,
+      element: <DashboardLayout />,
       children: [
         { path: '/', element: <TrackOrder /> },
         { path: '/:phone', element: <EcommercePhoto /> }

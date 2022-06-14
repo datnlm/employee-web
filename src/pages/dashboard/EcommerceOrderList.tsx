@@ -117,9 +117,7 @@ export default function OrderList() {
   const [orderBy, setOrderBy] = useState('createdAt');
 
   useEffect(() => {
-    console.log('order list');
     dispatch(getOrderDetail(page, rowsPerPage));
-    console.log(orderDetail);
   }, [dispatch, page, rowsPerPage]);
 
   const handleRequestSort = (property: string) => {
@@ -137,7 +135,7 @@ export default function OrderList() {
     setFilterName(filterName);
   };
 
-  const handleDeleteGroup = async (id: string) => {
+  const handleDeleteOrder = async (id: string) => {
     try {
       // await manageGroup.deleteGroupMode(id).then((respone) => {
       //   if (respone.status == 200) {
@@ -190,11 +188,7 @@ export default function OrderList() {
         <HeaderBreadcrumbs
           heading={translate('page.order.heading1.list')}
           links={[
-            { name: translate('page.order.heading2'), href: PATH_DASHBOARD.root },
-            {
-              name: translate('page.order.heading3'),
-              href: PATH_DASHBOARD.eCommerce.root
-            },
+            { name: translate('page.order.heading2'), href: PATH_DASHBOARD.eCommerce.shop },
             { name: translate('page.order.heading4.list') }
           ]}
         />
@@ -240,7 +234,7 @@ export default function OrderList() {
                           <TableCell align="left">{status}</TableCell>
                           <TableCell align="right">
                             <EcommerceMoreMenu
-                              onDelete={() => handleDeleteGroup(id.toString())}
+                              onDelete={() => handleDeleteOrder(id.toString())}
                               id={id.toString()}
                               status={status}
                             />

@@ -1,6 +1,7 @@
 import { sum } from 'lodash';
+import { useSnackbar } from 'notistack5';
 import { Icon } from '@iconify/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { useParams, Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
 // material
@@ -26,10 +27,13 @@ import {
 } from 'components/_dashboard/e-commerce/order';
 import EmptyContent from 'components/EmptyContent';
 import HeaderBreadcrumbs from 'components/HeaderBreadcrumbs';
+import { useEffect, useState } from 'react';
+import { manageShop } from '_apis_/products';
+import { LoadingButton } from '@material-ui/lab';
 import Page from '../../components/Page';
 import useSettings from '../../hooks/useSettings';
 // @types
-import { ProductState } from '../../@types/products';
+import { ProductState, OrderDetail, Customer } from '../../@types/products';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
 import {
@@ -45,8 +49,13 @@ import { PATH_DASHBOARD } from '../../routes/paths';
 // ----------------------------------------------------------------------
 
 export default function CheckoutCart() {
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
+  const { name } = useParams();
+  const [orderDetail, setOrderDetail] = useState<OrderDetail>();
+  const [customer, setCustomer] = useState<Customer>();
   const { checkout } = useSelector((state: { product: ProductState }) => state.product);
   const { cart, total, discount, subtotal } = checkout;
   const isEmptyCart = cart.length === 0;
@@ -76,31 +85,55 @@ export default function CheckoutCart() {
     initialValues: { products: cart },
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
-        setSubmitting(true);
-        handleNextStep();
+        const response = await manageShop.cancel(name, '');
+        if (response.status == 200) {
+          navigate(PATH_DASHBOARD.eCommerce.order);
+          enqueueSnackbar('Cancel success', { variant: 'success' });
+        } else {
+          enqueueSnackbar('Cancel error', { variant: 'error' });
+        }
       } catch (error) {
+        enqueueSnackbar('Cancel error', { variant: 'error' });
         console.error(error);
+        setSubmitting(false);
         // setErrors(error.message);
       }
     }
   });
 
-  const { values, handleSubmit } = formik;
+  const { values } = formik;
   const totalItems = sum(values.products.map((item) => item.quantity));
+
+  const fetchData = async () => {
+    await manageShop.getListOrderDetail(name, 1, -1).then((response) => {
+      setOrderDetail(response.data);
+      console.log(response.data.orderDetails);
+      setCustomer({
+        name: response.data.name,
+        email: response.data.email,
+        phone: response.data.phone,
+        nationality: response.data.nationalityName
+      });
+    });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log(orderDetail);
+    console.log(orderDetail?.orderDetails);
+  }, [orderDetail]);
+
+  const { isSubmitting, handleSubmit } = formik;
 
   return (
     <Page title="Ecommerce: Order">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading="Order"
-          links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            {
-              name: 'E-Commerce',
-              href: PATH_DASHBOARD.eCommerce.root
-            },
-            { name: 'Order' }
-          ]}
+          links={[{ name: 'E-Commerce', href: PATH_DASHBOARD.eCommerce.shop }, { name: 'Order' }]}
         />
 
         <FormikProvider value={formik}>
@@ -112,22 +145,17 @@ export default function CheckoutCart() {
                     title={
                       <Typography variant="h6">
                         Card
-                        <Typography component="span" sx={{ color: 'text.secondary' }}>
+                        {/* <Typography component="span" sx={{ color: 'text.secondary' }}>
                           &nbsp;({totalItems} item)
-                        </Typography>
+                        </Typography> */}
                       </Typography>
                     }
                     sx={{ mb: 3 }}
                   />
 
-                  {!isEmptyCart ? (
+                  {orderDetail?.orderDetails ? (
                     <Scrollbar>
-                      <CheckoutProductList
-                        products={values.products}
-                        onDelete={handleDeleteCart}
-                        onIncreaseQuantity={handleIncreaseQuantity}
-                        onDecreaseQuantity={handleDecreaseQuantity}
-                      />
+                      <CheckoutProductList products={orderDetail!.orderDetails} />
                     </Scrollbar>
                   ) : (
                     <EmptyContent
@@ -140,17 +168,18 @@ export default function CheckoutCart() {
               </Grid>
 
               <Grid item xs={12} md={4}>
-                <CheckoutBillingInfo />
-                <CheckoutSummary
-                  total={total}
-                  enableDiscount
-                  discount={discount}
-                  subtotal={subtotal}
-                  onApplyDiscount={handleApplyDiscount}
-                />
-                <Button fullWidth size="large" type="submit" variant="contained" color="error">
+                <CheckoutBillingInfo customer={customer} />
+                {orderDetail && <CheckoutSummary total={orderDetail!.total} />}
+                <LoadingButton
+                  loading={isSubmitting}
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                  color="error"
+                >
                   Cancel
-                </Button>
+                </LoadingButton>
               </Grid>
             </Grid>
           </Form>
