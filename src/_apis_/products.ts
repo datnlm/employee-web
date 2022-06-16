@@ -39,22 +39,10 @@ export class ShopManager {
       .then((response) => response)
       .catch((err) => err);
 
-  cancel = (orderId: string, description: string) => {
-
-    return axios
+  cancel = (orderId: string, description: string) =>
+    axios
       .post(`/api/v1/employee/orders/cancel?id=${orderId}&note=${description}`)
       .then((response) => response)
       .catch((err) => err);
-  };
-  // cancel = (orderId: string, description: string) => {
-  //   const data = {
-  //     id: orderId,
-  //     note: description
-  //   };
-  //   return axios
-  //     .post('/api/v1/employee/orders/cancel', data)
-  //     .then((response) => response)
-  //     .catch((err) => err);
-  // };
 }
 export const manageShop = new ShopManager();
