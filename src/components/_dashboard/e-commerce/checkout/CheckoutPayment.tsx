@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { Icon } from '@iconify/react';
+import { useSnackbar } from 'notistack5';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useNavigate } from 'react-router';
 import { PATH_DASHBOARD } from 'routes/paths';
@@ -17,6 +18,8 @@ import {
 } from '../../../../@types/products';
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
+// hook
+import useLocales from '../../../../hooks/useLocales';
 import {
   onGotoStep,
   onBackStep,
@@ -54,8 +57,10 @@ const CARDS_OPTIONS: CardOption[] = [
 ];
 
 export default function CheckoutPayment() {
+  const { translate } = useLocales();
   const { checkout } = useSelector((state: { product: ProductState }) => state.product);
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { total, discount, subtotal, shipping } = checkout;
@@ -109,11 +114,21 @@ export default function CheckoutPayment() {
         };
         await manageShop.createOrder(data).then((response) => {
           if (response.status == 200) {
+            enqueueSnackbar(translate('message.create-success'), {
+              variant: 'success'
+            });
             dispatch(resetCart());
             navigate(PATH_DASHBOARD.eCommerce.shop);
+          } else {
+            enqueueSnackbar(translate('message.create-error'), {
+              variant: 'error'
+            });
           }
         });
       } catch (error) {
+        enqueueSnackbar(translate('message.create-error'), {
+          variant: 'error'
+        });
         console.error(error);
         setSubmitting(false);
         // setErrors(error.message);
