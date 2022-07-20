@@ -109,6 +109,7 @@ export default function CheckoutPayment() {
           email: checkout.billing?.email,
           phone: checkout.billing?.phone,
           total: checkout.total,
+          groupId: checkout.groupId,
           nationalityCode: checkout.billing?.nationality,
           orderDetails: detail
         };

@@ -88,13 +88,23 @@ function AuthProvider({ children }: { children: ReactNode }) {
             params: { token: accessToken }
           });
           const user = response.data;
-          dispatch({
-            type: Types.Initial,
-            payload: {
-              isAuthenticated: true,
-              user
-            }
-          });
+          if (response.data.role == 'EM') {
+            dispatch({
+              type: Types.Initial,
+              payload: {
+                isAuthenticated: true,
+                user
+              }
+            });
+          } else {
+            dispatch({
+              type: Types.Initial,
+              payload: {
+                isAuthenticated: false,
+                user: null
+              }
+            });
+          }
         } else {
           dispatch({
             type: Types.Initial,
@@ -137,12 +147,23 @@ function AuthProvider({ children }: { children: ReactNode }) {
         });
         const user = response.data;
 
-        dispatch({
-          type: Types.Login,
-          payload: {
-            user
-          }
-        });
+        if (response.data.role == 'EM') {
+          dispatch({
+            type: Types.Initial,
+            payload: {
+              isAuthenticated: true,
+              user
+            }
+          });
+        } else {
+          dispatch({
+            type: Types.Initial,
+            payload: {
+              isAuthenticated: false,
+              user: null
+            }
+          });
+        }
       });
   };
 
@@ -184,7 +205,8 @@ function AuthProvider({ children }: { children: ReactNode }) {
           email: state?.user?.email,
           username: state?.user?.username,
           displayName: state?.user?.name,
-          role: state?.user?.roleName
+          role: state?.user?.roleName,
+          SiteId: state?.user?.siteid
         },
         login,
         logout,

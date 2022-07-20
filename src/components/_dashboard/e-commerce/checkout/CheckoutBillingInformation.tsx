@@ -19,6 +19,8 @@ import {
 } from '@material-ui/core';
 import { Form, FormikProvider, useFormik } from 'formik';
 // @types
+import { getGroupById } from '_apis_/group';
+import { Group } from '../../../../@types/group';
 import {
   BillingAddress as Address,
   Customer,
@@ -34,6 +36,7 @@ import Label from '../../../Label';
 import CheckoutSummary from './CheckoutSummary';
 import CheckoutNewAddressForm from './CheckoutNewAddressForm';
 import countries from './countries';
+import GroupInfor from './GroupInfor';
 
 // ----------------------------------------------------------------------
 
@@ -124,6 +127,7 @@ function CustomerItem({ onNextStep, onCreateBilling }: CustomerItemProps) {
                       helperText={touched.email && errors.email}
                     />
                   </Grid>
+
                   <Grid item xs={12} sm={6}>
                     <TextField
                       select
@@ -194,6 +198,7 @@ export default function CheckoutBillingInformation() {
         </Grid>
 
         <Grid item xs={12} md={4}>
+          <GroupInfor />
           <CheckoutSummary subtotal={subtotal} total={total} discount={discount} />
         </Grid>
       </Grid>

@@ -101,6 +101,7 @@ export type ProductState = {
     discount: number;
     shipping: number;
     billing: Customer | null;
+    groupId: string | null;
   };
 };
 

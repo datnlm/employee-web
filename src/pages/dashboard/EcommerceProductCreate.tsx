@@ -3,6 +3,7 @@ import { paramCase } from 'change-case';
 import { useParams, useLocation } from 'react-router-dom';
 // material
 import { Container } from '@material-ui/core';
+import useAuth from 'hooks/useAuth';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
 import { getProducts } from '../../redux/slices/product';
@@ -21,6 +22,7 @@ import ProductNewForm from '../../components/_dashboard/e-commerce/ProductNewFor
 
 export default function EcommerceProductCreate() {
   const { themeStretch } = useSettings();
+  const { user } = useAuth();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { name } = useParams();
@@ -29,7 +31,7 @@ export default function EcommerceProductCreate() {
   const currentProduct = products.find((product) => paramCase(product.name) === name);
 
   useEffect(() => {
-    dispatch(getProducts(0, -1));
+    dispatch(getProducts(user?.SiteId, 0, -1));
   }, [dispatch]);
 
   return (

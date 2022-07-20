@@ -24,6 +24,7 @@ import { PATH_AUTH } from '../../../routes/paths';
 // hooks
 import useAuth from '../../../hooks/useAuth';
 import useIsMountedRef from '../../../hooks/useIsMountedRef';
+import useLocales from '../../../hooks/useLocales';
 //
 import { MIconButton } from '../../@material-extend';
 
@@ -35,7 +36,8 @@ type InitialValues = {
   afterSubmit?: string;
 };
 export default function LoginForm() {
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
+  const { translate } = useLocales();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
@@ -55,14 +57,18 @@ export default function LoginForm() {
     onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
       try {
         await login(values.email, values.password);
-        enqueueSnackbar('Login success', {
-          variant: 'success',
-          action: (key) => (
-            <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-              <Icon icon={closeFill} />
-            </MIconButton>
-          )
-        });
+        if (isAuthenticated) {
+          enqueueSnackbar(translate('message.login.success'), {
+            variant: 'success',
+            action: (key) => (
+              <MIconButton size="small" onClick={() => closeSnackbar(key)}>
+                <Icon icon={closeFill} />
+              </MIconButton>
+            )
+          });
+        } else {
+          setErrors({ afterSubmit: translate('message.login.invalid') });
+        }
         if (isMountedRef.current) {
           setSubmitting(false);
         }

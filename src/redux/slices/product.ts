@@ -32,7 +32,8 @@ const initialState: ProductState = {
     total: 0,
     discount: 0,
     shipping: 0,
-    billing: null
+    billing: null,
+    groupId: null
   }
 };
 
@@ -183,6 +184,10 @@ const slice = createSlice({
       state.checkout.billing = action.payload;
     },
 
+    createGroup(state, action) {
+      state.checkout.groupId = action.payload;
+    },
+
     applyDiscount(state, action) {
       const discount = action.payload;
       state.checkout.discount = discount;
@@ -210,6 +215,7 @@ export const {
   onNextStep,
   deleteCart,
   createBilling,
+  createGroup,
   applyShipping,
   applyDiscount,
   increaseQuantity,
@@ -219,12 +225,12 @@ export const {
 } = slice.actions;
 
 // ----------------------------------------------------------------------
-export function getProducts(page: number, rowPerPage: number) {
+export function getProducts(SiteId: string, page: number, rowPerPage: number) {
   return async () => {
     const { dispatch } = store;
     dispatch(slice.actions.startLoading());
     try {
-      await manageShop.getListProduct(1 + page, rowPerPage).then((response) => {
+      await manageShop.getListProduct(SiteId, 1 + page, rowPerPage).then((response) => {
         if (response.status == 200) {
           dispatch(slice.actions.getProductsSuccess(response.data.items));
         }
@@ -237,12 +243,12 @@ export function getProducts(page: number, rowPerPage: number) {
 
 // ----------------------------------------------------------------------
 
-export function getOrderDetail(page: number, rowPerpage: number) {
+export function getOrderDetail(SiteId: string, page: number, rowPerpage: number) {
   return async () => {
     const { dispatch } = store;
     dispatch(slice.actions.startLoading());
     try {
-      await manageShop.getListOrder(1 + page, rowPerpage).then((response) => {
+      await manageShop.getListOrder(SiteId, 1 + page, rowPerpage).then((response) => {
         if (response.status == 200) {
           console.log(response.data.items);
           dispatch(slice.actions.getOrder(response.data.items));

@@ -24,10 +24,7 @@ import {
   TablePagination,
   CircularProgress
 } from '@material-ui/core';
-
-import plusFill from '@iconify/icons-eva/plus-fill';
-import axiosInstance from 'utils/axios';
-import axios from 'axios';
+import useAuth from 'hooks/useAuth';
 // redux
 import { RootState, useDispatch, useSelector } from '../../redux/store';
 import { getOrderDetail } from '../../redux/slices/product';
@@ -100,6 +97,7 @@ function applySortFilter(
 export default function OrderList() {
   const { translate } = useLocales();
   const { themeStretch } = useSettings();
+  const { user } = useAuth();
   const theme = useTheme();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
@@ -117,7 +115,7 @@ export default function OrderList() {
   const [orderBy, setOrderBy] = useState('createdAt');
 
   useEffect(() => {
-    dispatch(getOrderDetail(page, rowsPerPage));
+    dispatch(getOrderDetail(user?.SiteId, page, rowsPerPage));
   }, [dispatch, page, rowsPerPage]);
 
   const handleRequestSort = (property: string) => {

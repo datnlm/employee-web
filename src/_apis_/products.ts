@@ -2,35 +2,29 @@ import axios from 'axios';
 
 export class ShopManager {
   // get list account
-  getListProduct = (page_number: number, page_size: number) => {
-    const SiteId = 1;
-    return axios
+  getListProduct = (SiteId: String, page_number: number, page_size: number) =>
+    axios
       .get('/api/v1/employee/products', {
         params: { SiteId, page_number, page_size }
       })
       .then((res) => res)
       .catch((err) => err);
-  };
 
-  getListOrder = (page_number: number, page_size: number) => {
-    const SiteId = 1;
-    return axios
+  getListOrder = (SiteId: String, page_number: number, page_size: number) =>
+    axios
       .get('/api/v1/employee/orders', {
         params: { SiteId, page_number, page_size }
       })
       .then((res) => res)
       .catch((err) => err);
-  };
 
-  getListOrderDetail = (id: string, page_number: number, page_size: number) => {
-    const SiteId = 1;
-    return axios
+  getListOrderDetail = (SiteId: String, id: string, page_number: number, page_size: number) =>
+    axios
       .get(`/api/v1/employee/orders/${id}`, {
         params: { SiteId, page_number, page_size }
       })
       .then((res) => res)
       .catch((err) => err);
-  };
 
   // create
   createOrder = (checkout: any) =>

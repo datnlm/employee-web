@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { filter, includes, orderBy } from 'lodash';
 // material
 import { Backdrop, Container, Typography, CircularProgress, Stack } from '@material-ui/core';
+import useAuth from 'hooks/useAuth';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
 import { getProducts, filterProducts } from '../../redux/slices/product';
@@ -79,6 +80,7 @@ function applyFilter(products: ProductCoralPark[], sortBy: string | null, filter
 export default function EcommerceShop() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
+  const { user } = useAuth();
   const [openFilter, setOpenFilter] = useState(false);
   const { products, sortBy, filters, isLoading } = useSelector(
     (state: { product: ProductState }) => state.product
@@ -107,7 +109,7 @@ export default function EcommerceShop() {
   const { values, resetForm, handleSubmit, isSubmitting, initialValues } = formik;
 
   useEffect(() => {
-    dispatch(getProducts(0, -1));
+    dispatch(getProducts(user?.SiteId, 0, -1));
   }, [dispatch]);
 
   useEffect(() => {

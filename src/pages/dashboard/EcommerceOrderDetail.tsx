@@ -30,6 +30,7 @@ import HeaderBreadcrumbs from 'components/HeaderBreadcrumbs';
 import { useEffect, useState } from 'react';
 import { manageShop } from '_apis_/products';
 import { LoadingButton } from '@material-ui/lab';
+import useAuth from 'hooks/useAuth';
 import Page from '../../components/Page';
 import useSettings from '../../hooks/useSettings';
 // @types
@@ -51,6 +52,7 @@ import { PATH_DASHBOARD } from '../../routes/paths';
 export default function CheckoutCart() {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+  const { user } = useAuth();
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
   const { name } = useParams();
@@ -105,7 +107,7 @@ export default function CheckoutCart() {
   const totalItems = sum(values.products.map((item) => item.quantity));
 
   const fetchData = async () => {
-    await manageShop.getListOrderDetail(name, 1, -1).then((response) => {
+    await manageShop.getListOrderDetail(user?.SiteId, name, 1, -1).then((response) => {
       setOrderDetail(response.data);
       console.log(response.data.orderDetails);
       setCustomer({
