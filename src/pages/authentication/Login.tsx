@@ -7,6 +7,7 @@ import { Box, Card, Stack, Link, Alert, Tooltip, Container, Typography } from '@
 import { PATH_AUTH } from '../../routes/paths';
 // hooks
 import useAuth from '../../hooks/useAuth';
+import useLocales from '../../hooks/useLocales';
 // layouts
 import AuthLayout from '../../layouts/AuthLayout';
 // components
@@ -45,7 +46,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function Login() {
   const { method } = useAuth();
-
+  const { translate } = useLocales();
   return (
     <RootStyle title="Login | Employee Web">
       <MHidden width="mdDown">
@@ -61,21 +62,12 @@ export default function Login() {
           <Stack direction="row" alignItems="center" sx={{ mb: 5 }}>
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="h4" gutterBottom>
-                Sign in to Employee web
+                {translate('page.login.title')}
               </Typography>
             </Box>
           </Stack>
 
           <LoginForm />
-
-          <MHidden width="smUp">
-            <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-              Don’t have an account?&nbsp;
-              <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
-                Get started
-              </Link>
-            </Typography>
-          </MHidden>
         </ContentStyle>
       </Container>
     </RootStyle>

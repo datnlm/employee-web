@@ -15,6 +15,7 @@ import {
   Typography,
   TableContainer
 } from '@material-ui/core';
+import useLocales from 'hooks/useLocales';
 // utils
 import getColorName from '../../../../utils/getColorName';
 import { fCurrency } from '../../../../utils/formatNumber';
@@ -53,6 +54,7 @@ type IncrementerProps = {
 };
 
 function Incrementer({ available, quantity, onIncrease, onDecrease }: IncrementerProps) {
+  const { translate } = useLocales();
   return (
     <Box sx={{ width: 96, textAlign: 'right' }}>
       <IncrementerStyle>
@@ -70,7 +72,7 @@ function Incrementer({ available, quantity, onIncrease, onDecrease }: Incremente
         </MIconButton>
       </IncrementerStyle>
       <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-        available: {available}
+        {translate('label.available')}: {available}
       </Typography>
     </Box>
   );
@@ -89,15 +91,16 @@ export default function CheckoutProductList({
   onIncreaseQuantity,
   onDecreaseQuantity
 }: CheckoutProductListProps) {
+  const { translate } = useLocales();
   return (
     <TableContainer sx={{ minWidth: 720 }}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Product</TableCell>
-            <TableCell align="left">Price</TableCell>
-            <TableCell align="left">Quantity</TableCell>
-            <TableCell align="right">Total Price</TableCell>
+            <TableCell>{translate('form.product')}</TableCell>
+            <TableCell align="left">{translate('form.price')}</TableCell>
+            <TableCell align="left">{translate('form.quantity')}</TableCell>
+            <TableCell align="right">{translate('form.total-price')}</TableCell>
             <TableCell align="right" />
           </TableRow>
         </TableHead>

@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react';
 import editFill from '@iconify/icons-eva/edit-fill';
 // material
 import { Card, Button, Typography, CardHeader, CardContent } from '@material-ui/core';
+import useLocales from 'hooks/useLocales';
 // @types
 import { Customer, ProductState } from '../../../../@types/products';
 // redux
@@ -14,9 +15,10 @@ type CheckoutBillingInfoProps = {
 };
 
 export default function CheckoutBillingInfo({ customer }: CheckoutBillingInfoProps) {
+  const { translate } = useLocales();
   return (
     <Card sx={{ mb: 3 }}>
-      <CardHeader title="Billing Information" />
+      <CardHeader title={translate('label.billing-information')} />
       <CardContent>
         <Typography variant="subtitle2" gutterBottom>
           {customer?.name}

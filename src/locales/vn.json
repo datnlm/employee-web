@@ -1,0 +1,76 @@
+{
+  "page": {
+    "login": {
+      "title": "Đăng nhập vào web nhân viên đặt hàng",
+      "label": {
+        "signed": "Đăng nhập với tư cách là"
+      },
+      "form": {
+        "user": "Tên tài khoản",
+        "password": "Mật khẩu",
+        "remember": "Ghi nhớ tài khoản"
+      }
+    },
+    "order": {
+      "create": "Ngày tạo",
+      "total": "Giá",
+      "name": "Tên khách hàng",
+      "national": "Quốc tịch",
+      "status": "Trạng thái"
+    }
+  },
+  "label": {
+    "history": "Lịch sử đặt hàng",
+    "sort": "Sắp xếp theo",
+    "quantity": "Số lượng",
+    "available": "Còn lại",
+    "license-plate": "Biển số",
+    "start": "Thời gian tạo",
+    "end": "Thời gian kết thúc",
+    "payment-option": "Các lựa chọn thanh toán",
+    "cash": "Tiền mặt khi thanh toán",
+    "billing-information": "Thông tin thanh toán"
+  },
+  "form": {
+    "cart": "Cart",
+    "order-summary": "Hoá đơn",
+    "sub-total": "Tổng tiền",
+    "total": "Thành tiền",
+    "vat": "(Đã bao gồm VAT nếu có)",
+    "product": "Sản phẩm",
+    "price": "Giá",
+    "quantity": "Số lượng",
+    "total-price": "Tổng giá",
+    "full-name": "Tên đầy đủ",
+    "phone": "Số điện thoại",
+    "email": "Email",
+    "country": "Quốc gia",
+    "group": "Đoàn"
+  },
+  "message": {
+    "cart-empty": "Cart trống",
+    "cart-empty-detail": "Có vẻ như bạn không có mặt hàng nào trong giỏ hàng của mình.",
+    "momo": "Bạn sẽ được chuyển đến trang web MoMo để hoàn tất giao dịch mua của mình.",
+    "cash": "Thanh toán bằng tiền mặt khi bạn đặt hàng.",
+    "order-success": "Đặt hàng thành công",
+    "order-error": "Đặt hàng thất bại"
+  },
+  "menu": {
+    "language": {
+      "vi-VN": "Tiếng Việt",
+      "en-US": "Tiếng Anh"
+    }
+  },
+  "button": {
+    "add": "Thêm vào giỏ",
+    "cancel": "Huỷ",
+    "continue-shopping": "Tiếp tục mua",
+    "checkout": "Thanh toán",
+    "edit": "Chỉnh sửa",
+    "back": "Quay lại",
+    "confirm": "Xác nhận",
+    "complete-order": "Hoàn thành đơn đặt hàng",
+    "delete": "Xoá",
+    "view": "Xem chi tiết"
+  }
+}

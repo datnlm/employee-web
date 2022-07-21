@@ -4,6 +4,7 @@ import chevronUpFill from '@iconify/icons-eva/chevron-up-fill';
 import chevronDownFill from '@iconify/icons-eva/chevron-down-fill';
 // material
 import { Menu, Button, MenuItem, Typography } from '@material-ui/core';
+import useLocales from 'hooks/useLocales';
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
 import { sortByProducts } from '../../../../redux/slices/product';
@@ -35,6 +36,7 @@ function renderLabel(label: string | null) {
 export default function ShopProductSort() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState<HTMLButtonElement | null>(null);
+  const { translate } = useLocales();
   const { sortBy } = useSelector((state: { product: ProductState }) => state.product);
 
   const handleOpen = (currentTarget: HTMLButtonElement) => {
@@ -58,7 +60,7 @@ export default function ShopProductSort() {
         onClick={(event) => handleOpen(event.currentTarget)}
         endIcon={<Icon icon={open ? chevronUpFill : chevronDownFill} />}
       >
-        Sort By:&nbsp;
+        {translate('label.sort')}:&nbsp;
         <Typography component="span" variant="subtitle2" sx={{ color: 'text.secondary' }}>
           {renderLabel(sortBy)}
         </Typography>

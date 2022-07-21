@@ -35,27 +35,6 @@ import CheckoutPaymentMethods from './CheckoutPaymentMethods';
 import useAuth from '../../../../hooks/useAuth';
 // ----------------------------------------------------------------------
 
-const PAYMENT_OPTIONS: PaymentOption[] = [
-  {
-    value: 'momo',
-    title: 'MoMo',
-    description: 'You will be redirected to MoMo website to complete your purchase securely.',
-    icons: ['/static/icons/ic_momo.svg']
-  },
-  {
-    value: 'cash',
-    title: 'Cash on Checkout',
-    description: 'Pay with cash when your order.',
-    icons: []
-  }
-];
-
-const CARDS_OPTIONS: CardOption[] = [
-  { value: 'ViSa1', label: '**** **** **** 1212 - Jimmy Holland' },
-  { value: 'ViSa2', label: '**** **** **** 2424 - Shawn Stokes' },
-  { value: 'MasterCard', label: '**** **** **** 4545 - Cole Armstrong' }
-];
-
 export default function CheckoutPayment() {
   const { translate } = useLocales();
   const { checkout } = useSelector((state: { product: ProductState }) => state.product);
@@ -115,19 +94,19 @@ export default function CheckoutPayment() {
         };
         await manageShop.createOrder(data).then((response) => {
           if (response.status == 200) {
-            enqueueSnackbar(translate('message.create-success'), {
+            enqueueSnackbar(translate('message.order-success'), {
               variant: 'success'
             });
             dispatch(resetCart());
             navigate(PATH_DASHBOARD.eCommerce.shop);
           } else {
-            enqueueSnackbar(translate('message.create-error'), {
+            enqueueSnackbar(translate('message.order-error'), {
               variant: 'error'
             });
           }
         });
       } catch (error) {
-        enqueueSnackbar(translate('message.create-error'), {
+        enqueueSnackbar(translate('message.order-error'), {
           variant: 'error'
         });
         console.error(error);
@@ -136,6 +115,26 @@ export default function CheckoutPayment() {
       }
     }
   });
+  const PAYMENT_OPTIONS: PaymentOption[] = [
+    {
+      value: 'momo',
+      title: 'MoMo',
+      description: translate('message.momo'),
+      icons: ['/static/icons/ic_momo.svg']
+    },
+    {
+      value: 'cash',
+      title: translate('label.cash'),
+      description: translate('message.cash'),
+      icons: []
+    }
+  ];
+
+  const CARDS_OPTIONS: CardOption[] = [
+    { value: 'ViSa1', label: '**** **** **** 1212 - Jimmy Holland' },
+    { value: 'ViSa2', label: '**** **** **** 2424 - Shawn Stokes' },
+    { value: 'MasterCard', label: '**** **** **** 4545 - Cole Armstrong' }
+  ];
 
   const { isSubmitting, handleSubmit } = formik;
 
@@ -156,7 +155,7 @@ export default function CheckoutPayment() {
               onClick={handleBackStep}
               startIcon={<Icon icon={arrowIosBackFill} />}
             >
-              Back
+              {translate('button.back')}
             </Button>
           </Grid>
 
@@ -177,7 +176,7 @@ export default function CheckoutPayment() {
               variant="contained"
               loading={isSubmitting}
             >
-              Complete Order
+              {translate('button.complete-order')}
             </LoadingButton>
           </Grid>
         </Grid>

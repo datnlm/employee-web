@@ -10,6 +10,7 @@ import {
   Grid,
   TextField
 } from '@material-ui/core';
+import useLocales from 'hooks/useLocales';
 // @types
 import { useState } from 'react';
 import { getGroupById } from '_apis_/group';
@@ -18,6 +19,7 @@ import { ProductState } from '../../../../@types/products';
 // redux
 import { dispatch, useSelector } from '../../../../redux/store';
 import { Group } from '../../../../@types/group';
+
 // ----------------------------------------------------------------------
 
 export default function GroupInfor() {
@@ -26,6 +28,7 @@ export default function GroupInfor() {
   const { billing } = checkout;
   const [groupId, setGroupId] = useState('');
   const [group, setGroup] = useState<Group>();
+  const { translate } = useLocales();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGroupId(event.target.value);
@@ -46,24 +49,24 @@ export default function GroupInfor() {
         <Grid item xs={12} sm={12}>
           <TextField
             fullWidth
-            label="Group"
+            label={translate('form.group')}
             value={groupId}
             onChange={handleChange}
             onBlur={getGroup}
           />
         </Grid>
         <Typography variant="subtitle2" gutterBottom>
-          License Plate: {group?.licensePlate}
+          {translate('label.license-plate')}: {group?.licensePlate}
         </Typography>
 
         {/* <Typography variant="body2" gutterBottom>
           {group?.status}
         </Typography> */}
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Start time: {group?.startTime}
+          {translate('label.start')}: {group?.startTime}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          End time: {group?.endTime}
+          {translate('label.end')}: {group?.endTime}
         </Typography>
       </CardContent>
     </Card>

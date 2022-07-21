@@ -1,0 +1,78 @@
+{
+  "page": {
+    "login": {
+      "title": "Login to Employee Order",
+      "label": {
+        "signed": "Signed in as"
+      },
+      "form": {
+        "user": "User name",
+        "password": "Password",
+        "remember": "Remember me"
+      }
+    },
+    "order": {
+      "form": {
+        "create": "Ngày tạo",
+        "total": "Giá",
+        "name": "Tên khách hàng",
+        "national": "Quốc tịch",
+        "status": "Trạng thái"
+      }
+    }
+  },
+  "label": {
+    "history": "History Order",
+    "sort": "Sort by",
+    "quantity": "Quantity",
+    "available": "Available",
+    "license-plate": "License Plate",
+    "start": "Start time",
+    "end": "End time",
+    "payment-option": "Payment options",
+    "cash": "Cash on Checkout",
+    "billing-information": "Billing Information"
+  },
+  "form": {
+    "cart": "Cart",
+    "order-summary": "Order Summary",
+    "sub-total": "Sub Total",
+    "total": "Total",
+    "vat": "(VAT included if applicable)",
+    "product": "Product",
+    "price": "Price",
+    "quantity": "Quantity",
+    "total-price": "Total Price",
+    "full-name": "Full Nam",
+    "phone": "Phone",
+    "email": "Email",
+    "country": "Country",
+    "group": "Group"
+  },
+  "message": {
+    "cart-empty": "Cart is empty",
+    "cart-empty-detail": "Look like you have no items in your shopping cart.",
+    "momo": "You will be redirected to MoMo website to complete your purchase securely.",
+    "cash": "Pay with cash when your order.",
+    "order-success": "Order success",
+    "order-error": "Order error"
+  },
+  "menu": {
+    "language": {
+      "vi-VN": "Vietnamese",
+      "en-US": "English"
+    }
+  },
+  "button": {
+    "add": "Add to Cart",
+    "cancel": "Cancel",
+    "continue-shopping": "Continue Shopping",
+    "checkout": "Check Out",
+    "edit": "Edit",
+    "back": "Back",
+    "confirm": "Confirm",
+    "complete-order": "Complete Order",
+    "delete": "Delete",
+    "view": "View"
+  }
+}

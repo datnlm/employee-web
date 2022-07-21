@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react';
 import editFill from '@iconify/icons-eva/edit-fill';
 // material
 import { Card, Button, Typography, CardHeader, CardContent } from '@material-ui/core';
+import useLocales from 'hooks/useLocales';
 // @types
 import { ProductState } from '../../../../@types/products';
 // redux
@@ -16,11 +17,11 @@ type CheckoutBillingInfoProps = {
 export default function CheckoutBillingInfo({ onBackStep }: CheckoutBillingInfoProps) {
   const { checkout } = useSelector((state: { product: ProductState }) => state.product);
   const { billing } = checkout;
-
+  const { translate } = useLocales();
   return (
     <Card sx={{ mb: 3 }}>
       <CardHeader
-        title="Billing Information"
+        title={translate('label.billing-information')}
         action={
           <Button
             size="small"
@@ -28,7 +29,7 @@ export default function CheckoutBillingInfo({ onBackStep }: CheckoutBillingInfoP
             startIcon={<Icon icon={editFill} />}
             onClick={onBackStep}
           >
-            Edit
+            {translate('button.edit')}
           </Button>
         }
       />

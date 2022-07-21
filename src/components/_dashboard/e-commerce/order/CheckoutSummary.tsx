@@ -13,6 +13,7 @@ import {
   CardContent,
   InputAdornment
 } from '@material-ui/core';
+import useLocales from 'hooks/useLocales';
 // utils
 import { fCurrency } from '../../../../utils/formatNumber';
 
@@ -33,14 +34,15 @@ type CheckoutSummaryProps = {
 };
 
 export default function CheckoutSummary({ total }: CheckoutSummaryProps) {
+  const { translate } = useLocales();
   return (
     <Card sx={{ mb: 3 }}>
-      <CardHeader title="Order Summary" />
+      <CardHeader title={translate('form.order-summary')} />
 
       <CardContent>
         <RowStyle>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Sub Total
+            {translate('form.sub-total')}
           </Typography>
           {total && <Typography variant="subtitle2">{fCurrency(Number(total))}</Typography>}
         </RowStyle>
@@ -48,7 +50,7 @@ export default function CheckoutSummary({ total }: CheckoutSummaryProps) {
         <Divider sx={{ mb: 2 }} />
 
         <RowStyle>
-          <Typography variant="subtitle1">Total</Typography>
+          <Typography variant="subtitle1">{translate('form.total')}</Typography>
           <Box sx={{ textAlign: 'right' }}>
             {total && (
               <Typography variant="subtitle1" sx={{ color: 'error.main' }}>
@@ -57,7 +59,7 @@ export default function CheckoutSummary({ total }: CheckoutSummaryProps) {
             )}
 
             <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
-              (VAT included if applicable)
+              {translate('form.vat')}
             </Typography>
           </Box>
         </RowStyle>

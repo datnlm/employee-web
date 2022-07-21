@@ -18,6 +18,7 @@ import {
   CardHeader,
   Typography
 } from '@material-ui/core';
+import useLocales from 'hooks/useLocales';
 // components
 import Scrollbar from 'components/Scrollbar';
 import {
@@ -52,6 +53,7 @@ import { PATH_DASHBOARD } from '../../routes/paths';
 export default function CheckoutCart() {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+  const { translate } = useLocales();
   const { user } = useAuth();
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
@@ -180,7 +182,7 @@ export default function CheckoutCart() {
                   variant="contained"
                   color="error"
                 >
-                  Cancel
+                  {translate('button.cancel')}
                 </LoadingButton>
               </Grid>
             </Grid>

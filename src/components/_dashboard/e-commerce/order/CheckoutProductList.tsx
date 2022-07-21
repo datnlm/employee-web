@@ -15,6 +15,7 @@ import {
   Typography,
   TableContainer
 } from '@material-ui/core';
+import useLocales from 'hooks/useLocales';
 // utils
 import getColorName from '../../../../utils/getColorName';
 import { fCurrency } from '../../../../utils/formatNumber';
@@ -50,15 +51,16 @@ type CheckoutProductListProps = {
 };
 
 export default function CheckoutProductList({ products }: CheckoutProductListProps) {
+  const { translate } = useLocales();
   return (
     <TableContainer sx={{ minWidth: 720 }}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Product</TableCell>
-            <TableCell align="left">Price</TableCell>
-            <TableCell align="left">Quantity</TableCell>
-            <TableCell align="right">Total Price</TableCell>
+            <TableCell>{translate('form.product')}</TableCell>
+            <TableCell align="left">{translate('form.price')}</TableCell>
+            <TableCell align="left">{translate('form.quantity')}</TableCell>
+            <TableCell align="right">{translate('form.total-price')}</TableCell>
             <TableCell align="right" />
           </TableRow>
         </TableHead>

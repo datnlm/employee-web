@@ -103,7 +103,7 @@ function CustomerItem({ onNextStep, onCreateBilling }: CustomerItemProps) {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
-                      label="Full Name"
+                      label={translate('form.full-name')}
                       {...getFieldProps('name')}
                       error={Boolean(touched.name && errors.name)}
                       helperText={touched.name && errors.name}
@@ -112,7 +112,7 @@ function CustomerItem({ onNextStep, onCreateBilling }: CustomerItemProps) {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
-                      label="Phone Number"
+                      label={translate('form.phone')}
                       {...getFieldProps('phone')}
                       error={Boolean(touched.phone && errors.phone)}
                       helperText={touched.phone && errors.phone}
@@ -121,7 +121,7 @@ function CustomerItem({ onNextStep, onCreateBilling }: CustomerItemProps) {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
-                      label="Email"
+                      label={translate('form.email')}
                       {...getFieldProps('email')}
                       error={Boolean(touched.email && errors.email)}
                       helperText={touched.email && errors.email}
@@ -132,7 +132,7 @@ function CustomerItem({ onNextStep, onCreateBilling }: CustomerItemProps) {
                     <TextField
                       select
                       fullWidth
-                      label="Country"
+                      label={translate('form.country')}
                       placeholder="Country"
                       {...getFieldProps('nationality')}
                       SelectProps={{ native: true }}
@@ -151,7 +151,7 @@ function CustomerItem({ onNextStep, onCreateBilling }: CustomerItemProps) {
             </Grid>
             <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
               <Button type="submit" variant="contained">
-                Confirm
+                {translate('button.confirm')}
               </Button>
             </Box>
           </Form>

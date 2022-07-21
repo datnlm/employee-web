@@ -5,6 +5,7 @@ import { useFormik, Form, FormikProvider } from 'formik';
 import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
 // material
 import { Grid, Card, Button, CardHeader, Typography } from '@material-ui/core';
+import useLocales from 'hooks/useLocales';
 // @types
 import { ProductState } from '../../../../@types/products';
 // redux
@@ -28,6 +29,7 @@ import CheckoutProductList from './CheckoutProductList';
 
 export default function CheckoutCart() {
   const dispatch = useDispatch();
+  const { translate } = useLocales();
   const { checkout } = useSelector((state: { product: ProductState }) => state.product);
   const { cart, total, discount, subtotal } = checkout;
   const isEmptyCart = cart.length === 0;
@@ -78,7 +80,7 @@ export default function CheckoutCart() {
               <CardHeader
                 title={
                   <Typography variant="h6">
-                    Card
+                    Cart
                     <Typography component="span" sx={{ color: 'text.secondary' }}>
                       &nbsp;({totalItems} item)
                     </Typography>
@@ -98,8 +100,8 @@ export default function CheckoutCart() {
                 </Scrollbar>
               ) : (
                 <EmptyContent
-                  title="Cart is empty"
-                  description="Look like you have no items in your shopping cart."
+                  title={translate('message.cart-empty')}
+                  description={translate('message.cart-empty-detail')}
                   img="/static/illustrations/illustration_empty_cart.svg"
                 />
               )}
@@ -111,7 +113,7 @@ export default function CheckoutCart() {
               to={PATH_DASHBOARD.eCommerce.shop}
               startIcon={<Icon icon={arrowIosBackFill} />}
             >
-              Continue Shopping
+              {translate('button.continue-shopping')}
             </Button>
           </Grid>
 
@@ -130,7 +132,7 @@ export default function CheckoutCart() {
               variant="contained"
               disabled={values.products.length === 0}
             >
-              Check Out
+              {translate('button.checkout')}
             </Button>
           </Grid>
         </Grid>

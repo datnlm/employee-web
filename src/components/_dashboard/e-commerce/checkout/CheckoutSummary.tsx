@@ -13,9 +13,9 @@ import {
   CardContent,
   InputAdornment
 } from '@material-ui/core';
+import useLocales from 'hooks/useLocales';
 // utils
 import { fCurrency } from '../../../../utils/formatNumber';
-
 // ----------------------------------------------------------------------
 
 const RowStyle = styled('div')(({ theme }) => ({
@@ -50,11 +50,11 @@ export default function CheckoutSummary({
   enableDiscount = false
 }: CheckoutSummaryProps) {
   const displayShipping = shipping !== null ? 'Free' : '-';
-
+  const { translate } = useLocales();
   return (
     <Card sx={{ mb: 3 }}>
       <CardHeader
-        title="Order Summary"
+        title={translate('form.order-summary')}
         action={
           enableEdit && (
             <Button
@@ -63,7 +63,7 @@ export default function CheckoutSummary({
               onClick={onEdit}
               startIcon={<Icon icon={editFill} />}
             >
-              Edit
+              {translate('button.edit')}
             </Button>
           )
         }
@@ -72,7 +72,7 @@ export default function CheckoutSummary({
       <CardContent>
         <RowStyle>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Sub Total
+            {translate('form.sub-total')}
           </Typography>
           <Typography variant="subtitle2">{fCurrency(subtotal)}</Typography>
         </RowStyle>
@@ -80,13 +80,13 @@ export default function CheckoutSummary({
         <Divider sx={{ mb: 2 }} />
 
         <RowStyle>
-          <Typography variant="subtitle1">Total</Typography>
+          <Typography variant="subtitle1"> {translate('form.total')}</Typography>
           <Box sx={{ textAlign: 'right' }}>
             <Typography variant="subtitle1" sx={{ color: 'error.main' }}>
               {fCurrency(total)}
             </Typography>
             <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
-              (VAT included if applicable)
+              {translate('form.vat')}
             </Typography>
           </Box>
         </RowStyle>

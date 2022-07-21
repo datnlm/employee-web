@@ -18,6 +18,7 @@ import {
   FormHelperText,
   FormControlLabel
 } from '@material-ui/core';
+import useLocales from 'hooks/useLocales';
 // @types
 import { CardOption, PaymentOption, PaymentFormikProps } from '../../../../@types/products';
 //
@@ -49,10 +50,10 @@ export default function CheckoutPaymentMethods({
   formik
 }: CheckoutPaymentMethodsProps) {
   const { errors, touched, values, getFieldProps } = formik;
-
+  const { translate } = useLocales();
   return (
     <Card sx={{ my: 3 }}>
-      <CardHeader title="Payment options" />
+      <CardHeader title={translate('label.payment-option')} />
       <CardContent>
         <RadioGroup row {...getFieldProps('payment')}>
           <Grid container spacing={2}>

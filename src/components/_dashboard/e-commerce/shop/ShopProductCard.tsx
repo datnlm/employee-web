@@ -25,6 +25,7 @@ import { styled } from '@material-ui/core/styles';
 import roundAddShoppingCart from '@iconify/icons-ic/round-add-shopping-cart';
 // redux
 import { MIconButton } from 'components/@material-extend';
+import useLocales from 'hooks/useLocales';
 import { useDispatch, useSelector } from '../../../../redux/store';
 import { addCart, onGotoStep } from '../../../../redux/slices/product';
 // routes
@@ -56,6 +57,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
   // const { name, cover, price, colors, status, priceSale, available } = product;
   const { name, images, price, status } = product;
   const linkTo = `${PATH_DASHBOARD.eCommerce.root}/product/${paramCase(name)}`;
+  const { translate } = useLocales();
   let quantityProduct = 1;
   const maxQuantityProduct = 1000000000000;
   const dispatch = useDispatch();
@@ -144,7 +146,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
     return (
       <div>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Quantity</DialogTitle>
+          <DialogTitle> {translate('label.quantity')}</DialogTitle>
           <DialogContent>
             <DialogContentText>
               <Box
@@ -155,7 +157,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
                 }}
               >
                 <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-                  Quantity
+                  {translate('label.quantity')}
                 </Typography>
 
                 <div>
@@ -167,10 +169,10 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="inherit">
-              Cancel
+              {translate('button.cancel')}
             </Button>
             <Button onClick={handleAddCart} variant="contained">
-              Add to cart
+              {translate('button.add')}
             </Button>
           </DialogActions>
         </Dialog>
@@ -235,7 +237,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
             onClick={handleClickOpen}
             sx={{ whiteSpace: 'nowrap' }}
           >
-            Add to Cart
+            {translate('button.add')}
           </Button>
           <FormDialogs />
         </Stack>
