@@ -26,6 +26,8 @@ import {
 } from '@material-ui/core';
 import useAuth from 'hooks/useAuth';
 // redux
+import Label from 'components/Label';
+import { statusOrderOptions } from 'utils/constants';
 import { RootState, useDispatch, useSelector } from '../../redux/store';
 import { getOrderDetail } from '../../redux/slices/product';
 // routes
@@ -229,7 +231,21 @@ export default function OrderList() {
                           <TableCell align="left">{total}</TableCell>
                           <TableCell align="left">{name}</TableCell>
                           <TableCell align="left">{nationalityName}</TableCell>
-                          <TableCell align="left">{status}</TableCell>
+                          <TableCell align="left">
+                            <Label
+                              variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
+                              color={(status == '0' && 'error') || 'success'}
+                            >
+                              {statusOrderOptions.find((v: any) => v.id == status)?.label}
+
+                              {/* {translate(
+                                `status.${
+                                  statusOrderOptions.find((v: any) => v.id == status)?.label
+                                }`
+                              )} */}
+                            </Label>
+                          </TableCell>
+                          {/* <TableCell align="left">{status}</TableCell> */}
                           <TableCell align="right">
                             <EcommerceMoreMenu
                               onDelete={() => handleDeleteOrder(id.toString())}

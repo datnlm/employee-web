@@ -12,7 +12,9 @@
       }
     },
     "order": {
-      "title": "Employee Web | History Order",
+      "title": {
+        "list": "Employee Web | History Order"
+      },
       "heading1": {
         "list": "Order List"
       },

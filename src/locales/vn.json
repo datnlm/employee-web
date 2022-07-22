@@ -12,7 +12,9 @@
       }
     },
     "order": {
-      "title": "Lịch sử đơn hàng",
+      "title": {
+        "list": "Lịch sử đơn hàng"
+      },
       "heading1": {
         "list": "Danh sách đặt hàng"
       },
