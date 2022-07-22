@@ -12,11 +12,20 @@
       }
     },
     "order": {
-      "create": "Ngày tạo",
-      "total": "Giá",
-      "name": "Tên khách hàng",
-      "national": "Quốc tịch",
-      "status": "Trạng thái"
+      "title": "Lịch sử đơn hàng",
+      "heading1": {
+        "list": "Danh sách đặt hàng"
+      },
+      "heading2": "Shop",
+      "heading4": "Danh sách",
+      "search": "Tìm kiếm theo đơn hàng",
+      "form": {
+        "create": "Ngày tạo",
+        "total": "Giá",
+        "name": "Tên khách hàng",
+        "national": "Quốc tịch",
+        "status": "Trạng thái"
+      }
     }
   },
   "label": {
@@ -29,7 +38,8 @@
     "end": "Thời gian kết thúc",
     "payment-option": "Các lựa chọn thanh toán",
     "cash": "Tiền mặt khi thanh toán",
-    "billing-information": "Thông tin thanh toán"
+    "billing-information": "Thông tin thanh toán",
+    "not-found": "Không tìm thấy"
   },
   "form": {
     "cart": "Cart",
@@ -71,6 +81,7 @@
     "confirm": "Xác nhận",
     "complete-order": "Hoàn thành đơn đặt hàng",
     "delete": "Xoá",
-    "view": "Xem chi tiết"
+    "view": "Xem chi tiết",
+    "login": "Đăng nhập"
   }
 }

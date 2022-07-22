@@ -12,6 +12,13 @@
       }
     },
     "order": {
+      "title": "Employee Web | History Order",
+      "heading1": {
+        "list": "Order List"
+      },
+      "heading2": "Shop",
+      "heading4": "Order List",
+      "search": "Search order list",
       "form": {
         "create": "Ngày tạo",
         "total": "Giá",
@@ -31,7 +38,8 @@
     "end": "End time",
     "payment-option": "Payment options",
     "cash": "Cash on Checkout",
-    "billing-information": "Billing Information"
+    "billing-information": "Billing Information",
+    "not-found": "Not found"
   },
   "form": {
     "cart": "Cart",
@@ -73,6 +81,7 @@
     "confirm": "Confirm",
     "complete-order": "Complete Order",
     "delete": "Delete",
-    "view": "View"
+    "view": "View",
+    "login": "Login"
   }
 }

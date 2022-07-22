@@ -67,7 +67,7 @@ export default function EcommerceMoreMenu({ onDelete, id, status }: EcommerceMor
               <Icon icon={trash2Outline} width={24} height={24} />
             </ListItemIcon>
             <ListItemText
-              primary={translate('button.menu.delete')}
+              primary={translate('button.delete')}
               primaryTypographyProps={{ variant: 'body2' }}
             />
           </MenuItem>
@@ -106,7 +106,7 @@ export default function EcommerceMoreMenu({ onDelete, id, status }: EcommerceMor
             <Icon icon={eyeFill} width={24} height={24} />
           </ListItemIcon>
           <ListItemText
-            primary={translate('button.menu.view')}
+            primary={translate('button.view')}
             primaryTypographyProps={{ variant: 'body2' }}
           />
         </MenuItem>

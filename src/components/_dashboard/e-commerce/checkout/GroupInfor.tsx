@@ -27,26 +27,25 @@ export default function GroupInfor() {
   const { checkout } = useSelector((state: { product: ProductState }) => state.product);
   const { billing } = checkout;
   const [groupId, setGroupId] = useState('');
-  const [group, setGroup] = useState<Group>();
+  const [group, setGroup] = useState<Group | null>();
   const { translate } = useLocales();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGroupId(event.target.value);
   };
   const getGroup = async () => {
+    setGroup(null);
     getGroupById(groupId).then((response) => {
       if (response.status == 200) {
         setGroup(response.data);
         dispatch(createGroup(groupId));
-      } else {
-        dispatch(createGroup(null));
       }
     });
   };
   return (
     <Card sx={{ mb: 3 }}>
       <CardContent>
-        <Grid item xs={12} sm={12}>
+        <Grid spacing={2} item xs={12} sm={12}>
           <TextField
             fullWidth
             label={translate('form.group')}
@@ -55,19 +54,25 @@ export default function GroupInfor() {
             onBlur={getGroup}
           />
         </Grid>
-        <Typography variant="subtitle2" gutterBottom>
-          {translate('label.license-plate')}: {group?.licensePlate}
-        </Typography>
-
-        {/* <Typography variant="body2" gutterBottom>
-          {group?.status}
-        </Typography> */}
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {translate('label.start')}: {group?.startTime}
-        </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {translate('label.end')}: {group?.endTime}
-        </Typography>
+        {group != null ? (
+          <>
+            <Typography variant="subtitle2" gutterBottom>
+              {translate('label.license-plate')}: {group?.licensePlate}
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              {translate('label.start')}: {group?.startTime}
+            </Typography>
+            {group?.status != '1' && (
+              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                {translate('label.end')}: {group?.endTime}
+              </Typography>
+            )}
+          </>
+        ) : (
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            {translate('label.not-found')}
+          </Typography>
+        )}
       </CardContent>
     </Card>
   );
