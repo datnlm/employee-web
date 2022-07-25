@@ -93,6 +93,8 @@ export default function Router() {
         { path: 'shop', element: <EcommerceShop /> },
         { path: 'product/:name', element: <EcommerceProductDetails /> },
         { path: 'list', element: <EcommerceProductList /> },
+        { path: 'group', element: <EcommerceGroupList /> },
+        { path: 'group/new', element: <EcommerceGroupCreate /> },
         { path: 'order', element: <EcommerceOrderList /> },
         { path: 'order/:name', element: <EcommerceOrderDetail /> },
         { path: 'product/:name/edit', element: <EcommerceProductCreate /> },
@@ -119,6 +121,10 @@ const NotFound = Loadable(lazy(() => import('../pages/Page404')));
 // Main
 const LandingPage = Loadable(lazy(() => import('../pages/LandingPage')));
 const EcommerceProductList = Loadable(lazy(() => import('../pages/dashboard/EcommerceShop')));
+const EcommerceGroupList = Loadable(lazy(() => import('../pages/dashboard/EcommerceGroupList')));
+const EcommerceGroupCreate = Loadable(
+  lazy(() => import('../pages/dashboard/EcommerceGroupCreate'))
+);
 const EcommercePhoto = Loadable(lazy(() => import('../pages/dashboard/EcommercePhoto')));
 const EcommerceShop = Loadable(lazy(() => import('../pages/dashboard/EcommerceShop')));
 const EcommerceOrderDetail = Loadable(

@@ -7,6 +7,11 @@ export type OptionStatus = {
 
 const status = ['Deleted', 'Available'];
 
+export const statusOptions = status.map((v, index) => ({
+  id: index,
+  label: v
+}));
+
 export const statusOrder = [
   { id: '0', label: 'Đã huỷ' },
   { id: '1', label: 'Mới' },

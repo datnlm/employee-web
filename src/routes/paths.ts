@@ -26,6 +26,8 @@ export const PATH_DASHBOARD = {
     shop: path(ROOTS_DASHBOARD, '/shop'),
     product: path(ROOTS_DASHBOARD, '/product/:name'),
     list: path(ROOTS_DASHBOARD, '/list'),
+    group: path(ROOTS_DASHBOARD, '/group'),
+    groupNew: path(ROOTS_DASHBOARD, '/group/new'),
     order: path(ROOTS_DASHBOARD, '/order'),
     orderDetail: path(ROOTS_DASHBOARD, '/order/:name'),
     checkout: path(ROOTS_DASHBOARD, '/checkout'),

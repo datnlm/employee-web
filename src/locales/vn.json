@@ -19,7 +19,9 @@
         "list": "Danh sách đặt hàng"
       },
       "heading2": "Shop",
-      "heading4": "Danh sách",
+      "heading4": {
+        "list": "Danh sách"
+      },
       "search": "Tìm kiếm theo đơn hàng",
       "form": {
         "create": "Ngày tạo",
@@ -27,6 +29,36 @@
         "name": "Tên khách hàng",
         "national": "Quốc tịch",
         "status": "Trạng thái"
+      }
+    },
+    "group": {
+      "title": {
+        "list": "Danh sách đoàn",
+        "create": "Tạo mới đoàn",
+        "update": "Cập nhật đoàn"
+      },
+      "heading1": {
+        "list": "Danh sách đoàn",
+        "create": "Tạo mới đoàn",
+        "update": "Cập nhật đoàn"
+      },
+      "heading2": "Đoàn",
+      "heading3": "Đoàn",
+      "heading4": {
+        "list": "Danh sách",
+        "new": "Tạo mới đoàn",
+        "update": "Cập nhật đoàn"
+      },
+      "search": "Tìm kiếm theo đoàn",
+      "form": {
+        "licensePlate": "Biển số",
+        "startTime": "Ngày tạo",
+        "endTime": "Ngày kết thúc",
+        "note": "Ghi chú",
+        "status": "Trạng thái",
+        "contributionMembers": "Nhân viên đối tác",
+        "contribution": "Đóng góp",
+        "personalRate": "Tỷ lệ cá nhân"
       }
     }
   },
@@ -84,6 +116,7 @@
     "complete-order": "Hoàn thành đơn đặt hàng",
     "delete": "Xoá",
     "view": "Xem chi tiết",
-    "login": "Đăng nhập"
+    "login": "Đăng nhập",
+    "addNew": "Thêm mới"
   }
 }
