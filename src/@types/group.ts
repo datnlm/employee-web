@@ -3,10 +3,10 @@ export type Contribution = {
   groupId: string;
   contribution: string;
   personalRate: string;
-  employeePartnerId: string;
-  employeePaartnerName: string;
-  groupRoleId: string;
-  groupModeId: string;
+  employeePartnerId: any;
+  employeePartnerName: string;
+  groupRoleId: any;
+  groupModeId: any;
 };
 
 export type Group = {
@@ -16,6 +16,26 @@ export type Group = {
   licensePlate: string;
   note: string;
   siteId: string;
-  status: string;
+  status: any;
+  groupRoleId: string;
+  personalRate: string;
+  contribution: string;
+  employeePartnerId: any;
   contributionMembers: Contribution[];
+};
+
+export type GroupMode = {
+  id: string;
+  name: string;
+  contribution: string;
+};
+
+export type GroupRole = {
+  id: string;
+  name: string;
+  personalRate: string;
+  partnerRate: string;
+  groupModeId: string;
+  groupModeName: string;
+  groupModeContribution: string;
 };

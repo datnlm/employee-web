@@ -90,13 +90,16 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { path: 'shop', element: <EcommerceShop /> },
+        { path: 'order/:name/shop', element: <EcommerceShop /> },
         { path: 'product/:name', element: <EcommerceProductDetails /> },
         { path: 'list', element: <EcommerceProductList /> },
-        { path: 'order', element: <EcommerceOrderList /> },
-        { path: 'order/:name', element: <EcommerceOrderDetail /> },
+        { path: 'group', element: <EcommerceGroupList /> },
+        { path: 'group/new', element: <EcommerceGroupCreate /> },
+        { path: 'group/:name/edit', element: <EcommerceGroupCreate /> },
+        { path: 'order/:name', element: <EcommerceOrderList /> },
+        { path: 'order/:name/edit', element: <EcommerceOrderDetail /> },
         { path: 'product/:name/edit', element: <EcommerceProductCreate /> },
-        { path: 'checkout', element: <EcommerceCheckout /> },
+        { path: 'order/:name/checkout', element: <EcommerceCheckout /> },
         { path: 'invoice', element: <EcommerceInvoice /> }
       ]
     },
@@ -119,6 +122,10 @@ const NotFound = Loadable(lazy(() => import('../pages/Page404')));
 // Main
 const LandingPage = Loadable(lazy(() => import('../pages/LandingPage')));
 const EcommerceProductList = Loadable(lazy(() => import('../pages/dashboard/EcommerceShop')));
+const EcommerceGroupList = Loadable(lazy(() => import('../pages/dashboard/EcommerceGroupList')));
+const EcommerceGroupCreate = Loadable(
+  lazy(() => import('../pages/dashboard/EcommerceGroupCreate'))
+);
 const EcommercePhoto = Loadable(lazy(() => import('../pages/dashboard/EcommercePhoto')));
 const EcommerceShop = Loadable(lazy(() => import('../pages/dashboard/EcommerceShop')));
 const EcommerceOrderDetail = Loadable(

@@ -1,7 +1,8 @@
 import { Icon } from '@iconify/react';
 import { paramCase } from 'change-case';
 import { useRef, useState } from 'react';
-import eyeFill from '@iconify/icons-eva/eye-fill';
+import shoppingCartFill from '@iconify/icons-eva/shopping-cart-fill';
+import editFill from '@iconify/icons-eva/edit-fill';
 import { Link as RouterLink } from 'react-router-dom';
 import trash2Outline from '@iconify/icons-eva/trash-2-outline';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
@@ -19,18 +20,22 @@ import {
   DialogContent,
   DialogContentText
 } from '@material-ui/core';
+import { PATH_DASHBOARD } from 'routes/paths';
+import useLocales from 'hooks/useLocales';
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
-import useLocales from '../../../../hooks/useLocales';
 // ----------------------------------------------------------------------
 
-type EcommerceMoreMenuProps = {
+type EcommerceGroupMoreMenuProps = {
   onDelete: VoidFunction;
   id: string;
   status: any;
 };
 
-export default function EcommerceMoreMenu({ onDelete, id, status }: EcommerceMoreMenuProps) {
+export default function EcommerceGroupMoreMenu({
+  onDelete,
+  id,
+  status
+}: EcommerceGroupMoreMenuProps) {
   const { translate } = useLocales();
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -63,14 +68,28 @@ export default function EcommerceMoreMenu({ onDelete, id, status }: EcommerceMor
       >
         <MenuItem
           component={RouterLink}
-          to={`${PATH_DASHBOARD.eCommerce.root}/order/${id}/edit`}
+          to={`${PATH_DASHBOARD.eCommerce.root}/order/${paramCase(id)}`}
           sx={{ color: 'text.secondary' }}
         >
           <ListItemIcon>
-            <Icon icon={eyeFill} width={24} height={24} />
+            <Icon icon={shoppingCartFill} width={24} height={24} />
           </ListItemIcon>
           <ListItemText
-            primary={translate('button.view')}
+            primary={translate('button.order')}
+            primaryTypographyProps={{ variant: 'body2' }}
+          />
+        </MenuItem>
+
+        <MenuItem
+          component={RouterLink}
+          to={`${PATH_DASHBOARD.eCommerce.root}/group/${paramCase(id)}/edit`}
+          sx={{ color: 'text.secondary' }}
+        >
+          <ListItemIcon>
+            <Icon icon={editFill} width={24} height={24} />
+          </ListItemIcon>
+          <ListItemText
+            primary={translate('button.edit')}
             primaryTypographyProps={{ variant: 'body2' }}
           />
         </MenuItem>

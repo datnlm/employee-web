@@ -23,12 +23,15 @@ export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   eCommerce: {
     root: path(ROOTS_DASHBOARD, '/'),
-    shop: path(ROOTS_DASHBOARD, '/shop'),
+    shop: path(ROOTS_DASHBOARD, '/order/:name/shop'),
     product: path(ROOTS_DASHBOARD, '/product/:name'),
     list: path(ROOTS_DASHBOARD, '/list'),
-    order: path(ROOTS_DASHBOARD, '/order'),
-    orderDetail: path(ROOTS_DASHBOARD, '/order/:name'),
-    checkout: path(ROOTS_DASHBOARD, '/checkout'),
+    group: path(ROOTS_DASHBOARD, '/group'),
+    groupEdit: path(ROOTS_DASHBOARD, '/group/:name/edit'),
+    groupNew: path(ROOTS_DASHBOARD, '/group/new'),
+    order: path(ROOTS_DASHBOARD, '/order:name'),
+    orderDetail: path(ROOTS_DASHBOARD, '/order/:name/edit'),
+    checkout: path(ROOTS_DASHBOARD, '/order/:name/checkout'),
     invoice: path(ROOTS_DASHBOARD, '/invoice')
   }
 };

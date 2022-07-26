@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import { Icon } from '@iconify/react';
 import { useSnackbar } from 'notistack5';
 import { useFormik, Form, FormikProvider } from 'formik';
+import { useParams, useLocation, Link as RouterLink } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import { PATH_DASHBOARD } from 'routes/paths';
 import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
@@ -41,6 +42,8 @@ export default function CheckoutPayment() {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const { name } = useParams();
   const { user } = useAuth();
   const { total, discount, subtotal, shipping } = checkout;
 
@@ -88,7 +91,7 @@ export default function CheckoutPayment() {
           email: checkout.billing?.email,
           phone: checkout.billing?.phone,
           total: checkout.total,
-          groupId: checkout.groupId,
+          groupId: name,
           nationalityCode: checkout.billing?.nationality,
           orderDetails: detail
         };

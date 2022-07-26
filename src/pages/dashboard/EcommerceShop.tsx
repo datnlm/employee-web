@@ -1,9 +1,12 @@
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { filter, includes, orderBy } from 'lodash';
+import { paramCase, sentenceCase } from 'change-case';
+import { useParams, useLocation, Link as RouterLink } from 'react-router-dom';
 // material
 import { Backdrop, Container, Typography, CircularProgress, Stack } from '@material-ui/core';
 import useAuth from 'hooks/useAuth';
+import useLocales from 'hooks/useLocales';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
 import { getProducts, filterProducts } from '../../redux/slices/product';
@@ -80,7 +83,10 @@ function applyFilter(products: ProductCoralPark[], sortBy: string | null, filter
 export default function EcommerceShop() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
+  const { translate } = useLocales();
   const { user } = useAuth();
+  const { pathname } = useLocation();
+  const { name } = useParams();
   const [openFilter, setOpenFilter] = useState(false);
   const { products, sortBy, filters, isLoading } = useSelector(
     (state: { product: ProductState }) => state.product
@@ -138,6 +144,17 @@ export default function EcommerceShop() {
       )}
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
+        <HeaderBreadcrumbs
+          heading={translate('page.order.heading1.product')}
+          links={[
+            { name: translate('page.group.heading2'), href: PATH_DASHBOARD.eCommerce.group },
+            {
+              name: translate('page.order.heading3'),
+              href: `${PATH_DASHBOARD.eCommerce.root}/order/${paramCase(name)}/`
+            },
+            { name: translate('page.order.heading4.product') }
+          ]}
+        />
         {values !== initialValues && (
           <Typography gutterBottom>
             <Typography component="span" variant="subtitle1">

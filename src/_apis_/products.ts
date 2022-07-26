@@ -10,10 +10,10 @@ export class ShopManager {
       .then((res) => res)
       .catch((err) => err);
 
-  getListOrder = (SiteId: String, page_number: number, page_size: number) =>
+  getListOrder = (GroupId: string, SiteId: string, page_number: number, page_size: number) =>
     axios
       .get('/api/v1/employee/orders', {
-        params: { SiteId, page_number, page_size }
+        params: { GroupId, SiteId, page_number, page_size }
       })
       .then((res) => res)
       .catch((err) => err);

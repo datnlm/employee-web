@@ -16,10 +16,15 @@
         "list": "Lịch sử đơn hàng"
       },
       "heading1": {
-        "list": "Danh sách đặt hàng"
+        "list": "Danh sách đặt hàng",
+        "product": "Danh sách sản phẩm"
       },
       "heading2": "Shop",
-      "heading4": "Danh sách",
+      "heading3": "Lịch sử đơn hàng",
+      "heading4": {
+        "product": "Sản phẩm",
+        "list": "Danh sách"
+      },
       "search": "Tìm kiếm theo đơn hàng",
       "form": {
         "create": "Ngày tạo",
@@ -27,6 +32,37 @@
         "name": "Tên khách hàng",
         "national": "Quốc tịch",
         "status": "Trạng thái"
+      }
+    },
+    "group": {
+      "title": {
+        "list": "Danh sách đoàn",
+        "create": "Tạo mới đoàn",
+        "update": "Cập nhật đoàn"
+      },
+      "heading1": {
+        "list": "Danh sách đoàn",
+        "create": "Tạo mới đoàn",
+        "update": "Cập nhật đoàn",
+        "contribution":"Đóng góp"
+      },
+      "heading2": "Đoàn",
+      "heading3": "Đoàn",
+      "heading4": {
+        "list": "Danh sách",
+        "new": "Tạo mới đoàn",
+        "update": "Cập nhật đoàn"
+      },
+      "search": "Tìm kiếm theo đoàn",
+      "form": {
+        "licensePlate": "Biển số",
+        "startTime": "Ngày tạo",
+        "endTime": "Ngày kết thúc",
+        "note": "Ghi chú",
+        "status": "Trạng thái",
+        "contributionMembers": "Nhân viên đối tác",
+        "contribution": "Đóng góp",
+        "personalRate": "Tỷ lệ cá nhân"
       }
     }
   },
@@ -73,6 +109,11 @@
       "en-US": "Tiếng Anh"
     }
   },
+  "status": {
+    "0": "Đã huỷ" ,
+    "1": "Mới",
+    "3": "Hoàn thành"
+  },
   "button": {
     "add": "Thêm vào giỏ",
     "cancel": "Huỷ",
@@ -84,6 +125,11 @@
     "complete-order": "Hoàn thành đơn đặt hàng",
     "delete": "Xoá",
     "view": "Xem chi tiết",
-    "login": "Đăng nhập"
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "addNew": "Thêm mới",
+    "update":"Cập nhật",
+    "order": "Lịch sử đặt hàng",
+    "shop": "Đặt hàng"
   }
 }

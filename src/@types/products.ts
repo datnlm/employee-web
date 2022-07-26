@@ -82,6 +82,7 @@ export type BillingAddress = {
 export type ProductState = {
   isLoading: boolean;
   error: boolean;
+  totalCount: number;
   products: ProductCoralPark[];
   product: ProductCoralPark | null;
   orderDetail: OrderDetail[];

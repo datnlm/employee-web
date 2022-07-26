@@ -1,9 +1,12 @@
 import { Icon } from '@iconify/react';
 import { useEffect } from 'react';
 import checkmarkFill from '@iconify/icons-eva/checkmark-fill';
+import { paramCase, sentenceCase } from 'change-case';
+import { useParams, useLocation, Link as RouterLink } from 'react-router-dom';
 // material
 import { Box, Grid, Step, Stepper, Container, StepLabel, StepConnector } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
+import useLocales from 'hooks/useLocales';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
 import { getCart, createBilling } from '../../redux/slices/product';
@@ -82,10 +85,13 @@ function QontoStepIcon({ active, completed }: { active: boolean; completed: bool
 export default function EcommerceCheckout() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
+  const { translate } = useLocales();
   const isMountedRef = useIsMountedRef();
   const { checkout } = useSelector((state: { product: ProductState }) => state.product);
   const { cart, billing, activeStep } = checkout;
   const isComplete = activeStep === STEPS.length;
+  const { pathname } = useLocation();
+  const { name } = useParams();
 
   useEffect(() => {
     if (isMountedRef.current) {
@@ -105,7 +111,15 @@ export default function EcommerceCheckout() {
         <HeaderBreadcrumbs
           heading="Checkout"
           links={[
-            { name: 'E-Commerce', href: PATH_DASHBOARD.eCommerce.shop },
+            { name: translate('page.group.heading2'), href: PATH_DASHBOARD.eCommerce.group },
+            {
+              name: translate('page.order.heading3'),
+              href: `${PATH_DASHBOARD.eCommerce.root}/order/${paramCase(name)}/`
+            },
+            {
+              name: translate('page.order.heading4.product'),
+              href: `${PATH_DASHBOARD.eCommerce.root}/order/${paramCase(name)}/shop`
+            },
             { name: 'Checkout' }
           ]}
         />

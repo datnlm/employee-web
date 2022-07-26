@@ -36,7 +36,6 @@ import Label from '../../../Label';
 import CheckoutSummary from './CheckoutSummary';
 import CheckoutNewAddressForm from './CheckoutNewAddressForm';
 import countries from './countries';
-import GroupInfor from './GroupInfor';
 
 // ----------------------------------------------------------------------
 
@@ -198,7 +197,6 @@ export default function CheckoutBillingInformation() {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <GroupInfor />
           <CheckoutSummary subtotal={subtotal} total={total} discount={discount} />
         </Grid>
       </Grid>
