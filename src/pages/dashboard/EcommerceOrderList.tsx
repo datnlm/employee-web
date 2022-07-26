@@ -1,10 +1,11 @@
 import { filter } from 'lodash';
 import { useSnackbar } from 'notistack5';
+import { paramCase } from 'change-case';
+import shoppingCartFill from '@iconify/icons-eva/shopping-cart-fill';
+import { useParams, useLocation, Link as RouterLink } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import { sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
-import { Link as RouterLink } from 'react-router-dom';
 import { manageShop } from '_apis_/products';
 // material
 import { useTheme, styled } from '@material-ui/core/styles';
@@ -22,14 +23,20 @@ import {
   Typography,
   TableContainer,
   TablePagination,
-  CircularProgress
+  CircularProgress,
+  Stack,
+  CardHeader
 } from '@material-ui/core';
 import useAuth from 'hooks/useAuth';
 // redux
 import Label from 'components/Label';
 import { statusOrderOptions } from 'utils/constants';
+import { getGroupById } from '_apis_/group';
+import EcommerceGroupNewForm from 'components/_dashboard/e-commerce/group/EcommerceGroupNewForm';
+import { getContributions, getGroupModeList } from 'redux/slices/group';
+import { getEmployeePartnerList } from 'redux/slices/employee-partner';
 import { RootState, useDispatch, useSelector } from '../../redux/store';
-import { getOrderDetail } from '../../redux/slices/product';
+import { getOrder, resetCart } from '../../redux/slices/product';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks
@@ -42,6 +49,7 @@ import {
   ProductCoralPark,
   Product
 } from '../../@types/products';
+import { Group } from '../../@types/group';
 // components
 import Page from '../../components/Page';
 import Scrollbar from '../../components/Scrollbar';
@@ -52,6 +60,7 @@ import {
   EcommerceListToolbar,
   EcommerceMoreMenu
 } from '../../components/_dashboard/e-commerce/e-commerce_list';
+
 // ----------------------------------------------------------------------
 
 function descendingComparator(a: Anonymous, b: Anonymous, orderBy: string) {
@@ -103,7 +112,7 @@ export default function OrderList() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
-  const { orderDetail, sortBy, filters, isLoading } = useSelector(
+  const { orderDetail, sortBy, filters, isLoading, totalCount } = useSelector(
     (state: { product: ProductState }) => state.product
   );
 
@@ -115,9 +124,23 @@ export default function OrderList() {
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [orderBy, setOrderBy] = useState('createdAt');
+  const { pathname } = useLocation();
+  const { name } = useParams();
+  const isEdit = pathname.includes('edit');
+  const [currentGroup, setCurrentGroup] = useState<Group>();
+
+  const fetchData = async () => {
+    await getGroupById(paramCase(name)).then((response) => {
+      setCurrentGroup(response.data);
+    });
+    dispatch(getContributions(0, -1));
+    dispatch(getEmployeePartnerList(0, -1));
+    dispatch(getGroupModeList(0, -1));
+  };
 
   useEffect(() => {
-    dispatch(getOrderDetail(user?.SiteId, page, rowsPerPage));
+    fetchData();
+    dispatch(getOrder(name, user?.SiteId, page, rowsPerPage));
   }, [dispatch, page, rowsPerPage]);
 
   const handleRequestSort = (property: string) => {
@@ -133,6 +156,10 @@ export default function OrderList() {
 
   const handleFilterByName = (filterName: string) => {
     setFilterName(filterName);
+  };
+
+  const handleClick = () => {
+    dispatch(resetCart());
   };
 
   const handleDeleteOrder = async (id: string) => {
@@ -188,18 +215,40 @@ export default function OrderList() {
         <HeaderBreadcrumbs
           heading={translate('page.order.heading1.list')}
           links={[
-            { name: translate('page.order.heading2'), href: PATH_DASHBOARD.eCommerce.shop },
-            { name: translate('page.order.heading4.list') }
+            { name: translate('page.group.heading2'), href: PATH_DASHBOARD.eCommerce.group },
+            { name: translate('page.order.heading3') }
           ]}
         />
+        <Stack spacing={2} sx={{ pb: 3 }}>
+          <EcommerceGroupNewForm isEdit={true} isView={true} currentGroup={currentGroup} />
+        </Stack>
 
         <Card>
-          <EcommerceListToolbar
-            numSelected={selected.length}
-            filterName={filterName}
-            onFilterName={handleFilterByName}
-          />
-
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            spacing={{ xs: 3, sm: 2 }}
+            justifyContent="space-between"
+          >
+            <EcommerceListToolbar
+              numSelected={selected.length}
+              filterName={filterName}
+              onFilterName={handleFilterByName}
+            />
+            <CardHeader
+              sx={{ mb: 2 }}
+              action={
+                <Button
+                  onClick={handleClick}
+                  variant="contained"
+                  component={RouterLink}
+                  to={`${PATH_DASHBOARD.eCommerce.root}/order/${paramCase(name)}/shop`}
+                  startIcon={<Icon icon={shoppingCartFill} />}
+                >
+                  {translate('button.shop')}
+                </Button>
+              }
+            />
+          </Stack>
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
@@ -286,7 +335,7 @@ export default function OrderList() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
             component="div"
-            count={25}
+            count={totalCount}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(event, value) => setPage(value)}

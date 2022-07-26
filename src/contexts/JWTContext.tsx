@@ -87,23 +87,26 @@ function AuthProvider({ children }: { children: ReactNode }) {
           const response = await axios.get('/api/v1/account-info', {
             params: { token: accessToken }
           });
-          const user = response.data;
-          if (response.data.role == 'EM') {
-            dispatch({
-              type: Types.Initial,
-              payload: {
-                isAuthenticated: true,
-                user
-              }
-            });
-          } else {
-            dispatch({
-              type: Types.Initial,
-              payload: {
-                isAuthenticated: false,
-                user: null
-              }
-            });
+          if (response.status == 200) {
+            const user = response.data;
+            if (response.data.role == 'EM') {
+              console.log(response.data);
+              dispatch({
+                type: Types.Initial,
+                payload: {
+                  isAuthenticated: true,
+                  user
+                }
+              });
+            } else {
+              dispatch({
+                type: Types.Initial,
+                payload: {
+                  isAuthenticated: false,
+                  user: null
+                }
+              });
+            }
           }
         } else {
           dispatch({

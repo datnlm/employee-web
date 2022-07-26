@@ -14,6 +14,7 @@ import { CartItem, Product, ProductState } from '../../@types/products';
 const initialState: ProductState = {
   isLoading: false,
   error: false,
+  totalCount: 0,
   products: [],
   product: null,
   orderDetail: [],
@@ -44,6 +45,11 @@ const slice = createSlice({
     // START LOADING
     startLoading(state) {
       state.isLoading = true;
+    },
+
+    // TOTOAL COUNT
+    totalCount(state, action) {
+      state.totalCount = action.payload;
     },
 
     // HAS ERROR
@@ -232,6 +238,7 @@ export function getProducts(SiteId: string, page: number, rowPerPage: number) {
     try {
       await manageShop.getListProduct(SiteId, 1 + page, rowPerPage).then((response) => {
         if (response.status == 200) {
+          dispatch(slice.actions.totalCount(response.data.metaData.totalCount));
           dispatch(slice.actions.getProductsSuccess(response.data.items));
         }
       });
@@ -243,15 +250,18 @@ export function getProducts(SiteId: string, page: number, rowPerPage: number) {
 
 // ----------------------------------------------------------------------
 
-export function getOrderDetail(SiteId: string, page: number, rowPerpage: number) {
+export function getOrder(groupId: string, SiteId: string, page: number, rowPerpage: number) {
   return async () => {
     const { dispatch } = store;
     dispatch(slice.actions.startLoading());
     try {
-      await manageShop.getListOrder(SiteId, 1 + page, rowPerpage).then((response) => {
+      await manageShop.getListOrder(groupId, SiteId, 1 + page, rowPerpage).then((response) => {
         if (response.status == 200) {
-          console.log(response.data.items);
+          dispatch(slice.actions.totalCount(response.data.metaData.totalCount));
           dispatch(slice.actions.getOrder(response.data.items));
+        } else {
+          dispatch(slice.actions.totalCount(0));
+          dispatch(slice.actions.getOrder([]));
         }
       });
     } catch (error) {

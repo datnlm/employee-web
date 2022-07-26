@@ -111,7 +111,7 @@ export default function ProductNewForm({ isEdit, currentProduct }: ProductNewFor
       } catch (error) {
         console.error(error);
         setSubmitting(false);
-        setErrors(error);
+        // setErrors(error);
       }
     }
   });

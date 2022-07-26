@@ -61,6 +61,19 @@ export default function EcommerceMoreMenu({ onDelete, id, status }: EcommerceMor
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
+        <MenuItem
+          component={RouterLink}
+          to={`${PATH_DASHBOARD.eCommerce.root}/order/${id}/edit`}
+          sx={{ color: 'text.secondary' }}
+        >
+          <ListItemIcon>
+            <Icon icon={eyeFill} width={24} height={24} />
+          </ListItemIcon>
+          <ListItemText
+            primary={translate('button.view')}
+            primaryTypographyProps={{ variant: 'body2' }}
+          />
+        </MenuItem>
         {status !== 0 && (
           <MenuItem onClick={handleClickOpen} sx={{ color: 'text.secondary' }}>
             <ListItemIcon>
@@ -96,20 +109,6 @@ export default function EcommerceMoreMenu({ onDelete, id, status }: EcommerceMor
             </DialogActions>
           </Dialog>
         </div>
-
-        <MenuItem
-          component={RouterLink}
-          to={`${PATH_DASHBOARD.eCommerce.order}/${id}`}
-          sx={{ color: 'text.secondary' }}
-        >
-          <ListItemIcon>
-            <Icon icon={eyeFill} width={24} height={24} />
-          </ListItemIcon>
-          <ListItemText
-            primary={translate('button.view')}
-            primaryTypographyProps={{ variant: 'body2' }}
-          />
-        </MenuItem>
       </Menu>
     </>
   );

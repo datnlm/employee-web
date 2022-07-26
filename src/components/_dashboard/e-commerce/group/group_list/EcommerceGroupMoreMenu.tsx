@@ -1,7 +1,8 @@
 import { Icon } from '@iconify/react';
 import { paramCase } from 'change-case';
 import { useRef, useState } from 'react';
-import eyeFill from '@iconify/icons-eva/eye-fill';
+import shoppingCartFill from '@iconify/icons-eva/shopping-cart-fill';
+import editFill from '@iconify/icons-eva/edit-fill';
 import { Link as RouterLink } from 'react-router-dom';
 import trash2Outline from '@iconify/icons-eva/trash-2-outline';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
@@ -65,6 +66,33 @@ export default function EcommerceGroupMoreMenu({
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
+        <MenuItem
+          component={RouterLink}
+          to={`${PATH_DASHBOARD.eCommerce.root}/order/${paramCase(id)}`}
+          sx={{ color: 'text.secondary' }}
+        >
+          <ListItemIcon>
+            <Icon icon={shoppingCartFill} width={24} height={24} />
+          </ListItemIcon>
+          <ListItemText
+            primary={translate('button.order')}
+            primaryTypographyProps={{ variant: 'body2' }}
+          />
+        </MenuItem>
+
+        <MenuItem
+          component={RouterLink}
+          to={`${PATH_DASHBOARD.eCommerce.root}/group/${paramCase(id)}/edit`}
+          sx={{ color: 'text.secondary' }}
+        >
+          <ListItemIcon>
+            <Icon icon={editFill} width={24} height={24} />
+          </ListItemIcon>
+          <ListItemText
+            primary={translate('button.edit')}
+            primaryTypographyProps={{ variant: 'body2' }}
+          />
+        </MenuItem>
         {status !== 0 && (
           <MenuItem onClick={handleClickOpen} sx={{ color: 'text.secondary' }}>
             <ListItemIcon>
@@ -100,20 +128,6 @@ export default function EcommerceGroupMoreMenu({
             </DialogActions>
           </Dialog>
         </div>
-
-        <MenuItem
-          component={RouterLink}
-          to={`${PATH_DASHBOARD.eCommerce.order}/${id}`}
-          sx={{ color: 'text.secondary' }}
-        >
-          <ListItemIcon>
-            <Icon icon={eyeFill} width={24} height={24} />
-          </ListItemIcon>
-          <ListItemText
-            primary={translate('button.view')}
-            primaryTypographyProps={{ variant: 'body2' }}
-          />
-        </MenuItem>
       </Menu>
     </>
   );

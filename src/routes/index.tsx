@@ -90,15 +90,16 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { path: 'shop', element: <EcommerceShop /> },
+        { path: 'order/:name/shop', element: <EcommerceShop /> },
         { path: 'product/:name', element: <EcommerceProductDetails /> },
         { path: 'list', element: <EcommerceProductList /> },
         { path: 'group', element: <EcommerceGroupList /> },
         { path: 'group/new', element: <EcommerceGroupCreate /> },
-        { path: 'order', element: <EcommerceOrderList /> },
-        { path: 'order/:name', element: <EcommerceOrderDetail /> },
+        { path: 'group/:name/edit', element: <EcommerceGroupCreate /> },
+        { path: 'order/:name', element: <EcommerceOrderList /> },
+        { path: 'order/:name/edit', element: <EcommerceOrderDetail /> },
         { path: 'product/:name/edit', element: <EcommerceProductCreate /> },
-        { path: 'checkout', element: <EcommerceCheckout /> },
+        { path: 'order/:name/checkout', element: <EcommerceCheckout /> },
         { path: 'invoice', element: <EcommerceInvoice /> }
       ]
     },

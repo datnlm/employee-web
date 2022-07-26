@@ -3,24 +3,25 @@ export type Contribution = {
   groupId: string;
   contribution: string;
   personalRate: string;
-  employeePartnerId: string;
-  employeePaartnerName: string;
-  groupRoleId: string;
-  groupModeId: string;
+  employeePartnerId: any;
+  employeePartnerName: string;
+  groupRoleId: any;
+  groupModeId: any;
 };
 
 export type Group = {
   id: string;
-  startTime: Date;
-  endTime: Date;
+  startTime: string;
+  endTime: string;
   licensePlate: string;
   note: string;
   siteId: string;
   status: any;
+  groupRoleId: string;
   personalRate: string;
   contribution: string;
   employeePartnerId: any;
-  contributionMembers: Contribution[] | null;
+  contributionMembers: Contribution[];
 };
 
 export type GroupMode = {

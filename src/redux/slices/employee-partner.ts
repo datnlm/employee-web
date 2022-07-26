@@ -7,7 +7,7 @@ import { getEmployeePartner } from '_apis_/employee-partner';
 import { store, dispatch } from '../store';
 // utils
 import axios from '../../utils/axios';
-import { EmployeePartner } from '../../@types/employe-partner';
+import { EmployeePartner } from '../../@types/employee-partner';
 
 // ----------------------------------------------------------------------
 type EmployeePartnerState = {

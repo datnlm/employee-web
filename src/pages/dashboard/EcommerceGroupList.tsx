@@ -1,7 +1,7 @@
 import { filter } from 'lodash';
 import { useSnackbar } from 'notistack5';
 import { Icon } from '@iconify/react';
-import { sentenceCase } from 'change-case';
+import { paramCase, sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import plusFill from '@iconify/icons-eva/plus-fill';
@@ -179,10 +179,7 @@ export default function EcommerceGroupList() {
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading={translate('page.group.heading1.list')}
-          links={[
-            { name: translate('page.group.heading2'), href: PATH_DASHBOARD.eCommerce.group },
-            { name: translate('page.group.heading4.list') }
-          ]}
+          links={[]}
           action={
             <Button
               variant="contained"
@@ -238,7 +235,7 @@ export default function EcommerceGroupList() {
                               variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
                               color={(status == '0' && 'error') || 'success'}
                             >
-                              {statusOrderOptions.find((v: any) => v.id == status)?.label}
+                              {translate(`status.${status}`)}
 
                               {/* {translate(
                                 `status.${
@@ -288,7 +285,7 @@ export default function EcommerceGroupList() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
             component="div"
-            count={25}
+            count={totalCount}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(event, value) => setPage(value)}

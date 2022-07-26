@@ -20,7 +20,7 @@ import Page from '../../components/Page';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 // ----------------------------------------------------------------------
 
-export default function GroupRoleCreate() {
+export default function EcommerceGroupCreate() {
   const { translate } = useLocales();
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
@@ -63,7 +63,7 @@ export default function GroupRoleCreate() {
             { name: !isEdit ? translate('page.group.heading4.new') : name }
           ]}
         />
-        <EcommerceGroupNewForm isEdit={isEdit} currentGroup={currentGroup} />
+        <EcommerceGroupNewForm isEdit={isEdit} isView={false} currentGroup={currentGroup} />
       </Container>
     </Page>
   );

@@ -1,6 +1,8 @@
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack5';
 import { useCallback, useState, useEffect } from 'react';
+import { Icon } from '@iconify/react';
+import plusFill from '@iconify/icons-eva/plus-fill';
 import { useNavigate } from 'react-router-dom';
 import { Form, FormikProvider, useFormik } from 'formik';
 // material
@@ -17,7 +19,9 @@ import {
   TextField,
   Typography,
   FormHelperText,
-  Autocomplete
+  Autocomplete,
+  InputAdornment,
+  Button
 } from '@material-ui/core';
 // utils
 import { createGroup, updateGroup } from '_apis_/group';
@@ -25,10 +29,12 @@ import { createGroup, updateGroup } from '_apis_/group';
 import { PATH_DASHBOARD } from 'routes/paths';
 // hook
 import useLocales from 'hooks/useLocales';
-import { OptionStatus, statusOptions } from 'utils/constants';
+import { OptionStatus, statusOptions, statusOrder, statusOrderOptions } from 'utils/constants';
 import { getGroupRoleList } from 'redux/slices/group';
 // @types
-import { Group, GroupMode, GroupRole } from '../../../../@types/group';
+import { Contribution, Group, GroupMode, GroupRole } from '../../../../@types/group';
+import PartnerTaskCard from './PartnerTaskCard';
+import PartnerDialog from './PartnerDialog';
 
 // ----------------------------------------------------------------------
 
@@ -42,47 +48,89 @@ const LabelStyle = styled(Typography)(({ theme }) => ({
 
 type EcommerceGroupNewFormProps = {
   isEdit: boolean;
+  isView: boolean;
   currentGroup?: Group;
 };
 
 export default function EcommerceGroupNewForm({
   isEdit,
+  isView,
   currentGroup
 }: EcommerceGroupNewFormProps) {
   const { translate } = useLocales();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const { user } = useAuth();
+  const [open, setOpen] = useState(false);
   const employeePartnerList = useSelector(
     (state: RootState) => state.employeePartner.employeePartnerList
   );
   const groupModeList = useSelector((state: RootState) => state.group.groupModeList);
   const groupRoleList = useSelector((state: RootState) => state.group.groupRoleList);
+  const [contribution, setContribution] = useState<Contribution | null>(null);
+  const [contributionMembersList, setContributionMembersList] = useState<Contribution[]>([]);
   const [enumStatus, setEnumStatus] = useState<OptionStatus | null>(null);
   const [groupMode, setGroupMode] = useState<GroupMode | null>(null);
   const [groupRole, setGroupRole] = useState<GroupRole | null>(null);
-  const [startTime, setStartTime] = useState<Date | null>(new Date());
-  const [endTime, setEndTime] = useState<Date | null>(new Date());
+  const [isEditPartner, setIsEditPartner] = useState<boolean>(false);
 
   const NewGardenSchema = Yup.object().shape({
     name: Yup.string().required(translate('message.form.name')),
     imageUrl: Yup.array().min(1, translate('message.form.image'))
   });
 
+  const handleOpen = (contribution: Contribution | null, isEditContribution: boolean) => {
+    setOpen(true);
+    if (isEditContribution) {
+      setContribution(contribution);
+      setIsEditPartner(true);
+    } else {
+      setContribution(null);
+      setIsEditPartner(false);
+    }
+  };
+  const handleClose = () => {
+    setOpen(false);
+    // setIsOpen(false);
+  };
+
+  const handleDelete = async (id: string) => {
+    const data = contributionMembersList.filter((object) => object.id != id);
+    setContributionMembersList(data);
+  };
+
+  const callback = async (values: Contribution) => {
+    if (values != null) {
+      const data = contributionMembersList;
+      if (!isEditPartner) {
+        values.groupId = currentGroup?.id ?? '';
+        data.push(values);
+        setContributionMembersList(data);
+      } else {
+        const index = data.findIndex((object) => object.id == values.id);
+        data[index] = values;
+        setContributionMembersList(data);
+        setIsEditPartner(false);
+      }
+      setOpen(false);
+    }
+  };
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       id: currentGroup?.id || '',
-      startTime: currentGroup?.startTime || new Date(),
-      endTime: currentGroup?.endTime || new Date(),
+      startTime: currentGroup?.startTime || '',
+      endTime: currentGroup?.endTime || '',
       licensePlate: currentGroup?.licensePlate || '',
       note: currentGroup?.note || '',
       siteId: currentGroup?.siteId || '',
       status: currentGroup?.status || '',
+      groupRoleId: currentGroup?.groupRoleId || '',
       personalRate: currentGroup?.personalRate || '',
       contribution: currentGroup?.contribution || '',
       employeePartnerId: currentGroup?.employeePartnerId || '',
-      contributionMembers: currentGroup?.contributionMembers || null
+      contributionMembers: currentGroup?.contributionMembers || []
     },
     // validationSchema: NewGardenSchema,
     onSubmit: async (values, { setSubmitting, resetForm, setErrors }) => {
@@ -90,8 +138,10 @@ export default function EcommerceGroupNewForm({
       try {
         // values.groupModeId = values.groupModeId.id;
         values.siteId = user?.SiteId;
-        values.startTime = startTime ?? new Date();
-        values.endTime = endTime ?? new Date();
+        if (!isEdit) {
+          values.startTime = new Date().toISOString();
+        }
+        values.contributionMembers = contributionMembersList;
         !isEdit
           ? await createGroup(values).then((response) => {
               if (response.status == 200) {
@@ -125,20 +175,109 @@ export default function EcommerceGroupNewForm({
       }
     }
   });
-  useEffect(() => {
-    if (groupMode?.id != null) {
-      dispatch(getGroupRoleList(groupMode.id, 0, -1));
-    }
-  }, [groupMode]);
 
   const { errors, values, touched, handleSubmit, isSubmitting, setFieldValue, getFieldProps } =
     formik;
+
+  const fetchData = async () => {
+    if (groupMode?.id != null) {
+      await dispatch(getGroupRoleList(groupMode.id, 0, -1));
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, [groupMode]);
+
+  useEffect(() => {
+    if (isEdit) {
+      if (currentGroup != null) {
+        if (currentGroup.contributionMembers?.length != 0) {
+          setGroupMode(
+            groupModeList.find((v) => v.id == currentGroup?.contributionMembers[0].groupModeId) ??
+              null
+          );
+          setFieldValue(
+            'employeePartnerId',
+            employeePartnerList.find(
+              (v) => v.id == currentGroup?.contributionMembers[0].employeePartnerId
+            )
+          );
+          setContributionMembersList(currentGroup?.contributionMembers);
+        }
+      }
+      setEnumStatus(statusOrder.find((v) => v.id == currentGroup?.status) ?? null);
+    }
+  }, [currentGroup]);
+
+  useEffect(() => {
+    if (isEdit) {
+      setGroupRole(
+        groupRoleList.find((v) => v.id == currentGroup?.contributionMembers[0].groupRoleId) ?? null
+      );
+    }
+  }, [groupRoleList]);
 
   return (
     <FormikProvider value={formik}>
       <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
         <Grid container spacing={3} style={{ display: 'flex', justifyContent: 'center' }}>
           <Grid item xs={12} md={8}>
+            <Card sx={{ py: 3, px: 3 }}>
+              {isView && contributionMembersList.length == 0 && (
+                <Stack spacing={2} width="100%" justifyContent="center" alignItems="center">
+                  <Typography variant="subtitle1" noWrap>
+                    Không có đối tác
+                  </Typography>
+                </Stack>
+              )}
+              <Stack spacing={2} width="100%">
+                {contributionMembersList.map((contribution: Contribution, index: number) => (
+                  <PartnerTaskCard
+                    isView={isView}
+                    handleOpen={handleOpen}
+                    key={index}
+                    contribution={contribution}
+                    handleDelete={handleDelete}
+                  />
+                ))}
+              </Stack>
+              <Stack spacing={2} width="100%">
+                {contributionMembersList.map((contribution: Contribution, index: number) => (
+                  <PartnerTaskCard
+                    isView={isView}
+                    handleOpen={handleOpen}
+                    key={index}
+                    contribution={contribution}
+                    handleDelete={handleDelete}
+                  />
+                ))}
+              </Stack>
+              <Stack spacing={2} sx={{ pb: 3 }}>
+                {!isView && (
+                  <Button
+                    fullWidth
+                    size="large"
+                    color="inherit"
+                    startIcon={<Icon color="green" icon={plusFill} width={20} height={20} />}
+                    onClick={() => handleOpen(null, false)}
+                    sx={{ fontSize: 14 }}
+                  >
+                    <p style={{ color: 'green' }}> Add new partner</p>
+                  </Button>
+                )}
+
+                <PartnerDialog
+                  open={open}
+                  onClose={handleClose}
+                  isEdit={isEditPartner}
+                  isView={isView}
+                  currentContribution={contribution}
+                  callback={callback}
+                />
+              </Stack>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={4}>
             <Card sx={{ p: 3 }}>
               <Stack spacing={3}>
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 3, sm: 2 }}>
@@ -149,93 +288,7 @@ export default function EcommerceGroupNewForm({
                     error={Boolean(touched.licensePlate && errors.licensePlate)}
                     helperText={touched.licensePlate && errors.licensePlate}
                   />
-                  <Autocomplete
-                    fullWidth
-                    disablePortal
-                    clearIcon
-                    id="employeePartnerId"
-                    {...getFieldProps('employeePartnerId')}
-                    options={employeePartnerList}
-                    getOptionLabel={(option: any) => (option ? option.name : '')}
-                    onChange={(e, value: any) =>
-                      value ? { ...setFieldValue('employeePartnerId', value) } : ''
-                    }
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label={translate('page.group.form.contributionMembers')}
-                        error={Boolean(touched.contributionMembers && errors.contributionMembers)}
-                        helperText={touched.contributionMembers && errors.contributionMembers}
-                      />
-                    )}
-                  />
                 </Stack>
-                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 3, sm: 2 }}>
-                  <Autocomplete
-                    fullWidth
-                    disablePortal
-                    clearIcon
-                    id="contribution"
-                    value={groupMode}
-                    options={groupModeList}
-                    getOptionLabel={(option: any) => (option ? option.name : '')}
-                    onChange={(e, value: any) => {
-                      setFieldValue('contribution', value);
-                      setGroupMode(value);
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label={translate('page.group.form.contribution')}
-                        error={Boolean(touched.contribution && errors.contribution)}
-                        helperText={touched.contribution && errors.contribution}
-                      />
-                    )}
-                  />
-                  <Autocomplete
-                    fullWidth
-                    disablePortal
-                    clearIcon
-                    id="personalRate"
-                    value={groupRole}
-                    options={groupRoleList}
-                    getOptionLabel={(option: any) => (option ? option.personalRate : '')}
-                    onChange={(e, value: any) => {
-                      setFieldValue('personalRate', value);
-                      setGroupRole(value);
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label={translate('page.group.form.personalRate')}
-                        error={Boolean(touched.personalRate && errors.personalRate)}
-                        helperText={touched.personalRate && errors.personalRate}
-                      />
-                    )}
-                  />
-                </Stack>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 3, sm: 2 }}>
-                    <DesktopDatePicker
-                      label={translate('page.group.form.startTime')}
-                      value={startTime}
-                      minDate={new Date('2017-01-01')}
-                      onChange={(newValue) => {
-                        setStartTime(newValue);
-                      }}
-                      renderInput={(params) => <TextField fullWidth {...params} />}
-                    />
-                    <DesktopDatePicker
-                      label={translate('page.group.form.endTime')}
-                      value={endTime}
-                      minDate={startTime}
-                      onChange={(newValue) => {
-                        setEndTime(newValue);
-                      }}
-                      renderInput={(params) => <TextField fullWidth {...params} />}
-                    />
-                  </Stack>
-                </LocalizationProvider>
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 3, sm: 2 }}>
                   <TextField
                     fullWidth
@@ -244,6 +297,28 @@ export default function EcommerceGroupNewForm({
                     error={Boolean(touched.note && errors.note)}
                     helperText={touched.note && errors.note}
                   />
+                </Stack>
+                {isEdit && (
+                  <Stack direction={{ xs: 'column', sm: 'column' }} spacing={{ xs: 3, sm: 2 }}>
+                    <TextField
+                      fullWidth
+                      disabled
+                      label={translate('page.group.form.startTime')}
+                      {...getFieldProps('startTime')}
+                      error={Boolean(touched.startTime && errors.startTime)}
+                      helperText={touched.startTime && errors.startTime}
+                    />
+                    <TextField
+                      fullWidth
+                      disabled
+                      label={translate('page.group.form.endTime')}
+                      {...getFieldProps('endTime')}
+                      error={Boolean(touched.endTime && errors.endTime)}
+                      helperText={touched.endTime && errors.endTime}
+                    />
+                  </Stack>
+                )}
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 3, sm: 2 }}>
                   {isEdit && (
                     <Autocomplete
                       fullWidth
@@ -251,14 +326,13 @@ export default function EcommerceGroupNewForm({
                       clearIcon
                       id="status"
                       value={enumStatus}
-                      options={statusOptions}
-                      getOptionLabel={(option: OptionStatus) => translate(`status.${option.label}`)}
-                      // getOptionLabel={(option: any) => (option ? option.name : '')}
+                      options={statusOrderOptions}
+                      getOptionLabel={(option: OptionStatus) => translate(`status.${option.id}`)}
                       onChange={(e, values: OptionStatus | null) => setEnumStatus(values)}
                       renderInput={(params) => (
                         <TextField
                           {...params}
-                          label={translate('page.garden.form.status')}
+                          label={translate('page.group.form.status')}
                           error={Boolean(touched.status && errors.status)}
                           helperText={touched.status && errors.status}
                         />
@@ -266,14 +340,15 @@ export default function EcommerceGroupNewForm({
                     />
                   )}
                 </Stack>
-
-                <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
-                  <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                    {!isEdit ? translate('button.addNew') : translate('button.update')}
-                  </LoadingButton>
-                </Box>
               </Stack>
             </Card>
+            {!isView && (
+              <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
+                <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+                  {!isEdit ? translate('button.addNew') : translate('button.update')}
+                </LoadingButton>
+              </Box>
+            )}
           </Grid>
         </Grid>
       </Form>

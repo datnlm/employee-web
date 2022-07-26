@@ -16,10 +16,13 @@
         "list": "Lịch sử đơn hàng"
       },
       "heading1": {
-        "list": "Danh sách đặt hàng"
+        "list": "Danh sách đặt hàng",
+        "product": "Danh sách sản phẩm"
       },
       "heading2": "Shop",
+      "heading3": "Lịch sử đơn hàng",
       "heading4": {
+        "product": "Sản phẩm",
         "list": "Danh sách"
       },
       "search": "Tìm kiếm theo đơn hàng",
@@ -40,7 +43,8 @@
       "heading1": {
         "list": "Danh sách đoàn",
         "create": "Tạo mới đoàn",
-        "update": "Cập nhật đoàn"
+        "update": "Cập nhật đoàn",
+        "contribution":"Đóng góp"
       },
       "heading2": "Đoàn",
       "heading3": "Đoàn",
@@ -105,6 +109,11 @@
       "en-US": "Tiếng Anh"
     }
   },
+  "status": {
+    "0": "Đã huỷ" ,
+    "1": "Mới",
+    "3": "Hoàn thành"
+  },
   "button": {
     "add": "Thêm vào giỏ",
     "cancel": "Huỷ",
@@ -117,6 +126,10 @@
     "delete": "Xoá",
     "view": "Xem chi tiết",
     "login": "Đăng nhập",
-    "addNew": "Thêm mới"
+    "logout": "Đăng xuất",
+    "addNew": "Thêm mới",
+    "update":"Cập nhật",
+    "order": "Lịch sử đặt hàng",
+    "shop": "Đặt hàng"
   }
 }
