@@ -184,6 +184,11 @@ export default function OrderList() {
 
   const isOrderNotFound = filteredOrder.length === 0 && !isLoading;
 
+  function convertUTCDateToLocalDate(date: any) {
+    const newDate = new Date(date);
+    return newDate.toLocaleDateString();
+  }
+
   const TABLE_HEAD = [
     { id: 'time', label: translate('page.order.form.create'), alignRight: false },
     {
@@ -276,7 +281,9 @@ export default function OrderList() {
                           <TableCell padding="checkbox">
                             {/* <Checkbox checked={isItemSelected} /> */}
                           </TableCell>
-                          <TableCell align="left">{createTime}</TableCell>
+                          <TableCell align="left">
+                            {new Date(createTime).toLocaleDateString()}
+                          </TableCell>
                           <TableCell align="left">{total}</TableCell>
                           <TableCell align="left">{name}</TableCell>
                           <TableCell align="left">{nationalityName}</TableCell>
