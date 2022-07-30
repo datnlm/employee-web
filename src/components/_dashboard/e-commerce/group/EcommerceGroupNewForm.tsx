@@ -283,6 +283,7 @@ export default function EcommerceGroupNewForm({
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 3, sm: 2 }}>
                   <TextField
                     fullWidth
+                    disabled={isView}
                     label={translate('page.group.form.licensePlate')}
                     {...getFieldProps('licensePlate')}
                     error={Boolean(touched.licensePlate && errors.licensePlate)}
@@ -292,6 +293,7 @@ export default function EcommerceGroupNewForm({
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 3, sm: 2 }}>
                   <TextField
                     fullWidth
+                    disabled={isView}
                     label={translate('page.group.form.note')}
                     {...getFieldProps('note')}
                     error={Boolean(touched.note && errors.note)}
@@ -323,6 +325,7 @@ export default function EcommerceGroupNewForm({
                     <Autocomplete
                       fullWidth
                       disablePortal
+                      disabled={isView}
                       clearIcon
                       id="status"
                       value={enumStatus}

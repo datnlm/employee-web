@@ -227,8 +227,12 @@ export default function EcommerceGroupList() {
                             {/* <Checkbox checked={isItemSelected} /> */}
                           </TableCell>
                           <TableCell align="left">{licensePlate}</TableCell>
-                          <TableCell align="left">{startTime}</TableCell>
-                          <TableCell align="left">{endTime}</TableCell>
+                          <TableCell align="left">
+                            {new Date(startTime).toLocaleDateString()}
+                          </TableCell>
+                          <TableCell align="left">
+                            {new Date(endTime).toLocaleDateString()}
+                          </TableCell>
                           <TableCell align="left">{note}</TableCell>
                           <TableCell align="left">
                             <Label
