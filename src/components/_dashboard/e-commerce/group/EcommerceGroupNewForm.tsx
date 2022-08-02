@@ -202,7 +202,6 @@ export default function EcommerceGroupNewForm({
 
   useEffect(() => {
     if (isEdit) {
-      setIsLoading(true);
       if (currentGroup != null) {
         if (currentGroup.contributionMembers?.length != 0) {
           setGroupMode(
@@ -219,9 +218,7 @@ export default function EcommerceGroupNewForm({
         }
       }
       setEnumStatus(statusOrder.find((v) => v.id == currentGroup?.status) ?? null);
-      // setIsLoading(false);
     }
-    setIsLoading(false);
   }, [currentGroup]);
 
   useEffect(() => {
