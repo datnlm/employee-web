@@ -50,6 +50,7 @@ export const createGroup = (group: Group) => {
     groupRoleId: any;
     groupModeId: any;
   }[] = [];
+
   group.contributionMembers.map((v: Contribution) =>
     contribution.push({
       groupId: v.groupId,
@@ -61,6 +62,7 @@ export const createGroup = (group: Group) => {
       groupModeId: v.groupModeId
     })
   );
+
   const data = {
     startTime: group.startTime,
     licensePlate: group.licensePlate,
@@ -77,8 +79,6 @@ export const createGroup = (group: Group) => {
 export const updateGroup = (group: Group) => {
   const contribution: any[] = [];
   group.contributionMembers.map((v: Contribution) => {
-    console.log(v.id);
-    console.log(v.id == null);
     if (v.id != '') {
       contribution.push({
         id: v.id,

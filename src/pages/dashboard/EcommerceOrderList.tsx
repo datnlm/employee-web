@@ -134,7 +134,7 @@ export default function OrderList() {
       setCurrentGroup(response.data);
     });
     dispatch(getContributions(0, -1));
-    dispatch(getEmployeePartnerList(0, -1));
+    dispatch(getEmployeePartnerList(user?.SiteId, 0, -1));
     dispatch(getGroupModeList(0, -1));
   };
 

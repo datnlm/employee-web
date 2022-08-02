@@ -77,7 +77,8 @@
     "payment-option": "Các lựa chọn thanh toán",
     "cash": "Tiền mặt khi thanh toán",
     "billing-information": "Thông tin thanh toán",
-    "not-found": "Không tìm thấy"
+    "not-found": "Không tìm thấy",
+    "partner-emtpy": "Không có đối tác"
   },
   "form": {
     "cart": "Cart",
@@ -96,12 +97,21 @@
     "group": "Đoàn"
   },
   "message": {
+    "form": {
+      "partner": "Vui lòng chọn nhân viên đối tác",
+      "contribution": "Vui lòng chọn đóng góp",
+      "personalRate": "Vui lòng chọn tỉ lệ"
+    },
     "cart-empty": "Cart trống",
     "cart-empty-detail": "Có vẻ như bạn không có mặt hàng nào trong giỏ hàng của mình.",
     "momo": "Bạn sẽ được chuyển đến trang web MoMo để hoàn tất giao dịch mua của mình.",
     "cash": "Thanh toán bằng tiền mặt khi bạn đặt hàng.",
     "order-success": "Đặt hàng thành công",
-    "order-error": "Đặt hàng thất bại"
+    "order-error": "Đặt hàng thất bại",
+    "create-success": "Thêm mới thành công",
+    "update-success": "Cập nhật thành công",
+    "create-error": "Thêm mới thất bại",
+    "update-error": "Cập nhật thất bại"
   },
   "menu": {
     "language": {
@@ -130,6 +140,7 @@
     "addNew": "Thêm mới",
     "update":"Cập nhật",
     "order": "Lịch sử đặt hàng",
-    "shop": "Đặt hàng"
+    "shop": "Đặt hàng",
+    "addPartner": "Thêm đối tác"
   }
 }

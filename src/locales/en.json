@@ -13,20 +13,56 @@
     },
     "order": {
       "title": {
-        "list": "Employee Web | History Order"
+        "list": "History Order"
       },
       "heading1": {
-        "list": "Order List"
+        "list": "Order List",
+        "product": "Product List"
       },
       "heading2": "Shop",
-      "heading4": "Order List",
-      "search": "Search order list",
+      "heading3": "Order List",
+      "heading4": {
+        "product": "Product",
+        "list": "List"
+      },
+      "search": "Search order",
       "form": {
-        "create": "Ngày tạo",
-        "total": "Giá",
-        "name": "Tên khách hàng",
-        "national": "Quốc tịch",
-        "status": "Trạng thái"
+        "create": "Create time",
+        "total": "Total",
+        "name": "Name",
+        "national": "National",
+        "status": "Status"
+      }
+    },
+    "group": {
+      "title": {
+        "list": "Group List",
+        "create": "Create new group",
+        "update": "Update group"
+      },
+      "heading1": {
+        "list": "Group List",
+        "create": "Create new group",
+        "update": "Update group",
+        "contribution":"Contribution"
+      },
+      "heading2": "Group",
+      "heading3": "Group",
+      "heading4": {
+        "list": "List",
+        "new": "New Group",
+        "update": "Update group"
+      },
+      "search": "Search group",
+      "form": {
+        "licensePlate": "License Plate",
+        "startTime": "Start Time",
+        "endTime": "End Time",
+        "note": "Note",
+        "status": "Status",
+        "contributionMembers": "Employee Partner",
+        "contribution": "Contribution",
+        "personalRate": "Personal Rate"
       }
     }
   },
@@ -41,7 +77,8 @@
     "payment-option": "Payment options",
     "cash": "Cash on Checkout",
     "billing-information": "Billing Information",
-    "not-found": "Not found"
+    "not-found": "Not found",
+    "partner-emtpy": "Empty Partner"
   },
   "form": {
     "cart": "Cart",
@@ -60,18 +97,32 @@
     "group": "Group"
   },
   "message": {
+    "form": {
+      "partner": "Please choice employee partner",
+      "contribution": "Please choice contribution",
+      "personalRate": "Please choice personal rate"
+    },
     "cart-empty": "Cart is empty",
     "cart-empty-detail": "Look like you have no items in your shopping cart.",
     "momo": "You will be redirected to MoMo website to complete your purchase securely.",
     "cash": "Pay with cash when your order.",
     "order-success": "Order success",
-    "order-error": "Order error"
+    "order-error": "Order error",
+    "create-success": "Create new success",
+    "update-success": "Update success",
+    "create-error": "Create new error",
+    "update-error": "Update error"
   },
   "menu": {
     "language": {
       "vi-VN": "Vietnamese",
       "en-US": "English"
     }
+  },
+  "status": {
+    "0": "Cancel" ,
+    "1": "New",
+    "3": "Done"
   },
   "button": {
     "add": "Add to Cart",
@@ -84,6 +135,12 @@
     "complete-order": "Complete Order",
     "delete": "Delete",
     "view": "View",
-    "login": "Login"
+    "login": "Login",
+    "logout": "Logout",
+    "addNew": "Create",
+    "update":"Update",
+    "order": "Order List",
+    "shop": "Order",
+    "addPartner": "Add new partner"
   }
 }
