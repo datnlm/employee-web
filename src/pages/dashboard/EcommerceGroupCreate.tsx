@@ -7,6 +7,7 @@ import { Container } from '@material-ui/core';
 import EcommerceGroupNewForm from 'components/_dashboard/e-commerce/group/EcommerceGroupNewForm';
 import { getContributions, getGroupModeList } from 'redux/slices/group';
 import { getEmployeePartnerList } from 'redux/slices/employee-partner';
+import useAuth from 'hooks/useAuth';
 import { Group } from '../../@types/group';
 // redux
 import { useDispatch } from '../../redux/store';
@@ -23,6 +24,7 @@ import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 export default function EcommerceGroupCreate() {
   const { translate } = useLocales();
   const { themeStretch } = useSettings();
+  const { user } = useAuth();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { name } = useParams();
@@ -40,7 +42,7 @@ export default function EcommerceGroupCreate() {
       fetchData();
     }
     dispatch(getContributions(0, -1));
-    dispatch(getEmployeePartnerList(0, -1));
+    dispatch(getEmployeePartnerList(user?.SiteId, 0, -1));
     dispatch(getGroupModeList(0, -1));
   }, [dispatch]);
 

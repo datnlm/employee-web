@@ -74,9 +74,9 @@ export default function ContributionMembersNewForm({
   const [groupRole, setGroupRole] = useState<GroupRole | null>(null);
 
   const NewGardenSchema = Yup.object().shape({
-    employeePartnerId: Yup.object().required(translate('message.form.name')).nullable(true),
-    contribution: Yup.object().required(translate('message.form.name')).nullable(true),
-    personalRate: Yup.object().required(translate('message.form.name')).nullable(true)
+    employeePartnerId: Yup.object().required(translate('message.form.partner')).nullable(true),
+    contribution: Yup.object().required(translate('message.form.contribution')).nullable(true),
+    personalRate: Yup.object().required(translate('message.form.personalRate')).nullable(true)
   });
 
   const formik = useFormik({
@@ -130,26 +130,32 @@ export default function ContributionMembersNewForm({
   useEffect(() => {
     if (isEdit) {
       if (currentContribution != null) {
-        setGroupMode(groupModeList.find((v) => v.id == currentContribution.groupModeId) ?? null);
-        setFieldValue(
-          'contribution',
-          groupModeList.find((v) => v.id == currentContribution.groupModeId) ?? null
-        );
-        setFieldValue(
-          'employeePartnerId',
-          employeePartnerList.find((v) => v.id == currentContribution.employeePartnerId)
-        );
+        if (currentContribution.groupModeId != null) {
+          setGroupMode(groupModeList.find((v) => v.id == currentContribution.groupModeId) ?? null);
+          setFieldValue(
+            'contribution',
+            groupModeList.find((v) => v.id == currentContribution.groupModeId) ?? null
+          );
+        }
+        if (currentContribution.employeePartnerId != null) {
+          setFieldValue(
+            'employeePartnerId',
+            employeePartnerList.find((v) => v.id == currentContribution.employeePartnerId)
+          );
+        }
       }
     }
   }, [currentContribution]);
 
   useEffect(() => {
     if (isEdit) {
-      setFieldValue(
-        'personalRate',
-        groupRoleList.find((v) => v.id == currentContribution?.groupRoleId) ?? null
-      );
-      setGroupRole(groupRoleList.find((v) => v.id == currentContribution?.groupRoleId) ?? null);
+      if (currentContribution?.groupRoleId != null) {
+        setFieldValue(
+          'personalRate',
+          groupRoleList.find((v) => v.id == currentContribution?.groupRoleId) ?? null
+        );
+        setGroupRole(groupRoleList.find((v) => v.id == currentContribution?.groupRoleId) ?? null);
+      }
     }
   }, [groupRoleList]);
 

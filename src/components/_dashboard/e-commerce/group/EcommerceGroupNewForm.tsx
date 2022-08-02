@@ -67,6 +67,7 @@ export default function EcommerceGroupNewForm({
   );
   const groupModeList = useSelector((state: RootState) => state.group.groupModeList);
   const groupRoleList = useSelector((state: RootState) => state.group.groupRoleList);
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [contribution, setContribution] = useState<Contribution | null>(null);
   const [contributionMembersList, setContributionMembersList] = useState<Contribution[]>([]);
   const [enumStatus, setEnumStatus] = useState<OptionStatus | null>(null);
@@ -101,10 +102,15 @@ export default function EcommerceGroupNewForm({
 
   const callback = async (values: Contribution) => {
     if (values != null) {
-      const data = contributionMembersList;
+      let data = contributionMembersList;
       if (!isEditPartner) {
+        if (data.length == 0) {
+          data = [values];
+          console.log(data);
+        } else {
+          data.push(values);
+        }
         values.groupId = currentGroup?.id ?? '';
-        data.push(values);
         setContributionMembersList(data);
       } else {
         const index = data.findIndex((object) => object.id == values.id);
@@ -140,6 +146,12 @@ export default function EcommerceGroupNewForm({
         values.siteId = user?.SiteId;
         if (!isEdit) {
           values.startTime = new Date().toISOString();
+        }
+        if (isEdit) {
+          values.status = enumStatus!.id;
+          if (enumStatus!.id == 3) {
+            values.endTime = new Date().toISOString();
+          }
         }
         values.contributionMembers = contributionMembersList;
         !isEdit
@@ -211,9 +223,12 @@ export default function EcommerceGroupNewForm({
 
   useEffect(() => {
     if (isEdit) {
-      setGroupRole(
-        groupRoleList.find((v) => v.id == currentGroup?.contributionMembers[0].groupRoleId) ?? null
-      );
+      if (currentGroup?.contributionMembers[0].groupRoleId != null) {
+        setGroupRole(
+          groupRoleList.find((v) => v.id == currentGroup?.contributionMembers[0].groupRoleId) ??
+            null
+        );
+      }
     }
   }, [groupRoleList]);
 
@@ -223,24 +238,13 @@ export default function EcommerceGroupNewForm({
         <Grid container spacing={3} style={{ display: 'flex', justifyContent: 'center' }}>
           <Grid item xs={12} md={8}>
             <Card sx={{ py: 3, px: 3 }}>
-              {isView && contributionMembersList.length == 0 && (
+              {isView && contributionMembersList.length == 0 && !isLoading && (
                 <Stack spacing={2} width="100%" justifyContent="center" alignItems="center">
                   <Typography variant="subtitle1" noWrap>
-                    Không có đối tác
+                    {translate('label.partner-emtpy')}
                   </Typography>
                 </Stack>
               )}
-              <Stack spacing={2} width="100%">
-                {contributionMembersList.map((contribution: Contribution, index: number) => (
-                  <PartnerTaskCard
-                    isView={isView}
-                    handleOpen={handleOpen}
-                    key={index}
-                    contribution={contribution}
-                    handleDelete={handleDelete}
-                  />
-                ))}
-              </Stack>
               <Stack spacing={2} width="100%">
                 {contributionMembersList.map((contribution: Contribution, index: number) => (
                   <PartnerTaskCard
@@ -262,7 +266,7 @@ export default function EcommerceGroupNewForm({
                     onClick={() => handleOpen(null, false)}
                     sx={{ fontSize: 14 }}
                   >
-                    <p style={{ color: 'green' }}> Add new partner</p>
+                    <p style={{ color: 'green' }}>{translate('button.addPartner')}</p>
                   </Button>
                 )}
 

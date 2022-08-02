@@ -56,11 +56,11 @@ export default slice.reducer;
 
 // ----------------------------------------------------------------------
 
-export function getEmployeePartnerList(page: number, rowPerpage: number) {
+export function getEmployeePartnerList(SiteId: string, page: number, rowPerpage: number) {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      await getEmployeePartner(1 + page, rowPerpage).then((response) => {
+      await getEmployeePartner(SiteId, 1 + page, rowPerpage).then((response) => {
         if (response.status == 200) {
           dispatch(slice.actions.totalCount(response.data.metaData.totalCount));
           dispatch(slice.actions.getEmployeePartnerSuccess(response.data.items));
