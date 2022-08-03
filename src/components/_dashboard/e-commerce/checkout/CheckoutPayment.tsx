@@ -10,6 +10,7 @@ import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
 import { Grid, Button } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
 import { manageShop } from '_apis_/products';
+import { createOrderMomo } from '_apis_/momo';
 // @types
 import {
   DeliveryOption,
@@ -77,6 +78,8 @@ export default function CheckoutPayment() {
     validationSchema: PaymentSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
+        console.log('submit');
+        console.log(values.payment);
         const detail: { price: number; quantity: number; productId: string }[] = [];
         checkout.cart.map((v) =>
           detail.push({
@@ -95,19 +98,35 @@ export default function CheckoutPayment() {
           nationalityCode: checkout.billing?.nationality,
           orderDetails: detail
         };
-        await manageShop.createOrder(data).then((response) => {
-          if (response.status == 200) {
-            enqueueSnackbar(translate('message.order-success'), {
-              variant: 'success'
-            });
-            dispatch(resetCart());
-            navigate(PATH_DASHBOARD.eCommerce.shop);
-          } else {
-            enqueueSnackbar(translate('message.order-error'), {
-              variant: 'error'
-            });
-          }
-        });
+
+        if (values.payment == 'momo') {
+          await createOrderMomo(data).then((response) => {
+            if (response.status == 200) {
+              enqueueSnackbar(translate('message.order-success'), {
+                variant: 'success'
+              });
+              window.location.replace(response.data);
+            } else {
+              enqueueSnackbar(translate('message.order-error'), {
+                variant: 'error'
+              });
+            }
+          });
+        } else {
+          await manageShop.createOrder(data).then((response) => {
+            if (response.status == 200) {
+              enqueueSnackbar(translate('message.order-success'), {
+                variant: 'success'
+              });
+              dispatch(resetCart());
+              navigate(PATH_DASHBOARD.eCommerce.shop);
+            } else {
+              enqueueSnackbar(translate('message.order-error'), {
+                variant: 'error'
+              });
+            }
+          });
+        }
       } catch (error) {
         enqueueSnackbar(translate('message.order-error'), {
           variant: 'error'
