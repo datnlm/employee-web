@@ -38,5 +38,11 @@ export class ShopManager {
       .post(`/api/v1/employee/orders/cancel?id=${orderId}&note=${description}`)
       .then((response) => response)
       .catch((err) => err);
+
+  delete = (orderId: string) =>
+    axios
+      .post(`/api/v1/employee/orders/${orderId}`)
+      .then((response) => response)
+      .catch((err) => err);
 }
 export const manageShop = new ShopManager();

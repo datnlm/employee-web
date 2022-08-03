@@ -7,6 +7,8 @@ import { useParams, useLocation, Link as RouterLink } from 'react-router-dom';
 import { Backdrop, Container, Typography, CircularProgress, Stack } from '@material-ui/core';
 import useAuth from 'hooks/useAuth';
 import useLocales from 'hooks/useLocales';
+import { momoPayment } from '_apis_/momo';
+import { manageShop } from '_apis_/products';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
 import { getProducts, filterProducts } from '../../redux/slices/product';
@@ -26,6 +28,7 @@ import {
   ShopFilterSidebar
 } from '../../components/_dashboard/e-commerce/shop';
 import CartWidget from '../../components/_dashboard/e-commerce/CartWidget';
+
 // ----------------------------------------------------------------------
 
 function applyFilter(products: ProductCoralPark[], sortBy: string | null, filters: ProductFilter) {
@@ -115,6 +118,18 @@ export default function EcommerceShop() {
   const { values, resetForm, handleSubmit, isSubmitting, initialValues } = formik;
 
   useEffect(() => {
+    const data = pathname.split('&');
+    if (data[2] != null) {
+      const errorCode = data[11].split('=')[1];
+      const orderId = data[4].split('=')[1];
+      if (errorCode == '0') {
+        momoPayment(data);
+      } else {
+        manageShop.delete(orderId);
+      }
+    }
+    console.log('pathname');
+    console.log(pathname);
     dispatch(getProducts(user?.SiteId, 0, -1));
   }, [dispatch]);
 
