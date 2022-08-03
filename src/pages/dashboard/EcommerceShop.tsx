@@ -118,7 +118,7 @@ export default function EcommerceShop() {
   const { values, resetForm, handleSubmit, isSubmitting, initialValues } = formik;
 
   useEffect(() => {
-    const data = pathname.split('&');
+    const data = window.location.pathname.split('&');
     if (data[2] != null) {
       const errorCode = data[11].split('=')[1];
       const orderId = data[4].split('=')[1];
@@ -129,7 +129,7 @@ export default function EcommerceShop() {
       }
     }
     console.log('pathname');
-    console.log(pathname);
+    console.log(data);
     dispatch(getProducts(user?.SiteId, 0, -1));
   }, [dispatch]);
 
