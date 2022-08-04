@@ -13,7 +13,8 @@
     },
     "order": {
       "title": {
-        "list": "Lịch sử đơn hàng"
+        "list": "Lịch sử đơn hàng",
+        "order-detail": "Chi tiết đơn hàng"
       },
       "heading1": {
         "list": "Danh sách đặt hàng",
@@ -23,7 +24,8 @@
       "heading3": "Lịch sử đơn hàng",
       "heading4": {
         "product": "Sản phẩm",
-        "list": "Danh sách"
+        "list": "Danh sách",
+        "order-detail": "Chi tiết"
       },
       "search": "Tìm kiếm theo đơn hàng",
       "form": {
@@ -69,6 +71,8 @@
   "label": {
     "history": "Lịch sử đặt hàng",
     "sort": "Sắp xếp theo",
+    "low-high": "Giá: Thấp-Cao",
+    "high-low": "Giá: Cao-Thấp",
     "quantity": "Số lượng",
     "available": "Còn lại",
     "license-plate": "Biển số",
@@ -111,7 +115,9 @@
     "create-success": "Thêm mới thành công",
     "update-success": "Cập nhật thành công",
     "create-error": "Thêm mới thất bại",
-    "update-error": "Cập nhật thất bại"
+    "update-error": "Cập nhật thất bại",
+    "cancel-success": "Huỷ thành công",
+    "cancel-error": "Huỷ thất bại"
   },
   "menu": {
     "language": {

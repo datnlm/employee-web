@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
+import { useSnackbar } from 'notistack5';
 import { filter, includes, orderBy } from 'lodash';
 import { paramCase, sentenceCase } from 'change-case';
 import { useParams, useLocation, Link as RouterLink } from 'react-router-dom';
@@ -87,8 +88,9 @@ export default function EcommerceShop() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
   const { translate } = useLocales();
+  const { enqueueSnackbar } = useSnackbar();
   const { user } = useAuth();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const { name } = useParams();
   const [openFilter, setOpenFilter] = useState(false);
   const { products, sortBy, filters, isLoading } = useSelector(
@@ -118,13 +120,20 @@ export default function EcommerceShop() {
   const { values, resetForm, handleSubmit, isSubmitting, initialValues } = formik;
 
   useEffect(() => {
-    const data = window.location.search.split('&');
+    const data = search.split('&');
+    // const data = window.location.search.split('&');
     if (data[2] != null) {
       const errorCode = data[11].split('=')[1];
       const orderId = data[4].split('=')[1];
       if (errorCode == '0') {
+        enqueueSnackbar(translate('message.order-success'), {
+          variant: 'success'
+        });
         momoPayment(data);
       } else {
+        enqueueSnackbar(translate('message.order-error'), {
+          variant: 'error'
+        });
         manageShop.delete(orderId);
       }
     }
@@ -170,12 +179,12 @@ export default function EcommerceShop() {
             { name: translate('page.order.heading4.product') }
           ]}
         />
-        {values !== initialValues && (
+        {!isLoading && products.length == 0 && (
           <Typography gutterBottom>
             <Typography component="span" variant="subtitle1">
               {filteredProducts.length}
             </Typography>
-            &nbsp;Products found
+            &nbsp;{translate('label.not-found')}
           </Typography>
         )}
 

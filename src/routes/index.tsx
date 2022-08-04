@@ -90,6 +90,7 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
+        { path: '/', element: <EcommerceGroupList /> },
         { path: 'order/:name/shop', element: <EcommerceShop /> },
         { path: 'product/:name', element: <EcommerceProductDetails /> },
         { path: 'list', element: <EcommerceProductList /> },
@@ -105,8 +106,12 @@ export default function Router() {
     },
     {
       path: '/',
-      element: <MainLayout />,
-      children: [{ path: '/', element: <LandingPage /> }]
+      element: (
+        <AuthGuard>
+          <DashboardLayout />
+        </AuthGuard>
+      ),
+      children: [{ path: '/', element: <EcommerceGroupList /> }]
     }
   ]);
 }

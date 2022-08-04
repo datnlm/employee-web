@@ -74,41 +74,6 @@ export default function EcommerceMoreMenu({ onDelete, id, status }: EcommerceMor
             primaryTypographyProps={{ variant: 'body2' }}
           />
         </MenuItem>
-        {status !== 0 && (
-          <MenuItem onClick={handleClickOpen} sx={{ color: 'text.secondary' }}>
-            <ListItemIcon>
-              <Icon icon={trash2Outline} width={24} height={24} />
-            </ListItemIcon>
-            <ListItemText
-              primary={translate('button.delete')}
-              primaryTypographyProps={{ variant: 'body2' }}
-            />
-          </MenuItem>
-        )}
-
-        <div>
-          <Dialog open={open} onClose={handleClose} aria-labelledby="draggable-dialog-title">
-            <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-              {translate('message.title.confirm-delete')}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText>{translate('message.confirm-delete')}</DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button autoFocus onClick={handleClose}>
-                {translate('button.save.cancel')}
-              </Button>
-              <Button
-                onClick={(event) => {
-                  onDelete();
-                  handleClose();
-                }}
-              >
-                {translate('button.save.confirm')}
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
       </Menu>
     </>
   );
