@@ -118,7 +118,7 @@ export default function EcommerceShop() {
   const { values, resetForm, handleSubmit, isSubmitting, initialValues } = formik;
 
   useEffect(() => {
-    const data = window.location.pathname.split('&');
+    const data = window.location.search.split('&');
     if (data[2] != null) {
       const errorCode = data[11].split('=')[1];
       const orderId = data[4].split('=')[1];
