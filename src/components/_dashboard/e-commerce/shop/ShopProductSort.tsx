@@ -12,26 +12,6 @@ import { sortByProducts } from '../../../../redux/slices/product';
 import { ProductState } from '../../../../@types/products';
 // ----------------------------------------------------------------------
 
-const SORT_BY_OPTIONS = [
-  { value: 'featured', label: 'Featured' },
-  { value: 'newest', label: 'Newest' },
-  { value: 'priceDesc', label: 'Price: High-Low' },
-  { value: 'priceAsc', label: 'Price: Low-High' }
-];
-
-function renderLabel(label: string | null) {
-  if (label === 'featured') {
-    return 'Featured';
-  }
-  if (label === 'newest') {
-    return 'Newest';
-  }
-  if (label === 'priceDesc') {
-    return 'Price: High-Low';
-  }
-  return 'Price: Low-High';
-}
-
 export default function ShopProductSort() {
   const dispatch = useDispatch();
   const { translate } = useLocales();
@@ -50,6 +30,18 @@ export default function ShopProductSort() {
     handleClose();
     dispatch(sortByProducts(value));
   };
+
+  const SORT_BY_OPTIONS = [
+    { value: 'priceDesc', label: translate('label.high-low') },
+    { value: 'priceAsc', label: translate('label.low-high') }
+  ];
+
+  function renderLabel(label: string | null) {
+    if (label === 'priceDesc') {
+      return translate('label.high-low');
+    }
+    return translate('label.low-high');
+  }
 
   return (
     <>

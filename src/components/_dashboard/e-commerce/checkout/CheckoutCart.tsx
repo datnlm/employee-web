@@ -1,6 +1,7 @@
 import { sum } from 'lodash';
 import { Icon } from '@iconify/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { paramCase } from 'change-case';
+import { useParams, useLocation, Link as RouterLink } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
 // material
@@ -29,6 +30,8 @@ import CheckoutProductList from './CheckoutProductList';
 
 export default function CheckoutCart() {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  const { name } = useParams();
   const { translate } = useLocales();
   const { checkout } = useSelector((state: { product: ProductState }) => state.product);
   const { cart, total, discount, subtotal } = checkout;
@@ -110,7 +113,7 @@ export default function CheckoutCart() {
             <Button
               color="inherit"
               component={RouterLink}
-              to={PATH_DASHBOARD.eCommerce.shop}
+              to={`${PATH_DASHBOARD.eCommerce.root}/order/${paramCase(name)}/shop`}
               startIcon={<Icon icon={arrowIosBackFill} />}
             >
               {translate('button.continue-shopping')}

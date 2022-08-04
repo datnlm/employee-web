@@ -2,6 +2,7 @@ import { sum } from 'lodash';
 import { useSnackbar } from 'notistack5';
 import { Icon } from '@iconify/react';
 import { useParams, Link as RouterLink, useNavigate } from 'react-router-dom';
+import { paramCase, sentenceCase } from 'change-case';
 import { useFormik, Form, FormikProvider } from 'formik';
 import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
 // material
@@ -92,12 +93,12 @@ export default function CheckoutCart() {
         const response = await manageShop.cancel(name, '');
         if (response.status == 200) {
           navigate(PATH_DASHBOARD.eCommerce.order);
-          enqueueSnackbar('Cancel success', { variant: 'success' });
+          enqueueSnackbar(translate('message.cancel-success'), { variant: 'success' });
         } else {
-          enqueueSnackbar('Cancel error', { variant: 'error' });
+          enqueueSnackbar(translate('message.cancel-error'), { variant: 'error' });
         }
       } catch (error) {
-        enqueueSnackbar('Cancel error', { variant: 'error' });
+        enqueueSnackbar(translate('message.cancel-success'), { variant: 'error' });
         console.error(error);
         setSubmitting(false);
         // setErrors(error.message);
@@ -133,11 +134,14 @@ export default function CheckoutCart() {
   const { isSubmitting, handleSubmit } = formik;
 
   return (
-    <Page title="Ecommerce: Order">
+    <Page title={translate('page.order.title.order-detail')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Order"
-          links={[{ name: 'E-Commerce', href: PATH_DASHBOARD.eCommerce.shop }, { name: 'Order' }]}
+          heading={translate('page.order.heading1.product')}
+          links={[
+            { name: translate('page.group.heading2'), href: PATH_DASHBOARD.eCommerce.group },
+            { name: translate('page.order.heading4.order-detail') }
+          ]}
         />
 
         <FormikProvider value={formik}>
@@ -148,7 +152,7 @@ export default function CheckoutCart() {
                   <CardHeader
                     title={
                       <Typography variant="h6">
-                        Card
+                        {translate('form.cart')}
                         {/* <Typography component="span" sx={{ color: 'text.secondary' }}>
                           &nbsp;({totalItems} item)
                         </Typography> */}
@@ -163,8 +167,8 @@ export default function CheckoutCart() {
                     </Scrollbar>
                   ) : (
                     <EmptyContent
-                      title="Cart is empty"
-                      description="Look like you have no items in your shopping cart."
+                      title={translate('message.cart-empty')}
+                      description={translate('message.cart-empty-detail')}
                       img="/static/illustrations/illustration_empty_cart.svg"
                     />
                   )}

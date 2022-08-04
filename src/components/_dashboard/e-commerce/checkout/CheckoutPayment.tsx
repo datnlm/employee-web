@@ -102,9 +102,6 @@ export default function CheckoutPayment() {
         if (values.payment == 'momo') {
           await createOrderMomo(data).then((response) => {
             if (response.status == 200) {
-              enqueueSnackbar(translate('message.order-success'), {
-                variant: 'success'
-              });
               window.location.replace(response.data);
             } else {
               enqueueSnackbar(translate('message.order-error'), {

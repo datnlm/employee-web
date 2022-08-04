@@ -13,7 +13,8 @@
     },
     "order": {
       "title": {
-        "list": "History Order"
+        "list": "History Order",
+        "order-detail": "Order Detail"
       },
       "heading1": {
         "list": "Order List",
@@ -23,7 +24,8 @@
       "heading3": "Order List",
       "heading4": {
         "product": "Product",
-        "list": "List"
+        "list": "List",
+        "order-detail": "Order Detail"
       },
       "search": "Search order",
       "form": {
@@ -69,6 +71,8 @@
   "label": {
     "history": "History Order",
     "sort": "Sort by",
+    "low-high": "Price: Low-High",
+    "high-low": "Price: High-Low",
     "quantity": "Quantity",
     "available": "Available",
     "license-plate": "License Plate",
@@ -111,7 +115,9 @@
     "create-success": "Create new success",
     "update-success": "Update success",
     "create-error": "Create new error",
-    "update-error": "Update error"
+    "update-error": "Update error",
+    "cancel-success": "Cancel success",
+    "cancel-error": "Cancel error"
   },
   "menu": {
     "language": {
