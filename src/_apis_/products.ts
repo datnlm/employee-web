@@ -29,7 +29,7 @@ export class ShopManager {
   // create
   createOrder = (checkout: any) =>
     axios
-      .post('/api/v1/employee/orders', checkout)
+      .post('/api/v1/employee/orders/cash', checkout)
       .then((response) => response)
       .catch((err) => err);
 
