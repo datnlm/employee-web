@@ -101,11 +101,15 @@
     "group": "Group"
   },
   "message": {
+    "title": {
+      "confirm-delete": "Confirm delete"
+    },
     "form": {
       "partner": "Please choice employee partner",
       "contribution": "Please choice contribution",
       "personalRate": "Please choice personal rate"
     },
+    "confirm-delete": "Are you sure to delete this?",
     "cart-empty": "Cart is empty",
     "cart-empty-detail": "Look like you have no items in your shopping cart.",
     "momo": "You will be redirected to MoMo website to complete your purchase securely.",
