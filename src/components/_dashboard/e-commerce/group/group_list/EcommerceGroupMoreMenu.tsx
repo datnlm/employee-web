@@ -79,21 +79,23 @@ export default function EcommerceGroupMoreMenu({
             primaryTypographyProps={{ variant: 'body2' }}
           />
         </MenuItem>
+        {status !== 3 && (
+          <MenuItem
+            component={RouterLink}
+            to={`${PATH_DASHBOARD.eCommerce.root}/group/${paramCase(id)}/edit`}
+            sx={{ color: 'text.secondary' }}
+          >
+            <ListItemIcon>
+              <Icon icon={editFill} width={24} height={24} />
+            </ListItemIcon>
+            <ListItemText
+              primary={translate('button.edit')}
+              primaryTypographyProps={{ variant: 'body2' }}
+            />
+          </MenuItem>
+        )}
 
-        <MenuItem
-          component={RouterLink}
-          to={`${PATH_DASHBOARD.eCommerce.root}/group/${paramCase(id)}/edit`}
-          sx={{ color: 'text.secondary' }}
-        >
-          <ListItemIcon>
-            <Icon icon={editFill} width={24} height={24} />
-          </ListItemIcon>
-          <ListItemText
-            primary={translate('button.edit')}
-            primaryTypographyProps={{ variant: 'body2' }}
-          />
-        </MenuItem>
-        {status !== 0 && (
+        {status == 1 && (
           <MenuItem onClick={handleClickOpen} sx={{ color: 'text.secondary' }}>
             <ListItemIcon>
               <Icon icon={trash2Outline} width={24} height={24} />

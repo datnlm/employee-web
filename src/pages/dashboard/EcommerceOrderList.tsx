@@ -35,6 +35,7 @@ import { getGroupById } from '_apis_/group';
 import EcommerceGroupNewForm from 'components/_dashboard/e-commerce/group/EcommerceGroupNewForm';
 import { getContributions, getGroupModeList } from 'redux/slices/group';
 import { getEmployeePartnerList } from 'redux/slices/employee-partner';
+import LoadingScreen from 'components/LoadingScreen';
 import { RootState, useDispatch, useSelector } from '../../redux/store';
 import { getOrder, resetCart } from '../../redux/slices/product';
 // routes
@@ -112,12 +113,10 @@ export default function OrderList() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
-  const { orderDetail, sortBy, filters, isLoading, totalCount } = useSelector(
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
+  const { orderDetail, sortBy, filters, totalCount } = useSelector(
     (state: { product: ProductState }) => state.product
   );
-
-  // const orderList = useSelector((state: ProductState) => state.orderDetail);
-  // const isLoading = useSelector((state: ProductState) => state.isLoading);
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [selected, setSelected] = useState<string[]>([]);
@@ -130,12 +129,14 @@ export default function OrderList() {
   const [currentGroup, setCurrentGroup] = useState<Group>();
 
   const fetchData = async () => {
+    setIsLoading(true);
     await getGroupById(paramCase(name)).then((response) => {
       setCurrentGroup(response.data);
     });
     dispatch(getContributions(0, -1));
     dispatch(getEmployeePartnerList(user?.SiteId, 0, -1));
     dispatch(getGroupModeList(0, -1));
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -215,141 +216,148 @@ export default function OrderList() {
   ];
 
   return (
-    <Page title={translate('page.order.title.list')}>
-      <Container maxWidth={themeStretch ? false : 'lg'}>
-        <HeaderBreadcrumbs
-          heading={translate('page.order.heading1.list')}
-          links={[
-            { name: translate('page.group.heading2'), href: PATH_DASHBOARD.eCommerce.group },
-            { name: translate('page.order.heading3') }
-          ]}
-        />
-        <Stack spacing={2} sx={{ pb: 3 }}>
-          <EcommerceGroupNewForm isEdit={true} isView={true} currentGroup={currentGroup} />
-        </Stack>
+    <>
+      {isLoading == true ? (
+        <LoadingScreen />
+      ) : (
+        <Page title={translate('page.order.title.list')}>
+          <Container maxWidth={themeStretch ? false : 'lg'}>
+            <HeaderBreadcrumbs
+              heading={translate('page.order.heading1.list')}
+              links={[
+                { name: translate('page.group.heading2'), href: PATH_DASHBOARD.eCommerce.group },
+                { name: translate('page.order.heading3') }
+              ]}
+            />
+            <Stack spacing={2} sx={{ pb: 3 }}>
+              <EcommerceGroupNewForm isEdit={true} isView={true} currentGroup={currentGroup} />
+            </Stack>
 
-        <Card>
-          <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            spacing={{ xs: 3, sm: 2 }}
-            justifyContent="space-between"
-          >
-            <EcommerceListToolbar
-              numSelected={selected.length}
-              filterName={filterName}
-              onFilterName={handleFilterByName}
-            />
-            <CardHeader
-              sx={{ mb: 2 }}
-              action={
-                <Button
-                  onClick={handleClick}
-                  variant="contained"
-                  component={RouterLink}
-                  to={`${PATH_DASHBOARD.eCommerce.root}/order/${paramCase(name)}/shop`}
-                  startIcon={<Icon icon={shoppingCartFill} />}
-                >
-                  {translate('button.shop')}
-                </Button>
-              }
-            />
-          </Stack>
-          <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
-                <EcommerceListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={orderDetail.length}
+            <Card>
+              <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={{ xs: 3, sm: 2 }}
+                justifyContent="space-between"
+              >
+                <EcommerceListToolbar
                   numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
+                  filterName={filterName}
+                  onFilterName={handleFilterByName}
                 />
-                <TableBody>
-                  {isLoading ? (
-                    <TableCell align="center" colSpan={7} sx={{ py: 3 }}>
-                      <CircularProgress />
-                    </TableCell>
-                  ) : (
-                    orderDetail.map((row, index) => {
-                      const { id, createTime, total, nationalityName, name, status } = row;
+                <CardHeader
+                  sx={{ mb: 2 }}
+                  action={
+                    <Button
+                      onClick={handleClick}
+                      disabled={currentGroup != null ? currentGroup?.status != 1 : false}
+                      variant="contained"
+                      component={RouterLink}
+                      to={`${PATH_DASHBOARD.eCommerce.root}/order/${paramCase(name)}/shop`}
+                      startIcon={<Icon icon={shoppingCartFill} />}
+                    >
+                      {translate('button.shop')}
+                    </Button>
+                  }
+                />
+              </Stack>
+              <Scrollbar>
+                <TableContainer sx={{ minWidth: 800 }}>
+                  <Table>
+                    <EcommerceListHead
+                      order={order}
+                      orderBy={orderBy}
+                      headLabel={TABLE_HEAD}
+                      rowCount={orderDetail.length}
+                      numSelected={selected.length}
+                      onRequestSort={handleRequestSort}
+                    />
+                    <TableBody>
+                      {isLoading ? (
+                        <TableCell align="center" colSpan={7} sx={{ py: 3 }}>
+                          <CircularProgress />
+                        </TableCell>
+                      ) : (
+                        orderDetail.map((row, index) => {
+                          const { id, createTime, total, nationalityName, name, status } = row;
 
-                      const isItemSelected = selected.indexOf(id) !== -1;
+                          const isItemSelected = selected.indexOf(id) !== -1;
 
-                      return (
-                        <TableRow hover key={id} tabIndex={-1} role="checkbox">
-                          <TableCell padding="checkbox">
-                            {/* <Checkbox checked={isItemSelected} /> */}
-                          </TableCell>
-                          <TableCell align="left">
-                            {new Date(createTime).toLocaleDateString()}
-                          </TableCell>
-                          <TableCell align="left">{total}</TableCell>
-                          <TableCell align="left">{name}</TableCell>
-                          <TableCell align="left">{nationalityName}</TableCell>
-                          <TableCell align="left">
-                            <Label
-                              variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-                              color={(status == '0' && 'error') || 'success'}
-                            >
-                              {statusOrderOptions.find((v: any) => v.id == status)?.label}
+                          return (
+                            <TableRow hover key={id} tabIndex={-1} role="checkbox">
+                              <TableCell padding="checkbox">
+                                {/* <Checkbox checked={isItemSelected} /> */}
+                              </TableCell>
+                              <TableCell align="left">
+                                {new Date(createTime).toLocaleDateString()}
+                              </TableCell>
+                              <TableCell align="left">{total}</TableCell>
+                              <TableCell align="left">{name}</TableCell>
+                              <TableCell align="left">{nationalityName}</TableCell>
+                              <TableCell align="left">
+                                <Label
+                                  variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
+                                  color={(status == '0' && 'error') || 'success'}
+                                >
+                                  {statusOrderOptions.find((v: any) => v.id == status)?.label}
 
-                              {/* {translate(
+                                  {/* {translate(
                                 `status.${
                                   statusOrderOptions.find((v: any) => v.id == status)?.label
                                 }`
                               )} */}
-                            </Label>
-                          </TableCell>
-                          {/* <TableCell align="left">{status}</TableCell> */}
-                          <TableCell align="right">
-                            <EcommerceMoreMenu
-                              onDelete={() => handleDeleteOrder(id.toString())}
-                              id={id.toString()}
-                              status={status}
-                            />
+                                </Label>
+                              </TableCell>
+                              {/* <TableCell align="left">{status}</TableCell> */}
+                              <TableCell align="right">
+                                <EcommerceMoreMenu
+                                  onDelete={() => handleDeleteOrder(id.toString())}
+                                  id={id.toString()}
+                                  status={status}
+                                />
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })
+                      )}
+
+                      {emptyRows && (
+                        <TableRow style={{ height: 53 * emptyRows }}>
+                          <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                            <Typography gutterBottom align="center" variant="subtitle1">
+                              {translate('message.not-found')}
+                            </Typography>
                           </TableCell>
                         </TableRow>
-                      );
-                    })
-                  )}
+                      )}
+                    </TableBody>
+                    {isOrderNotFound && (
+                      <TableBody>
+                        <TableRow>
+                          <TableCell align="center" colSpan={6}>
+                            <Box sx={{ py: 3 }}>
+                              <SearchNotFound searchQuery={filterName} />
+                            </Box>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    )}
+                  </Table>
+                </TableContainer>
+              </Scrollbar>
 
-                  {emptyRows && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                        <Typography gutterBottom align="center" variant="subtitle1">
-                          {translate('message.not-found')}
-                        </Typography>
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-                {isOrderNotFound && (
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align="center" colSpan={6}>
-                        <Box sx={{ py: 3 }}>
-                          <SearchNotFound searchQuery={filterName} />
-                        </Box>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                )}
-              </Table>
-            </TableContainer>
-          </Scrollbar>
-
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-            component="div"
-            count={totalCount}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(event, value) => setPage(value)}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Card>
-      </Container>
-    </Page>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                component="div"
+                count={totalCount}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={(event, value) => setPage(value)}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </Card>
+          </Container>
+        </Page>
+      )}
+    </>
   );
 }

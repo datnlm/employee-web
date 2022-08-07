@@ -8,6 +8,7 @@ import EcommerceGroupNewForm from 'components/_dashboard/e-commerce/group/Ecomme
 import { getContributions, getGroupModeList } from 'redux/slices/group';
 import { getEmployeePartnerList } from 'redux/slices/employee-partner';
 import useAuth from 'hooks/useAuth';
+import LoadingScreen from 'components/LoadingScreen';
 import { Group } from '../../@types/group';
 // redux
 import { useDispatch } from '../../redux/store';
@@ -19,6 +20,7 @@ import useLocales from '../../hooks/useLocales';
 // components
 import Page from '../../components/Page';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
+
 // ----------------------------------------------------------------------
 
 export default function EcommerceGroupCreate() {
@@ -27,13 +29,16 @@ export default function EcommerceGroupCreate() {
   const { user } = useAuth();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
   const { name } = useParams();
   const isEdit = pathname.includes('edit');
   const [currentGroup, setCurrentGroup] = useState<Group>();
 
   const fetchData = async () => {
+    setIsLoading(true);
     await getGroupById(paramCase(name)).then((response) => {
       setCurrentGroup(response.data);
+      setIsLoading(false);
     });
   };
 
@@ -47,26 +52,34 @@ export default function EcommerceGroupCreate() {
   }, [dispatch]);
 
   return (
-    <Page
-      title={!isEdit ? translate('page.group.title.create') : translate('page.group.title.update')}
-    >
-      <Container maxWidth={themeStretch ? false : 'lg'}>
-        <HeaderBreadcrumbs
-          heading={
-            !isEdit
-              ? translate('page.group.heading1.create')
-              : translate('page.group.heading1.update')
+    <>
+      {isLoading == true ? (
+        <LoadingScreen />
+      ) : (
+        <Page
+          title={
+            !isEdit ? translate('page.group.title.create') : translate('page.group.title.update')
           }
-          links={[
-            {
-              name: translate('page.group.heading2'),
-              href: PATH_DASHBOARD.eCommerce.group
-            },
-            { name: !isEdit ? translate('page.group.heading4.new') : name }
-          ]}
-        />
-        <EcommerceGroupNewForm isEdit={isEdit} isView={false} currentGroup={currentGroup} />
-      </Container>
-    </Page>
+        >
+          <Container maxWidth={themeStretch ? false : 'lg'}>
+            <HeaderBreadcrumbs
+              heading={
+                !isEdit
+                  ? translate('page.group.heading1.create')
+                  : translate('page.group.heading1.update')
+              }
+              links={[
+                {
+                  name: translate('page.group.heading2'),
+                  href: PATH_DASHBOARD.eCommerce.group
+                },
+                { name: !isEdit ? translate('page.group.heading4.new') : name }
+              ]}
+            />
+            <EcommerceGroupNewForm isEdit={isEdit} isView={false} currentGroup={currentGroup} />
+          </Container>
+        </Page>
+      )}
+    </>
   );
 }

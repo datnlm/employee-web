@@ -310,15 +310,16 @@ export default function EcommerceGroupNewForm({
                       fullWidth
                       disabled
                       label={translate('page.group.form.startTime')}
-                      {...getFieldProps('startTime')}
+                      value={new Date(values.startTime).toLocaleDateString()}
+                      // {...getFieldProps('startTime')}
                       error={Boolean(touched.startTime && errors.startTime)}
                       helperText={touched.startTime && errors.startTime}
                     />
                     <TextField
                       fullWidth
                       disabled
+                      value={new Date(values.endTime).toLocaleDateString()}
                       label={translate('page.group.form.endTime')}
-                      {...getFieldProps('endTime')}
                       error={Boolean(touched.endTime && errors.endTime)}
                       helperText={touched.endTime && errors.endTime}
                     />

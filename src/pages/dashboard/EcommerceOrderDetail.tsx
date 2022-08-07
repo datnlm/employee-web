@@ -33,6 +33,7 @@ import { useEffect, useState } from 'react';
 import { manageShop } from '_apis_/products';
 import { LoadingButton } from '@material-ui/lab';
 import useAuth from 'hooks/useAuth';
+import LoadingScreen from 'components/LoadingScreen';
 import Page from '../../components/Page';
 import useSettings from '../../hooks/useSettings';
 // @types
@@ -59,6 +60,7 @@ export default function CheckoutCart() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
   const { name } = useParams();
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [orderDetail, setOrderDetail] = useState<OrderDetail>();
   const [customer, setCustomer] = useState<Customer>();
   const { checkout } = useSelector((state: { product: ProductState }) => state.product);
@@ -110,6 +112,7 @@ export default function CheckoutCart() {
   const totalItems = sum(values.products.map((item) => item.quantity));
 
   const fetchData = async () => {
+    setIsLoading(true);
     await manageShop.getListOrderDetail(user?.SiteId, name, 1, -1).then((response) => {
       setOrderDetail(response.data);
       console.log(response.data.orderDetails);
@@ -119,6 +122,7 @@ export default function CheckoutCart() {
         phone: response.data.phone,
         nationality: response.data.nationalityName
       });
+      setIsLoading(false);
     });
   };
 
@@ -126,73 +130,68 @@ export default function CheckoutCart() {
     fetchData();
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log(orderDetail);
-    console.log(orderDetail?.orderDetails);
-  }, [orderDetail]);
-
   const { isSubmitting, handleSubmit } = formik;
 
   return (
-    <Page title={translate('page.order.title.order-detail')}>
-      <Container maxWidth={themeStretch ? false : 'lg'}>
-        <HeaderBreadcrumbs
-          heading={translate('page.order.heading1.product')}
-          links={[
-            { name: translate('page.group.heading2'), href: PATH_DASHBOARD.eCommerce.group },
-            { name: translate('page.order.heading4.order-detail') }
-          ]}
-        />
+    <>
+      {isLoading == true ? (
+        <LoadingScreen />
+      ) : (
+        <Page title={translate('page.order.title.order-detail')}>
+          <Container maxWidth={themeStretch ? false : 'lg'}>
+            <HeaderBreadcrumbs
+              heading={translate('page.order.heading1.product')}
+              links={[
+                { name: translate('page.group.heading2'), href: PATH_DASHBOARD.eCommerce.group },
+                { name: translate('page.order.heading4.order-detail') }
+              ]}
+            />
 
-        <FormikProvider value={formik}>
-          <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={8}>
-                <Card sx={{ mb: 3 }}>
-                  <CardHeader
-                    title={
-                      <Typography variant="h6">
-                        {translate('form.cart')}
-                        {/* <Typography component="span" sx={{ color: 'text.secondary' }}>
-                          &nbsp;({totalItems} item)
-                        </Typography> */}
-                      </Typography>
-                    }
-                    sx={{ mb: 3 }}
-                  />
+            <FormikProvider value={formik}>
+              <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={8}>
+                    <Card sx={{ mb: 3 }}>
+                      <CardHeader
+                        title={<Typography variant="h6">{translate('form.cart')}</Typography>}
+                        sx={{ mb: 3 }}
+                      />
 
-                  {orderDetail?.orderDetails ? (
-                    <Scrollbar>
-                      <CheckoutProductList products={orderDetail!.orderDetails} />
-                    </Scrollbar>
-                  ) : (
-                    <EmptyContent
-                      title={translate('message.cart-empty')}
-                      description={translate('message.cart-empty-detail')}
-                      img="/static/illustrations/illustration_empty_cart.svg"
-                    />
-                  )}
-                </Card>
-              </Grid>
+                      {orderDetail?.orderDetails ? (
+                        <Scrollbar>
+                          <CheckoutProductList products={orderDetail!.orderDetails} />
+                        </Scrollbar>
+                      ) : (
+                        <EmptyContent
+                          title={translate('message.cart-empty')}
+                          description={translate('message.cart-empty-detail')}
+                          img="/static/illustrations/illustration_empty_cart.svg"
+                        />
+                      )}
+                    </Card>
+                  </Grid>
 
-              <Grid item xs={12} md={4}>
-                <CheckoutBillingInfo customer={customer} />
-                {orderDetail && <CheckoutSummary total={orderDetail!.total} />}
-                <LoadingButton
-                  loading={isSubmitting}
-                  fullWidth
-                  size="large"
-                  type="submit"
-                  variant="contained"
-                  color="error"
-                >
-                  {translate('button.cancel')}
-                </LoadingButton>
-              </Grid>
-            </Grid>
-          </Form>
-        </FormikProvider>
-      </Container>
-    </Page>
+                  <Grid item xs={12} md={4}>
+                    <CheckoutBillingInfo customer={customer} />
+                    {orderDetail && <CheckoutSummary total={orderDetail!.total} />}
+                    <LoadingButton
+                      loading={isSubmitting}
+                      fullWidth
+                      disabled={orderDetail != null ? orderDetail.status != '1' : false}
+                      size="large"
+                      type="submit"
+                      variant="contained"
+                      color="error"
+                    >
+                      {translate('button.cancel')}
+                    </LoadingButton>
+                  </Grid>
+                </Grid>
+              </Form>
+            </FormikProvider>
+          </Container>
+        </Page>
+      )}
+    </>
   );
 }
