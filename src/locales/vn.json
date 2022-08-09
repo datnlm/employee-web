@@ -6,7 +6,7 @@
         "signed": "Đăng nhập với tư cách là"
       },
       "form": {
-        "user": "Tên tài khoản",
+        "user": "Tài khoản",
         "password": "Mật khẩu",
         "remember": "Ghi nhớ tài khoản"
       }
@@ -82,7 +82,9 @@
     "cash": "Tiền mặt khi thanh toán",
     "billing-information": "Thông tin thanh toán",
     "not-found": "Không tìm thấy",
-    "partner-emtpy": "Không có đối tác"
+    "partner-emtpy": "Không có đối tác",
+    "not-found-result": "Không có kết quả tìm kiếm cho ",
+    "try-check": "Thử kiểm tra lỗi chính tả hoặc sử dụng các từ hoàn chỉnh."
   },
   "form": {
     "cart": "Giỏ hàng",
@@ -107,7 +109,15 @@
     "form": {
       "partner": "Vui lòng chọn nhân viên đối tác",
       "contribution": "Vui lòng chọn đóng góp",
-      "personalRate": "Vui lòng chọn tỉ lệ"
+      "personalRate": "Vui lòng chọn tỉ lệ",
+      "name": "Tên is bắt buộc",
+      "phone": "Số điện thoại là bắt buộc",
+      "phone-length": "Điện thoại phải là 10 số",
+      "email": "Email là bắt buộc",
+      "email-invalid": "Email phải là một địa chỉ email hợp lệ",
+      "national": "Quốc tịch là bắt buộc",
+      "username": "Vui lòng nhập tên người dùng",
+      "password": "Vui lòng nhập mật khẩu" 
     },
     "confirm-delete": "Bạn có chắc chắn muốn xoá?",
     "cart-empty": "Cart trống",
@@ -121,7 +131,9 @@
     "create-error": "Thêm mới thất bại",
     "update-error": "Cập nhật thất bại",
     "cancel-success": "Huỷ thành công",
-    "cancel-error": "Huỷ thất bại"
+    "cancel-error": "Huỷ thất bại",
+    "invalid": "Tên người dùng hoặc mật khẩu không hợp lệ.",
+    "failedLoginAttempts": "Quá nhiều lần đăng nhập không thành công"
   },
   "menu": {
     "language": {

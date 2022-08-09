@@ -49,15 +49,17 @@ function CustomerItem({ onNextStep, onCreateBilling }: CustomerItemProps) {
   const { checkout } = useSelector((state: { product: ProductState }) => state.product);
 
   const NewProductSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
+    name: Yup.string().required(translate('message.form.name')),
     phone: Yup.string()
       .required()
       .matches(/^[0-9]+$/, 'Phone must be only number')
-      .min(10, 'Phone must be 10 number')
-      .max(10, 'Phone must be 10 number')
-      .required('Phone is required'),
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    nationality: Yup.string().required('Nationality is required')
+      .min(10, translate('message.form.phone-length'))
+      .max(10, translate('message.form.phone-length'))
+      .required(translate('message.form.phone')),
+    email: Yup.string()
+      .email(translate('message.form.email-invalid'))
+      .required(translate('message.form.email')),
+    nationality: Yup.string().required(translate('message.form.national'))
   });
 
   const formik = useFormik({
