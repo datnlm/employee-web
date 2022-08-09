@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import { Icon } from '@iconify/react';
 import { useSnackbar } from 'notistack5';
 import { useFormik, Form, FormikProvider } from 'formik';
+import { paramCase, sentenceCase } from 'change-case';
 import { useParams, useLocation, Link as RouterLink } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import { PATH_DASHBOARD } from 'routes/paths';
@@ -78,8 +79,6 @@ export default function CheckoutPayment() {
     validationSchema: PaymentSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
-        console.log('submit');
-        console.log(values.payment);
         const detail: { price: number; quantity: number; productId: string }[] = [];
         checkout.cart.map((v) =>
           detail.push({
@@ -116,7 +115,7 @@ export default function CheckoutPayment() {
                 variant: 'success'
               });
               dispatch(resetCart());
-              navigate(PATH_DASHBOARD.eCommerce.shop);
+              navigate(`${PATH_DASHBOARD.eCommerce.root}/order/${paramCase(name)}/shop`);
             } else {
               enqueueSnackbar(translate('message.order-error'), {
                 variant: 'error'

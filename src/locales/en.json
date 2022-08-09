@@ -6,7 +6,7 @@
         "signed": "Signed in as"
       },
       "form": {
-        "user": "User name",
+        "user": "Username",
         "password": "Password",
         "remember": "Remember me"
       }
@@ -82,7 +82,9 @@
     "cash": "Cash on Checkout",
     "billing-information": "Billing Information",
     "not-found": "Not found",
-    "partner-emtpy": "Empty Partner"
+    "partner-emtpy": "Empty Partner",
+    "not-found-result": "No result found for ",
+    "try-check": "Try checking for typos or using complete words."
   },
   "form": {
     "cart": "Cart",
@@ -107,7 +109,15 @@
     "form": {
       "partner": "Please choice employee partner",
       "contribution": "Please choice contribution",
-      "personalRate": "Please choice personal rate"
+      "personalRate": "Please choice personal rate",
+      "name": "Name is required",
+      "phone": "Phone is required",
+      "phone-length": "Phone must be 10 number",
+      "email": "Email is required",
+      "email-invalid": "Email must be a valid email address",
+      "national": "Nationality is required"  ,
+      "username": "Username is required",
+      "password": "Password is required" 
     },
     "confirm-delete": "Are you sure to delete this?",
     "cart-empty": "Cart is empty",
@@ -121,7 +131,9 @@
     "create-error": "Create new error",
     "update-error": "Update error",
     "cancel-success": "Cancel success",
-    "cancel-error": "Cancel error"
+    "cancel-error": "Cancel error",
+    "invalid": "The username or password are not valid.",
+    "failedLoginAttempts": "Too many failed login attempts"
   },
   "menu": {
     "language": {

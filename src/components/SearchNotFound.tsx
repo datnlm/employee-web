@@ -1,4 +1,5 @@
 import { Paper, PaperProps, Typography } from '@material-ui/core';
+import useLocales from 'hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -7,14 +8,15 @@ interface SearchNotFoundProps extends PaperProps {
 }
 
 export default function SearchNotFound({ searchQuery = '', ...other }: SearchNotFoundProps) {
+  const { translate } = useLocales();
   return (
     <Paper {...other}>
       <Typography gutterBottom align="center" variant="subtitle1">
-        Not found
+        {translate('label.not-found')}
       </Typography>
       <Typography variant="body2" align="center">
-        No results found for &nbsp;
-        <strong>&quot;{searchQuery}&quot;</strong>. Try checking for typos or using complete words.
+        {translate('label.not-found-result')} &nbsp;
+        <strong>&quot;{searchQuery}&quot;</strong>. {translate('label.try-check')}
       </Typography>
     </Paper>
   );

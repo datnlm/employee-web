@@ -49,14 +49,6 @@ export default function Login() {
   const { translate } = useLocales();
   return (
     <RootStyle title="Login | Employee Web">
-      <MHidden width="mdDown">
-        <SectionStyle>
-          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            Hi, Welcome Back
-          </Typography>
-        </SectionStyle>
-      </MHidden>
-
       <Container maxWidth="sm">
         <ContentStyle>
           <Stack direction="row" alignItems="center" sx={{ mb: 5 }}>

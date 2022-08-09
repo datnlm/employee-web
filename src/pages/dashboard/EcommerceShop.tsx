@@ -12,7 +12,7 @@ import { momoPayment } from '_apis_/momo';
 import { manageShop } from '_apis_/products';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
-import { getProducts, filterProducts } from '../../redux/slices/product';
+import { getProducts, filterProducts, resetCart } from '../../redux/slices/product';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // @types
@@ -129,6 +129,7 @@ export default function EcommerceShop() {
         enqueueSnackbar(translate('message.order-success'), {
           variant: 'success'
         });
+        dispatch(resetCart());
         momoPayment(data);
       } else {
         enqueueSnackbar(translate('message.order-error'), {
