@@ -36,6 +36,7 @@ import EcommerceGroupNewForm from 'components/_dashboard/e-commerce/group/Ecomme
 import { getContributions, getGroupModeList } from 'redux/slices/group';
 import { getEmployeePartnerList } from 'redux/slices/employee-partner';
 import LoadingScreen from 'components/LoadingScreen';
+import { fCurrency } from 'utils/formatNumber';
 import { RootState, useDispatch, useSelector } from '../../redux/store';
 import { getOrder, resetCart } from '../../redux/slices/product';
 // routes
@@ -290,7 +291,7 @@ export default function OrderList() {
                               <TableCell align="left">
                                 {new Date(createTime).toLocaleDateString()}
                               </TableCell>
-                              <TableCell align="left">{total}</TableCell>
+                              <TableCell align="left">{fCurrency(Number(total))}</TableCell>
                               <TableCell align="left">{name}</TableCell>
                               <TableCell align="left">{nationalityName}</TableCell>
                               <TableCell align="left">
