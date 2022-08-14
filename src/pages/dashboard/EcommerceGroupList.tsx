@@ -139,6 +139,26 @@ export default function EcommerceGroupList() {
     }
   };
 
+  const renkDegis = (count: string) => {
+    let choosen = 'error';
+
+    switch (count) {
+      case '0':
+        choosen = 'error';
+        break;
+      case '1':
+        choosen = 'sucees';
+        break;
+      case '2':
+        choosen = 'warning';
+        break;
+      default:
+        choosen = 'error';
+    }
+
+    return choosen;
+  };
+
   const emptyRows = !isLoading && !groupList;
 
   const filteredGroup = applySortFilter(groupList, getComparator(order, orderBy), filterName);
@@ -237,7 +257,11 @@ export default function EcommerceGroupList() {
                           <TableCell align="left">
                             <Label
                               variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-                              color={(status == '0' && 'error') || 'success'}
+                              color={
+                                (status == '0' && 'error') ||
+                                (status == '1' && 'warning') ||
+                                'success'
+                              }
                             >
                               {translate(`status.${status}`)}
 
@@ -287,7 +311,7 @@ export default function EcommerceGroupList() {
           </Scrollbar>
 
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+            rowsPerPageOptions={[5, 10, 25, { label: translate('message.all'), value: -1 }]}
             component="div"
             count={totalCount}
             rowsPerPage={rowsPerPage}

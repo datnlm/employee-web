@@ -223,12 +223,14 @@ export default function EcommerceGroupNewForm({
 
   useEffect(() => {
     if (isEdit) {
-      if (currentGroup?.contributionMembers[0].groupRoleId != null) {
-        setGroupRole(
-          groupRoleList.find((v) => v.id == currentGroup?.contributionMembers[0].groupRoleId) ??
-            null
-        );
-      }
+      // if (currentGroup?.contributionMembers != null) {
+      //   if (currentGroup?.contributionMembers[0].groupRoleId != null) {
+      //     setGroupRole(
+      //       groupRoleList.find((v) => v.id == currentGroup?.contributionMembers[0].groupRoleId) ??
+      //         null
+      //     );
+      //   }
+      // }
     }
   }, [groupRoleList]);
 
