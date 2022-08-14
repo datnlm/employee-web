@@ -95,7 +95,7 @@ export default function EcommerceGroupMoreMenu({
           </MenuItem>
         )}
 
-        {status == 1 && (
+        {/* {status == 1 && (
           <MenuItem onClick={handleClickOpen} sx={{ color: 'text.secondary' }}>
             <ListItemIcon>
               <Icon icon={trash2Outline} width={24} height={24} />
@@ -105,7 +105,7 @@ export default function EcommerceGroupMoreMenu({
               primaryTypographyProps={{ variant: 'body2' }}
             />
           </MenuItem>
-        )}
+        )} */}
 
         <div>
           <Dialog open={open} onClose={handleClose} aria-labelledby="draggable-dialog-title">
@@ -117,7 +117,7 @@ export default function EcommerceGroupMoreMenu({
             </DialogContent>
             <DialogActions>
               <Button autoFocus onClick={handleClose}>
-                {translate('button.save.cancel')}
+                {translate('button.cancel')}
               </Button>
               <Button
                 onClick={(event) => {
@@ -125,7 +125,7 @@ export default function EcommerceGroupMoreMenu({
                   handleClose();
                 }}
               >
-                {translate('button.save.confirm')}
+                {translate('button.confirm')}
               </Button>
             </DialogActions>
           </Dialog>

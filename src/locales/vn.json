@@ -119,6 +119,7 @@
       "username": "Vui lòng nhập tên người dùng",
       "password": "Vui lòng nhập mật khẩu" 
     },
+    "all": "Tất cả",
     "confirm-delete": "Bạn có chắc chắn muốn xoá?",
     "cart-empty": "Cart trống",
     "cart-empty-detail": "Có vẻ như bạn không có mặt hàng nào trong giỏ hàng của mình.",

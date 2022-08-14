@@ -297,7 +297,11 @@ export default function OrderList() {
                               <TableCell align="left">
                                 <Label
                                   variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-                                  color={(status == '0' && 'error') || 'success'}
+                                  color={
+                                    (status == '0' && 'error') ||
+                                    (status == '1' && 'warning') ||
+                                    'success'
+                                  }
                                 >
                                   {statusOrderOptions.find((v: any) => v.id == status)?.label}
 
@@ -347,7 +351,7 @@ export default function OrderList() {
               </Scrollbar>
 
               <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                rowsPerPageOptions={[5, 10, 25, { label: translate('message.all'), value: -1 }]}
                 component="div"
                 count={totalCount}
                 rowsPerPage={rowsPerPage}

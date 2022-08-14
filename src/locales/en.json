@@ -119,6 +119,7 @@
       "username": "Username is required",
       "password": "Password is required" 
     },
+    "all": "All",
     "confirm-delete": "Are you sure to delete this?",
     "cart-empty": "Cart is empty",
     "cart-empty-detail": "Look like you have no items in your shopping cart.",
