@@ -251,7 +251,7 @@ export default function EcommerceGroupList() {
                             {new Date(startTime).toLocaleDateString()}
                           </TableCell>
                           <TableCell align="left">
-                            {new Date(endTime).toLocaleDateString()}
+                            {endTime != null ? new Date(endTime).toLocaleDateString() : endTime}
                           </TableCell>
                           <TableCell align="left">{note}</TableCell>
                           <TableCell align="left">

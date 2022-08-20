@@ -313,18 +313,20 @@ export default function EcommerceGroupNewForm({
                       disabled
                       label={translate('page.group.form.startTime')}
                       value={new Date(values.startTime).toLocaleDateString()}
-                      // {...getFieldProps('startTime')}
                       error={Boolean(touched.startTime && errors.startTime)}
                       helperText={touched.startTime && errors.startTime}
                     />
-                    <TextField
-                      fullWidth
-                      disabled
-                      value={new Date(values.endTime).toLocaleDateString()}
-                      label={translate('page.group.form.endTime')}
-                      error={Boolean(touched.endTime && errors.endTime)}
-                      helperText={touched.endTime && errors.endTime}
-                    />
+                    {values.endTime != null ||
+                      (values.endTime != '' && (
+                        <TextField
+                          fullWidth
+                          disabled
+                          value={new Date(values.endTime).toLocaleDateString()}
+                          label={translate('page.group.form.endTime')}
+                          error={Boolean(touched.endTime && errors.endTime)}
+                          helperText={touched.endTime && errors.endTime}
+                        />
+                      ))}
                   </Stack>
                 )}
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 3, sm: 2 }}>
