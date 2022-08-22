@@ -171,6 +171,7 @@ export type ProductCoralPark = {
   name: string;
   images: any;
   price: number;
+  quantity: number;
   description: string;
   mediaUrl: any;
   siteId: string;

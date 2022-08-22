@@ -55,11 +55,10 @@ type ShopProductCardProps = {
 
 export default function ShopProductCard({ product }: ShopProductCardProps) {
   // const { name, cover, price, colors, status, priceSale, available } = product;
-  const { name, images, price, status } = product;
+  const { name, images, price, status, quantity } = product;
   const linkTo = `${PATH_DASHBOARD.eCommerce.root}/product/${paramCase(name)}`;
   const { translate } = useLocales();
   let quantityProduct = 1;
-  const maxQuantityProduct = 1000000000000;
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -161,7 +160,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
                 </Typography>
 
                 <div>
-                  <Incrementer name="quantity" available={maxQuantityProduct} />
+                  <Incrementer name="quantity" available={quantity} />
                 </div>
               </Box>
               <Divider sx={{ borderStyle: 'dashed' }} />
