@@ -71,9 +71,9 @@ function Incrementer({ available, quantity, onIncrease, onDecrease }: Incremente
           <Icon icon={plusFill} width={16} height={16} />
         </MIconButton>
       </IncrementerStyle>
-      <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+      {/* <Typography variant="caption" sx={{ color: 'text.secondary' }}>
         {translate('label.available')}: {available}
-      </Typography>
+      </Typography> */}
     </Box>
   );
 }
