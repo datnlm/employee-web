@@ -1,7 +1,7 @@
 {
   "page": {
     "login": {
-      "title": "Đăng nhập vào web nhân viên đặt hàng",
+      "title": "Đăng nhập",
       "label": {
         "signed": "Đăng nhập với tư cách là"
       },
@@ -69,6 +69,8 @@
     }
   },
   "label": {
+    "login":"Đăng nhập",
+    "ecommerce": "Thương mại",
     "history": "Lịch sử đặt hàng",
     "sort": "Sắp xếp theo",
     "low-high": "Giá: Thấp-Cao",
