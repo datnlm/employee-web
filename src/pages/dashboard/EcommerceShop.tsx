@@ -161,7 +161,7 @@ export default function EcommerceShop() {
   };
 
   return (
-    <Page title={translate('page.ecommerce')}>
+    <Page title={translate('page.label.ecommerce')}>
       {values && (
         <Backdrop open={isSubmitting} sx={{ zIndex: 9999 }}>
           <CircularProgress />
