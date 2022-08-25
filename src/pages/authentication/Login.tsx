@@ -48,7 +48,7 @@ export default function Login() {
   const { method } = useAuth();
   const { translate } = useLocales();
   return (
-    <RootStyle title="Login | Employee Web">
+    <RootStyle title={translate('page.login.title')}>
       <Container maxWidth="sm">
         <ContentStyle>
           <Stack direction="row" alignItems="center" sx={{ mb: 5 }}>

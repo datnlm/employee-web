@@ -94,7 +94,8 @@ export default function CheckoutCart() {
       try {
         const response = await manageShop.cancel(name, '');
         if (response.status == 200) {
-          navigate(PATH_DASHBOARD.eCommerce.order);
+          navigate(`${PATH_DASHBOARD.eCommerce.root}`);
+          // navigate(`${PATH_DASHBOARD.eCommerce.root}/order/${paramCase(name)}/`);
           enqueueSnackbar(translate('message.cancel-success'), { variant: 'success' });
         } else {
           enqueueSnackbar(translate('message.cancel-error'), { variant: 'error' });

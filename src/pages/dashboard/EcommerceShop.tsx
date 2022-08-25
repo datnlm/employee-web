@@ -161,7 +161,7 @@ export default function EcommerceShop() {
   };
 
   return (
-    <Page title="Ecommerce | CPMS">
+    <Page title={translate('page.ecommerce')}>
       {values && (
         <Backdrop open={isSubmitting} sx={{ zIndex: 9999 }}>
           <CircularProgress />

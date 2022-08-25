@@ -1,7 +1,7 @@
 {
   "page": {
     "login": {
-      "title": "Login to Employee Order",
+      "title": "Login",
       "label": {
         "signed": "Signed in as"
       },
@@ -69,6 +69,8 @@
     }
   },
   "label": {
+    "login":"Login",
+    "ecommerce": "Ecommerce",
     "history": "History Order",
     "sort": "Sort by",
     "low-high": "Price: Low-High",
