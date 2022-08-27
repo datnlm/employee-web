@@ -163,7 +163,7 @@ function CustomerItem({ onNextStep, onCreateBilling }: CustomerItemProps) {
 }
 
 export default function CheckoutBillingInformation() {
-  //
+  const { translate } = useLocales();
   const dispatch = useDispatch();
   const { checkout } = useSelector((state: { product: ProductState }) => state.product);
   const { total, discount, subtotal } = checkout;
@@ -193,7 +193,7 @@ export default function CheckoutBillingInformation() {
               onClick={handleBackStep}
               startIcon={<Icon icon={arrowIosBackFill} />}
             >
-              Back
+              {translate('button.back')}
             </Button>
           </Box>
         </Grid>
