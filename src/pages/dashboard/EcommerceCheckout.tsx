@@ -28,8 +28,6 @@ import {
 
 // ----------------------------------------------------------------------
 
-const STEPS = ['Cart', 'Billing', 'Payment'];
-
 const QontoConnector = withStyles((theme) => ({
   alternativeLabel: {
     top: 10,
@@ -86,6 +84,12 @@ export default function EcommerceCheckout() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
   const { translate } = useLocales();
+  const STEPS = [
+    translate('form.cart'),
+    translate('label.billing-information'),
+    translate('button.checkout')
+  ];
+
   const isMountedRef = useIsMountedRef();
   const { checkout } = useSelector((state: { product: ProductState }) => state.product);
   const { cart, billing, activeStep } = checkout;
@@ -106,10 +110,10 @@ export default function EcommerceCheckout() {
   }, [dispatch, activeStep]);
 
   return (
-    <Page title="Ecommerce: Checkout">
+    <Page title={translate('label.ecommerce')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Checkout"
+          heading={translate('button.checkout')}
           links={[
             { name: translate('page.group.heading2'), href: PATH_DASHBOARD.eCommerce.group },
             {
@@ -120,7 +124,7 @@ export default function EcommerceCheckout() {
               name: translate('page.order.heading4.product'),
               href: `${PATH_DASHBOARD.eCommerce.root}/order/${paramCase(name)}/shop`
             },
-            { name: 'Checkout' }
+            { name: translate('button.checkout') }
           ]}
         />
 

@@ -138,8 +138,6 @@ export default function EcommerceShop() {
         manageShop.delete(orderId);
       }
     }
-    console.log('pathname');
-    console.log(data);
     dispatch(getProducts(user?.SiteId, 0, -1));
   }, [dispatch]);
 
@@ -161,7 +159,7 @@ export default function EcommerceShop() {
   };
 
   return (
-    <Page title={translate('page.label.ecommerce')}>
+    <Page title={translate('label.ecommerce')}>
       {values && (
         <Backdrop open={isSubmitting} sx={{ zIndex: 9999 }}>
           <CircularProgress />
