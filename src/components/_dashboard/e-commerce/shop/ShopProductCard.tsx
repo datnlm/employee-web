@@ -111,7 +111,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
         <MIconButton
           size="small"
           color="inherit"
-          disabled={value >= available}
+          disabled={quantity != null ? value >= available : false}
           onClick={incrementQuantity}
         >
           <Icon icon={plusFill} width={16} height={16} />
