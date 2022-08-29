@@ -159,6 +159,12 @@ export default function CheckoutProductList({
                     onDecrease={() => onDecreaseQuantity(id)}
                     onIncrease={() => onIncreaseQuantity(id)}
                   />
+                  {/* <Typography variant="body2">
+                    <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>
+                      {translate('label.available')}:
+                    </Typography>
+                    {quantity}
+                  </Typography> */}
                 </TableCell>
 
                 <TableCell align="right">{fCurrency(price * quantity)}</TableCell>
